@@ -28,7 +28,7 @@
     "lib": "lib"
   },
   "peerDependencies": {
-    "@trpc/server": "^10.0.0",
+    "@trpc/server": "^11.0.0-next-beta.264",
     "zod": "^3.19.1"
   },
   "devDependencies": {

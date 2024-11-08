@@ -7,21 +7,21 @@ import { trpc } from "trpc-panel/react-app/trpc";
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const parse = parseRouterWithOptions(appRouter, { transformer: "superjson" });
-
-Promise.resolve(function () {
+const App = dynamic(
+  Promise.resolve(function () {
     return (
-      <RootComponent
-        rootRouter={parse}
-        options={{
-          url: "http://localhost:3001/api/trpc",
-          transformer: "superjson",
-        }}
-        trpc={trpc}
-      />
+    <RootComponent
+      rootRouter={parse}
+      options={{
+      url: "http://localhost:3001/api/trpc",
+      transformer: "superjson",
+      }}
+      trpc={trpc}
+    />
     );
   }),
   { ssr: false }
-
+)
 const Component = () => {
   return <App />;
 };
