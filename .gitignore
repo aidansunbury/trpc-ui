@@ -46,3 +46,6 @@ testem.log
 Thumbs.db
 
 stats.html
+
+# yarn
+.yarn
