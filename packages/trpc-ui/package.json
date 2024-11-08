@@ -1,5 +1,5 @@
 {
-  "name": "@metamorph/trpc-panel",
+  "name": "trpc-ui",
   "version": "1.0.5",
   "description": "UI for testing tRPC backends",
   "main": "lib/index.js",

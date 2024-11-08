@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import dynamic from "next/dynamic";
-import { parseRouterWithOptions } from "trpc-panel/parse/parseRouter";
-import { RootComponent } from "trpc-panel/react-app/Root";
+import { parseRouterWithOptions } from "trpc-ui/parse/parseRouter";
+import { RootComponent } from "trpc-ui/react-app/Root";
 import { appRouter } from "~/router";
-import { trpc } from "trpc-panel/react-app/trpc";
+import { trpc } from "trpc-ui/react-app/trpc";
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const parse = parseRouterWithOptions(appRouter, { transformer: "superjson" });
@@ -14,7 +14,7 @@ const App = dynamic(
       <RootComponent
         rootRouter={parse}
         options={{
-          url: "http://localhost:3001/api/trpc",
+          url: "http://localhost:3000/api/trpc",
           transformer: "superjson",
         }}
         trpc={trpc}

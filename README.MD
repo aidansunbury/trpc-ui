@@ -1,30 +1,16 @@
-# Roadmap:
-1. Merge in v11 support fixes from here: https://github.com/iway1/trpc-panel/issues/95
-2. Ensure that it works with multiple input statements
-```typescript
-test2: protectedProcedure
-    .input(z.object({ text: z.string() }))
-    .input(z.object({ text2: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text} and ${input.text2}`,
-      };
-    }),
-```
-3. Review existing issues and PRs
-4. See if supporting the zod types at the bottom of the document makes sense
-5. Publish to NPM and add notice to original project
+# tRPC.ui()
 
-
-# tRPC.panel()
-
-Probably the easiest and cheapest way to build a testing UI and documentation for your tRPC endpoints. tRPC panel automatically generates a UI for manually testing your tRPC backend with 0 overhead:
+Probably the easiest and cheapest way to build a testing UI and documentation for your tRPC v11.0 endpoints. tRPC ui automatically generates a UI for manually testing your tRPC backend with 0 overhead:
 
 ![Screenshot 2022-12-08 at 7 24 02 PM](https://user-images.githubusercontent.com/12774588/206602120-017a2b3a-66c3-4bf0-bd93-90fb4bddf0cc.png)
 
 trpc panel moves as fast as your trpc backend with minimal effort.
 
 Check out our [test app](https://app.trpcpanel.io)
+
+## Fork Notice
+
+This is a fork of the original [tRPC panel](https://github.com/iway1/trpc-panel) project, which is now unmaintained. The [original author](https://github.com/iway1) deserves credit for the vast majority of the work done on this project.
 
 ## Features
 
@@ -40,16 +26,28 @@ Check out our [test app](https://app.trpcpanel.io)
 
 ## Quick Start
 
-Install with your preferred package manager:
+Install as a dev dependency with your preferred package manager:
 
 ```sh
-yarn add trpc-panel
+npm install trpc-ui
+```
+
+```sh
+yarn add trpc-ui
+```
+
+```sh
+pnpm install trpc-ui
+```
+
+```sh
+bun add trpc-ui
 ```
 
 render your panel and return it from your backend (express example):
 
 ```js
-import { renderTrpcPanel } from "trpc-panel";
+import { renderTrpcPanel } from "trpc-ui";
 // ...
 app.use("/panel", (_, res) => {
   return res.send(
@@ -58,7 +56,7 @@ app.use("/panel", (_, res) => {
 });
 ```
 
-`trpc-panel` just renders as a string, so it can be used with any backend.
+`trpc-ui` just renders as a string, so it can be used with any backend.
 
 ## NextJS / create-t3-app example
 
@@ -66,7 +64,7 @@ In Nextjs you'd want to create an api route somewhere like `src/pages/api/panel.
 
 ```ts
 import type { NextApiRequest, NextApiResponse } from "next";
-import { renderTrpcPanel } from "trpc-panel";
+import { renderTrpcPanel } from "trpc-ui";
 import { appRouter } from "../../server/api/root";
 
 export default async function handler(_: NextApiRequest, res: NextApiResponse) {
@@ -83,7 +81,7 @@ Then we can visit the url `http://localhost:3000/api/panel` to use the panel. He
 
 ## Documenting Procedures
 
-As of v1.1.0, `trpc-panel` supports documenting procedures.
+As of v1.1.0, `trpc-ui` supports documenting procedures.
 
 Documentation is opt-in, meaning you only need to set it up if you want to use it. When docs are included for your trpc procedure, a "Docs" section will appear in your procedure:
 
@@ -91,11 +89,11 @@ Documentation is opt-in, meaning you only need to set it up if you want to use i
 
 ### Procedure Descriptions
 
-`trpc-panel` supports documenting procedures via trpc meta. First setup your trpc instance to be typed with `TRPCPanelMeta`:
+`trpc-ui` supports documenting procedures via trpc meta. First setup your trpc instance to be typed with `TRPCPanelMeta`:
 
 ```ts
 import { initTRPC } from "@trpc/server";
-import { TRPCPanelMeta } from "trpc-panel";
+import { TRPCPanelMeta } from "trpc-ui";
 
 const t = initTRPC.meta<TRPCPanelMeta>().create();
 ```
@@ -115,7 +113,7 @@ export const appRouter = t.router({
 
 ### Input Parameter Descriptions
 
-`trpc-panel` supports documenting parameters via zod's `.describe()` method. This allows developers to quickly write documentation as they're writing schemas:
+`trpc-ui` supports documenting parameters via zod's `.describe()` method. This allows developers to quickly write documentation as they're writing schemas:
 
 ```ts
 export const appRouter = t.router({
@@ -148,13 +146,11 @@ app.use("/panel", (_, res) => {
 
 ## Contributing
 
-`trpc-panel` welcomes and encourages open source contributions. Please see our [contributing](./CONTRIBUTING.md) guide for information on how to develop locally.
+`trpc-ui` welcomes and encourages open source contributions. Please see our [contributing](./CONTRIBUTING.md) guide for information on how to develop locally.
 
 ## Limitations
 
-Currently, tRPC panel only supports tRPC v10 and only works with zod input schemas. With it's current design it would be feasible to easily add support for other input types as well
-
-There are no plans to support v9 or other previous tRPC versions.
+Currently, tRPC panel only works with zod input schemas. With it's current design it would be feasible to easily add support for other input types as well
 
 ### Supported zod types
 

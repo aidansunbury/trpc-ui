@@ -1,1 +1,1 @@
-rm -rf node_modules packages/trpc-panel/node_modules packages/test-app/node_modules packages/dev-app/node_modules
+rm -rf node_modules packages/trpc-ui/node_modules packages/test-app/node_modules packages/dev-app/node_modules

@@ -12,7 +12,7 @@ yarn
 
 ### Development App
 
-Included in this repo there is a development app that makes it easy to work on `trpc-panel` locally. It is a `next.js` app that will render the router included in the dev app. To run it, do:
+Included in this repo there is a development app that makes it easy to work on `trpc-ui` locally. It is a `next.js` app that will render the router included in the dev app. To run it, do:
 
 ```sh
 cd packages/dev-app && yarn dev
@@ -24,10 +24,20 @@ To add / remove procedures from the dev app's panel, modify its router in `packa
 
 ## Front end contributions
 
-The `trpc-panel` front end is just a bunch of react components. Any updates made to the react components should immediately be visible while running the `dev-app`.
+The `trpc-ui` front end is just a bunch of react components. Any updates made to the react components should immediately be visible while running the `dev-app`.
 
-The React components are located in `packages/trpc-panel/src/react-app`.
+The React components are located in `packages/trpc-ui/src/react-app`.
 
 ## Updating the parser
 
-For more advanced features, it may be required to update the parsing logic, which can be found in `packages/trpc-panel/parse`.
+For more advanced features, it may be required to update the parsing logic, which can be found in `packages/trpc-ui/parse`.
+
+## Running the tests
+
+Jest is used to test the functionality of the parser. To run them, use
+
+```sh
+yarn test:panel
+```
+
+at the root of the monorepo.

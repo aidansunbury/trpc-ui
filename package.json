@@ -1,13 +1,13 @@
 {
-  "name": "trpc-panel",
+  "name": "trpc-ui-monorepo",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "test:panel": "yarn && npx nx test --project @extends/trpc-panel",
-    "build:panel": "yarn && npx nx build --project @extends/trpc-panel",
+    "test:panel": "yarn && npx nx test --project trpc-ui",
+    "build:panel": "yarn && npx nx build --project trpc-ui",
     "build:test-app": "yarn && npx nx build --project test-trpc-panel",
     "build:docs": "yarn && npx nx build --project docs",
-    "cpy:readme": "cp README.MD packages/trpc-panel/README.md",
+    "cpy:readme": "cp README.MD packages/trpc-ui/README.md",
     "start:test-app": "node ./packages/test-app/lib/server.js",
     "start:docs": "cd packages/docs && yarn serve"
   },
@@ -21,7 +21,7 @@
   },
   "workspaces": {
     "packages": [
-      "packages/trpc-panel",
+      "packages/trpc-ui",
       "packages/test-app",
       "packages/dev-app"
     ],
