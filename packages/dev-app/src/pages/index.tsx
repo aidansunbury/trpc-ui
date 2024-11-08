@@ -7,6 +7,7 @@ import { trpc } from "trpc-panel/react-app/trpc";
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const parse = parseRouterWithOptions(appRouter, { transformer: "superjson" });
+
 const App = dynamic(
   Promise.resolve(function () {
     return (
@@ -21,7 +22,8 @@ const App = dynamic(
     );
   }),
   { ssr: false }
-)
+);
+
 const Component = () => {
   return <App />;
 };
