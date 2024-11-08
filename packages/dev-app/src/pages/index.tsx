@@ -10,14 +10,14 @@ const parse = parseRouterWithOptions(appRouter, { transformer: "superjson" });
 const App = dynamic(
   Promise.resolve(function () {
     return (
-    <RootComponent
-      rootRouter={parse}
-      options={{
-      url: "http://localhost:3001/api/trpc",
-      transformer: "superjson",
-      }}
-      trpc={trpc}
-    />
+      <RootComponent
+        rootRouter={parse}
+        options={{
+          url: "http://localhost:3001/api/trpc",
+          transformer: "superjson",
+        }}
+        trpc={trpc}
+      />
     );
   }),
   { ssr: false }
