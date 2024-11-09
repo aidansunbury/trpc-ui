@@ -46,6 +46,7 @@
     "@rollup/plugin-replace": "^5.0.1",
     "@rollup/plugin-terser": "^0.2.0",
     "@rollup/plugin-typescript": "^10.0.1",
+    "@tailwindcss/typography": "^0.5.15",
     "@tanstack/react-query": "^5.12.2",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -94,6 +95,7 @@
     "path": "^0.12.7",
     "pretty-bytes": "^6.1.0",
     "pretty-ms": "^8.0.0",
+    "react-markdown": "^9.0.1",
     "string-byte-length": "^1.6.0",
     "url": "^0.11.0",
     "zod-to-json-schema": "^3.20.0"

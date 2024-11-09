@@ -39,5 +39,7 @@ module.exports = {
       separatorLine: "#d4d4d888",
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 };

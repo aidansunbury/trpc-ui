@@ -149,7 +149,7 @@ export const appRouter = createTRPCRouter({
     }),
   procedureWithDescription: procedure
     .meta({
-      description: "This is a description",
+      description: "This is a description \n # with a newline",
     })
     .input(
       z.object({
