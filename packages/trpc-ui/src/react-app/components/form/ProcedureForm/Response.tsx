@@ -15,11 +15,11 @@ export function Response({
 }) {
   const title = size
     ? time
-      ? `Response (${prettyBytes(size)}, ${prettyMs(time)})`
-      : `Response (${prettyBytes(size)})`
+      ? `Response hello (${prettyBytes(size)}, ${prettyMs(time)})`
+      : `Response hello (${prettyBytes(size)})`
     : time
-    ? `Response (${prettyMs(time)})`
-    : `Response`;
+    ? `Response hello (${prettyMs(time)})`
+    : `Response hello`;
 
   if (typeof children === "object") {
     return (

@@ -18,6 +18,7 @@ import superjson from "superjson";
 import { AllPathsContextProvider } from "@src/react-app/components/contexts/AllPathsContext";
 import { HotKeysContextProvider } from "@src/react-app/components/contexts/HotKeysContext";
 import { SearchOverlay } from "@src/react-app/components/SearchInputOverlay";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 export function RootComponent({
   rootRouter,
@@ -75,7 +76,10 @@ function ClientProviders({
 
   return (
     <trpc.Provider queryClient={queryClient} client={trpcClient}>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      <QueryClientProvider client={queryClient}>
+        {children}
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </trpc.Provider>
   );
 }

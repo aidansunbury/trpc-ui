@@ -1728,6 +1728,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/query-devtools@npm:5.59.20":
+  version: 5.59.20
+  resolution: "@tanstack/query-devtools@npm:5.59.20"
+  checksum: 5a4f351b0b9bda78095c4074da4d44743076287f07e544f77d840a9061c95fc85e15f80b08a04bb4b907a3cac63176ee79b3627b1dba6323444ba25419e63761
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query-devtools@npm:^5.59.20":
+  version: 5.59.20
+  resolution: "@tanstack/react-query-devtools@npm:5.59.20"
+  dependencies:
+    "@tanstack/query-devtools": 5.59.20
+  peerDependencies:
+    "@tanstack/react-query": ^5.59.20
+    react: ^18 || ^19
+  checksum: 306f4e992c5351d31a0a3283275a519550787759d3e3e1566ae82acd0353855902b17ad617b2a28b581acfb21086c7e924df3a25e29a044d4fcf7a126f36cc6a
+  languageName: node
+  linkType: hard
+
 "@tanstack/react-query@npm:^5.12.2":
   version: 5.59.20
   resolution: "@tanstack/react-query@npm:5.59.20"
@@ -4618,6 +4637,7 @@ __metadata:
   resolution: "dev-app@workspace:packages/dev-app"
   dependencies:
     "@tanstack/react-query": ^5.12.2
+    "@tanstack/react-query-devtools": ^5.59.20
     "@trpc/client": ^11.0.0-next-beta.264
     "@trpc/next": ^11.0.0-next-beta.264
     "@trpc/react-query": ^11.0.0-next-beta.264
@@ -12697,7 +12717,7 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     superjson: ^1.12.0
-    trpc-ui: ^1.0.0
+    trpc-ui: "*"
     tsconfig-paths: ^4.1.0
     tsx: ^4.19.2
     typescript: ^5.4.5
@@ -12881,7 +12901,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"trpc-ui@^1.0.0, trpc-ui@workspace:packages/trpc-ui":
+"trpc-ui@*, trpc-ui@workspace:packages/trpc-ui":
   version: 0.0.0-use.local
   resolution: "trpc-ui@workspace:packages/trpc-ui"
   dependencies:

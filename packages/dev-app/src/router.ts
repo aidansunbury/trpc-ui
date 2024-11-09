@@ -69,10 +69,10 @@ export const appRouter = createTRPCRouter({
         return "It's an input";
       }),
     nativeEnumInput: procedure
-    .input(z.object({ aEnumInput: z.nativeEnum({ONE: "one", TWO: "two"}) }))
-    .query(() => {
-      return "It's an input";
-    }),
+      .input(z.object({ aEnumInput: z.nativeEnum({ ONE: "one", TWO: "two" }) }))
+      .query(() => {
+        return "It's an input";
+      }),
     stringArrayInput: procedure
       .input(z.object({ aStringArray: z.string().array() }))
       .query(() => {
@@ -172,13 +172,15 @@ export const appRouter = createTRPCRouter({
       return "Was that described well enough?";
     }),
 
-  hello: procedure
+  slowProcedure: procedure
     .input(
       z.object({
         name: z.string(),
       })
     )
-    .query(({ input }) => {
+    .query(async ({ input }) => {
+      // two second delay
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       return `Hello ${input.name}`;
     }),
   anErrorThrowingRoute: procedure

@@ -10,7 +10,6 @@ import { ProcedureFormButton } from "./ProcedureFormButton";
 import { Response } from "./Response";
 import { FormSection } from "./FormSection";
 import { Error } from "./Error";
-import { RequestResult } from "./RequestResult";
 import { CollapsableSection } from "@src/react-app/components/CollapsableSection";
 import { CloseIcon } from "@src/react-app/components/icons/CloseIcon";
 import { ToggleJsonIcon } from "@src/react-app/components/icons/ToggleJsonIcon";
@@ -68,7 +67,6 @@ export function ProcedureForm({
   const [queryInput, setQueryInput] = useState<any>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
   const context = trpc.useContext();
-  const [dataSize, setDataSize] = useState<number | undefined>();
   const [startTime, setStartTime] = useState<number | undefined>();
   const [opDuration, setOpDuration] = useState<number | undefined>();
 
@@ -90,11 +88,6 @@ export function ProcedureForm({
       initialData: null,
       retry: false,
       refetchOnWindowFocus: false,
-      onSuccess: (data: unknown) => {
-        if (startTime) setOpDuration(Date.now() - startTime);
-        setDataSize(getSize(JSON.stringify(data)));
-        setStartTime(undefined);
-      },
     });
   })() as UseQueryResult<any>;
 
@@ -113,7 +106,6 @@ export function ProcedureForm({
       retry: false,
       onSuccess: (data: unknown) => {
         if (startTime) setOpDuration(Date.now() - startTime);
-        setDataSize(getSize(JSON.stringify(data)));
         setStartTime(undefined);
       },
     });
@@ -134,13 +126,13 @@ export function ProcedureForm({
     },
   });
   function onSubmit(data: { [ROOT_VALS_PROPERTY_NAME]: any }) {
-    setStartTime(Date.now());
     const newData = { json: data[ROOT_VALS_PROPERTY_NAME] };
     if (procedure.procedureType === "query") {
       setQueryInput(newData);
       setQueryEnabled(true);
       invalidateQuery(newData);
     } else {
+      setStartTime(Date.now());
       mutation.mutateAsync(newData).then(setMutationResponse).catch();
     }
   }
@@ -172,6 +164,16 @@ export function ProcedureForm({
       : mutationResponse;
   const error =
     procedure.procedureType == "query" ? query.error : mutation.error;
+
+  // Fixes the timing for queries, not ideal but works
+  useEffect(() => {
+    if (query.fetchStatus === "fetching") {
+      setStartTime(Date.now());
+    }
+    if (query.fetchStatus === "idle") {
+      setOpDuration(Date.now() - startTime);
+    }
+  }, [query.fetchStatus]);
 
   const fieldName = procedure.node.path.join(".");
 
@@ -239,14 +241,16 @@ export function ProcedureForm({
               <ProcedureFormButton
                 text={`Execute ${name}`}
                 colorScheme={"neutral"}
-                loading={query.fetchStatus === "fetching" || mutation.isLoading}
+                loading={query.fetchStatus === "fetching" || mutation.isPending}
               />
             </FormSection>
           </div>
         </form>
         <div className="flex flex-col space-y-4">
           {data && (
-            <RequestResult result={data} size={dataSize} time={opDuration} />
+            <Response size={getSize(JSON.stringify(data))} time={opDuration}>
+              {data}
+            </Response>
           )}
           {!data && data !== null && (
             <Response>Successful request but no data was returned</Response>
