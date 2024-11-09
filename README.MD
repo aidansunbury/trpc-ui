@@ -19,7 +19,7 @@ This is a fork of the original [tRPC panel](https://github.com/iway1/trpc-panel)
   - No output schemas (procedure return types can be inferred as nature intended)
   - New procedures will be added to your UI as you create them in your backend
   - No compilation required, works with any backend
-- 📄 [Document](#documenting-procedures) your procedures and input parameters with minimal effort
+- 📄 [Document](#documenting-procedures) your procedures and input parameters with minimal effort and markdown support
 - 🐦 Supports nested routers, and nested input objects. The structure of the UI maps one-to-one to your API's routers and procedures.
 - 🧭 SideNav and VSCode-like procedure / router search to quickly find what you're looking for
 - ✨ [Transform](#data-transformers) data with built in `superjson` support.
@@ -109,6 +109,13 @@ export const appRouter = t.router({
       return { greeting: `Hello ${input.name}!` };
     });
 });
+```
+
+### Markdown Support
+Most descriptions don't need more than basic text, but descriptions for procedures and procedure descriptions can render markdown. This is most often useful for adding links within descriptions, but all markdown is supported thanks to [react-markdown](https://github.com/remarkjs/react-markdown).
+
+```ts
+.meta({ /* 👉 */ description: "# H1 heading\nSome normal, or maybe **bold** text below, and a [link](https://trpc.io/docs) to something important" })
 ```
 
 ### Input Parameter Descriptions

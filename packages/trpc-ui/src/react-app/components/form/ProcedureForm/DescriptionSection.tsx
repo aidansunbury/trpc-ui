@@ -3,22 +3,6 @@ import { FormLabel } from "@src/react-app/components/form/FormLabel";
 import { FormSection } from "@src/react-app/components/form/ProcedureForm/FormSection";
 import React, { ReactNode } from "react";
 import Markdown from 'react-markdown'
-
-const markdown = `A paragraph with *emphasis* and **strong importance**.
-
-
-
-# Header 1
-
-## Header 2
-
-### Header 3
-
-link [link](https://google.com)
-
-
-`
-
 export function DocumentationSection({
   extraData,
 }: {
@@ -31,15 +15,12 @@ export function DocumentationSection({
     <FormSection title="Docs">
       <div className="space-y-4">
         {extraData.description && (
-          <DocumentationSubsection title="Description asdf">
+          <DocumentationSubsection title="Description">
             <article className="prose">
-            <Markdown className={"prose"}>
-            {/* {extraData.description} */}
-            {markdown}
-            </Markdown>
-            <h1>wtf</h1>
+              <Markdown>
+                {extraData.description}
+              </Markdown>
             </article>
-            <h1 className="text-xl">wtf 2</h1>
           </DocumentationSubsection>
         )}
         {hasParams && (
@@ -56,7 +37,11 @@ export function DocumentationSection({
                         {`${key}: `}
                       </td>
                       <td className="pl-4 text-sm text-gray-500 py-2">
-                        {`${value} with some funny goofy`}
+                        <article className="prose">
+                          <Markdown className={"prose"}>
+                            {value}
+                          </Markdown>
+                        </article>
                       </td>
                     </tr>
                   )

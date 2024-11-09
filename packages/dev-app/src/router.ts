@@ -149,7 +149,7 @@ export const appRouter = createTRPCRouter({
     }),
   procedureWithDescription: procedure
     .meta({
-      description: "This is a description \n # with a newline",
+      description: "# This is a description\n\nIt's a **good** one.\nIt may be overkill in certain situations, but procedures descriptions can render markdown thanks to [react-markdown](https://github.com/remarkjs/react-markdown) and [tailwindcss-typography](https://github.com/tailwindlabs/tailwindcss-typography)\n1. Lists\n2. Are\n3. Supported\n but I *personally* think that [links](https://github.com/aidansunbury/trpc-ui) and images ![Image example](https://private-user-images.githubusercontent.com/64103161/384591987-7dc0e751-d493-4337-ac8d-a1f16924bf48.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzExNDM3OTMsIm5iZiI6MTczMTE0MzQ5MywicGF0aCI6Ii82NDEwMzE2MS8zODQ1OTE5ODctN2RjMGU3NTEtZDQ5My00MzM3LWFjOGQtYTFmMTY5MjRiZjQ4LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDExMDklMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMTA5VDA5MTEzM1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTE4YmM4OTlkZmYyNmJjOWI5YzgwZDUxOTVlYTBjODlkMTVkMzNlNmJjZDhkZDJiNTRhNzFmNDZhMzllNDc2ZGYmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.FsvDvXo6S7n4uOsi3LMUUOeEhjXq6LF88MlU60gzZ2k)\n are the most useful for documentation purposes",
     })
     .input(
       z.object({
@@ -158,7 +158,7 @@ export const appRouter = createTRPCRouter({
           .string()
           .optional()
           .describe(
-            "The name of the thing to search for. Really really long long long boi long boi long"
+            "Even term descriptions *can* render basic markdown, but don't get too fancy"
           ),
         searchTerm2: z
           .string()
