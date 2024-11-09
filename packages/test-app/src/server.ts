@@ -1,14 +1,17 @@
 import express from "express";
-import { renderTrpcPanel } from "trpc-panel";
+import { renderTrpcPanel } from "trpc-ui";
 import connectLiveReload from "connect-livereload";
 import morgan from "morgan";
 import * as trpcExpress from "@trpc/server/adapters/express";
 import cors from "cors";
 import { testRouter } from "./router.js";
+import dotenv from "dotenv";
+dotenv.config();
 
-const serverUrl = process.env.SERVER_URL;
-const trpcPath = process.env.TRPC_PATH;
-const port = process.env.DEV_PORT;
+const serverUrl = process.env.SERVER_URL || "http://localhost";
+const trpcPath = process.env.TRPC_PATH || "trpc";
+const port = Number(process.env.PORT) || 4000;
+
 // to marginally improve local development experience
 const liveReload = process.env.LIVE_RELOAD === "true";
 const simulateDelay = process.env.SIMULATE_DELAY === "true";

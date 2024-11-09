@@ -8,7 +8,7 @@
     "build:test-app": "yarn && npx nx build --project test-trpc-panel",
     "build:docs": "yarn && npx nx build --project docs",
     "cpy:readme": "cp README.MD packages/trpc-ui/README.md",
-    "start:test-app": "node ./packages/test-app/lib/server.js",
+    "start:test-app": "node ./packages/test-app/lib/server.ts",
     "start:docs": "cd packages/docs && yarn serve"
   },
   "private": true,
