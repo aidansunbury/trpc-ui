@@ -29,5 +29,8 @@
       "**/zod-to-json-schema",
       "**/zod-to-json-schema/**"
     ]
+  },
+  "dependencies": {
+    "nuqs": "^2.2.1"
   }
 }

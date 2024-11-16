@@ -10,6 +10,8 @@ import {
   solidColorBg,
   solidColorBorder,
 } from "@src/react-app/components/style-utils";
+import { useQueryState } from 'nuqs'
+
 
 export type ColorSchemeType =
   | "query"
@@ -34,6 +36,8 @@ export function CollapsableSection({
 }) {
   const { scrollToPathIfMatches } = useSiteNavigationContext();
   const shown = useCollapsableIsShowing(fullPath);
+  const [_path, setPath] = useQueryState("path");
+
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
@@ -68,7 +72,11 @@ export function CollapsableSection({
     >
       {collapsable ? (
         <button
-          onClick={() => collapsables.toggle(fullPath)}
+          onClick={() => {
+            collapsables.toggle(fullPath)
+            console.log(fullPath);
+            setPath(fullPath.join("."));
+          }}
           className="flex flex-row justify-between items-center p-1 "
         >
           <span className="flex flex-row">

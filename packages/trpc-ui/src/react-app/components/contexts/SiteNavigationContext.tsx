@@ -115,6 +115,7 @@ export function SiteNavigationContextProvider({
     ) {
       return false;
     }
+
     scrollToPathRef.current = null;
     element.scrollIntoView({
       behavior: "smooth",

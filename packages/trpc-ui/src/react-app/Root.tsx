@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { RouterContainer } from "./components/RouterContainer";
 import type { ParsedRouter } from "../parse/parseRouter";
 import { RenderOptions } from "@src/render";
@@ -19,6 +19,10 @@ import { AllPathsContextProvider } from "@src/react-app/components/contexts/AllP
 import { HotKeysContextProvider } from "@src/react-app/components/contexts/HotKeysContext";
 import { SearchOverlay } from "@src/react-app/components/SearchInputOverlay";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { useSiteNavigationContext } from "@src/react-app/components/contexts/SiteNavigationContext";
+import { NuqsAdapter } from 'nuqs/adapters/react'
+import { useQueryState } from 'nuqs'
+import { parseAsArrayOf, parseAsString } from 'nuqs'
 
 export function RootComponent({
   rootRouter,
@@ -30,21 +34,23 @@ export function RootComponent({
   trpc: ReturnType<typeof createTRPCReact>;
 }) {
   return (
-    <HeadersContextProvider>
-      <AllPathsContextProvider rootRouter={rootRouter}>
-        <SiteNavigationContextProvider>
-          <ClientProviders trpc={trpc} options={options}>
-            <HotKeysContextProvider>
-              <SearchOverlay>
-                <div className="flex flex-col w-full h-full flex-1 relative">
-                  <AppInnards rootRouter={rootRouter} />
-                </div>
-              </SearchOverlay>
-            </HotKeysContextProvider>
-          </ClientProviders>
-        </SiteNavigationContextProvider>
-      </AllPathsContextProvider>
-    </HeadersContextProvider>
+    <NuqsAdapter>
+      <HeadersContextProvider>
+        <AllPathsContextProvider rootRouter={rootRouter}>
+          <SiteNavigationContextProvider>
+            <ClientProviders trpc={trpc} options={options}>
+              <HotKeysContextProvider>
+                <SearchOverlay>
+                  <div className="flex flex-col w-full h-full flex-1 relative">
+                    <AppInnards rootRouter={rootRouter} />
+                  </div>
+                </SearchOverlay>
+              </HotKeysContextProvider>
+            </ClientProviders>
+          </SiteNavigationContextProvider>
+        </AllPathsContextProvider>
+      </HeadersContextProvider>
+    </NuqsAdapter>
   );
 }
 
@@ -89,6 +95,13 @@ function AppInnards({ rootRouter }: { rootRouter: ParsedRouter }) {
     "trpc-panel.show-minimap",
     true
   );
+  const { openAndNavigateTo } = useSiteNavigationContext();
+
+  const [path] = useQueryState("path", parseAsArrayOf(parseAsString, "."));
+
+  useEffect(() => {
+    openAndNavigateTo(path ?? [], true);
+  }, []);
 
   return (
     <div className="flex flex-col flex-1 relative">
