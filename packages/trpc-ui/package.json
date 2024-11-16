@@ -92,6 +92,7 @@
   "dependencies": {
     "@textea/json-viewer": "^3.0.0",
     "fuzzysort": "^2.0.4",
+    "nuqs": "^2.2.1",
     "path": "^0.12.7",
     "pretty-bytes": "^6.1.0",
     "pretty-ms": "^8.0.0",
