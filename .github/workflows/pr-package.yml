@@ -18,7 +18,10 @@ jobs:
       - name: Build App
         run: |
           yarn build:panel
+    
 
-      - run: |
+      - name: Publish with yarn
+        run: |
             cd packages/trpc-ui
+            yarn install
             yarn pkg-pr-new publish
