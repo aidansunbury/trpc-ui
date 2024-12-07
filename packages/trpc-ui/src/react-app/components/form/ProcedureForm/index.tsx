@@ -21,6 +21,7 @@ import { Field } from "@src/react-app/components/form/Field";
 import { ProcedureFormContextProvider } from "@src/react-app/components/form/ProcedureForm/ProcedureFormContext";
 import getSize from "string-byte-length";
 import JSONEditor from "../JSONEditor";
+import { RenderOptions } from "@src/render";
 
 const TRPCErrorSchema = z.object({
   meta: z.object({
@@ -55,9 +56,11 @@ export const ROOT_VALS_PROPERTY_NAME = "vals";
 
 export function ProcedureForm({
   procedure,
+  options,
   name,
 }: {
   procedure: ParsedProcedure;
+  options: RenderOptions;
   name: string;
 }) {
   // null => request was never sent
@@ -158,12 +161,21 @@ export function ProcedureForm({
     setQueryEnabled(false);
   }
 
-  const data =
-    procedure.procedureType === "query"
-      ? query.data?.json ?? null
-      : mutationResponse;
+  let data: any; 
+  if (procedure.procedureType === "query") {
+    data = query.data ?? null;
+    if (options.transformer === "superjson" && data) {
+      data = data.json;
+    } 
+  }
+  else {
+    data = mutationResponse;
+    if (options.transformer === "superjson" && data) {
+      data = data.json;
+    }
+  }
   const error =
-    procedure.procedureType == "query" ? query.error : mutation.error;
+    procedure.procedureType === "query" ? query.error : mutation.error;
 
   // Fixes the timing for queries, not ideal but works
   useEffect(() => {

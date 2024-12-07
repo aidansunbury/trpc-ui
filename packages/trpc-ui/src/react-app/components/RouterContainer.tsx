@@ -2,12 +2,15 @@ import React from "react";
 import { CollapsableSection } from "@src/react-app/components/CollapsableSection";
 import { ProcedureForm } from "@src/react-app/components/form/ProcedureForm";
 import { ParsedRouter } from "../../parse/parseRouter";
+import { RenderOptions } from "@src/render";
 
 export function RouterContainer({
   router,
+  options,
   name,
 }: {
   router: ParsedRouter;
+  options: RenderOptions;
   name?: string;
 }) {
   const isRoot = router.path.length == 0;
@@ -36,12 +39,14 @@ export function RouterContainer({
                 {routerOrProcedure.nodeType == "router" ? (
                   <RouterContainer
                     name={childName}
+                    options={options}
                     router={routerOrProcedure}
                   />
                 ) : (
                   <ProcedureForm
                     name={childName}
                     procedure={routerOrProcedure}
+                    options={options}
                   />
                 )}
               </div>

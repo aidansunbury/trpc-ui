@@ -42,7 +42,7 @@ export function RootComponent({
               <HotKeysContextProvider>
                 <SearchOverlay>
                   <div className="flex flex-col w-full h-full flex-1 relative">
-                    <AppInnards rootRouter={rootRouter} />
+                    <AppInnards rootRouter={rootRouter} options={options}/>
                   </div>
                 </SearchOverlay>
               </HotKeysContextProvider>
@@ -90,7 +90,7 @@ function ClientProviders({
   );
 }
 
-function AppInnards({ rootRouter }: { rootRouter: ParsedRouter }) {
+function AppInnards({ rootRouter, options }: { rootRouter: ParsedRouter, options: RenderOptions }) {
   const [sidebarOpen, setSidebarOpen] = useLocalStorage(
     "trpc-panel.show-minimap",
     true
@@ -119,7 +119,7 @@ function AppInnards({ rootRouter }: { rootRouter: ParsedRouter }) {
           }}
         >
           <div className="container max-w-6xl p-4 pt-8">
-            <RouterContainer router={rootRouter} />
+            <RouterContainer router={rootRouter}  options={options}/>
           </div>
         </div>
       </div>
