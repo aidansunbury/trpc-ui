@@ -9,10 +9,13 @@
     "build:docs": "yarn && npx nx build --project docs",
     "cpy:readme": "cp README.MD packages/trpc-ui/README.md",
     "start:test-app": "node ./packages/test-app/lib/server.ts",
-    "start:docs": "cd packages/docs && yarn serve"
+    "start:docs": "cd packages/docs && yarn serve",
+    "biome:check": "biome check",
+    "biome:check:fix": "biome check --write --unsafe"
   },
   "private": true,
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "@nrwl/nx-cloud": "latest",
     "@tsconfig/docusaurus": "^1.0.6",
     "nx": "15.2.4",
