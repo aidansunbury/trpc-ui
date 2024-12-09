@@ -1,9 +1,9 @@
+import type { TRPCPanelMeta } from "@src/meta";
+import type { ObjectNode } from "@src/parse/parseNodeTypes";
+import type { ParsedProcedure } from "@src/parse/parseProcedure";
 import { initTRPC } from "@trpc/server";
-import { ObjectNode } from "@src/parse/parseNodeTypes";
 import { z } from "zod";
-import { TRPCPanelMeta } from "@src/meta";
 import { zodToJsonSchema } from "zod-to-json-schema";
-import { ParsedProcedure } from "@src/parse/parseProcedure";
 
 export const testTrpcInstance = initTRPC.meta<TRPCPanelMeta>().create({});
 
@@ -96,7 +96,7 @@ export const testQueryExpectedParseResult: ParsedProcedure = {
   procedureType: "query",
   pathFromRootRouter: ["testQuery"],
   extraData: {
-    parameterDescriptions: {}
+    parameterDescriptions: {},
   },
 };
 
@@ -107,7 +107,7 @@ export const testMutationExpectedParseResult: ParsedProcedure = {
   procedureType: "mutation",
   pathFromRootRouter: ["testMutation"],
   extraData: {
-    parameterDescriptions: {}
+    parameterDescriptions: {},
   },
 };
 

@@ -1,10 +1,10 @@
-import {
+import type {
   ParseReferences,
   SharedInputNodeProperties,
 } from "@src/parse/parseNodeTypes";
 
 export function nodePropertiesFromRef(
-  references: ParseReferences
+  references: ParseReferences,
 ): SharedInputNodeProperties {
   return {
     path: references.path,

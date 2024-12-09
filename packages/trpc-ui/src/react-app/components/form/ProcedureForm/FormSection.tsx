@@ -1,5 +1,5 @@
-import React, { ReactNode } from "react";
 import { FormSectionHeader } from "@src/react-app/components/form/ProcedureForm/FormSectionHeader";
+import React, { type ReactNode } from "react";
 
 export function FormSection({
   children,
@@ -14,7 +14,7 @@ export function FormSection({
 }) {
   return (
     <div className="flex flex-col">
-      <div className="flex flex-row justify-between bg-white shadow-sm px-4 py-2">
+      <div className="flex flex-row justify-between bg-white px-4 py-2 shadow-sm">
         <FormSectionHeader className={titleClassName}>
           {title}
         </FormSectionHeader>

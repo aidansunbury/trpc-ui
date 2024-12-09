@@ -1,28 +1,28 @@
-import React, { ReactNode, useEffect, useState } from "react";
-import { RouterContainer } from "./components/RouterContainer";
-import type { ParsedRouter } from "../parse/parseRouter";
-import { RenderOptions } from "@src/render";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { createTRPCReact, httpBatchLink } from "@trpc/react-query";
+import { HeadersPopup } from "@src/react-app/components/HeadersPopup";
+import { SearchOverlay } from "@src/react-app/components/SearchInputOverlay";
+import { AllPathsContextProvider } from "@src/react-app/components/contexts/AllPathsContext";
 import {
   HeadersContextProvider,
   useHeaders,
 } from "@src/react-app/components/contexts/HeadersContext";
-import { useLocalStorage } from "@src/react-app/components/hooks/useLocalStorage";
-import { HeadersPopup } from "@src/react-app/components/HeadersPopup";
-import { Toaster } from "react-hot-toast";
+import { HotKeysContextProvider } from "@src/react-app/components/contexts/HotKeysContext";
 import { SiteNavigationContextProvider } from "@src/react-app/components/contexts/SiteNavigationContext";
+import { useSiteNavigationContext } from "@src/react-app/components/contexts/SiteNavigationContext";
+import { useLocalStorage } from "@src/react-app/components/hooks/useLocalStorage";
+import type { RenderOptions } from "@src/render";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { type createTRPCReact, httpBatchLink } from "@trpc/react-query";
+import { useQueryState } from "nuqs";
+import { parseAsArrayOf, parseAsString } from "nuqs";
+import { NuqsAdapter } from "nuqs/adapters/react";
+import React, { type ReactNode, useEffect, useState } from "react";
+import { Toaster } from "react-hot-toast";
+import superjson from "superjson";
+import type { ParsedRouter } from "../parse/parseRouter";
+import { RouterContainer } from "./components/RouterContainer";
 import { SideNav } from "./components/SideNav";
 import { TopBar } from "./components/TopBar";
-import superjson from "superjson";
-import { AllPathsContextProvider } from "@src/react-app/components/contexts/AllPathsContext";
-import { HotKeysContextProvider } from "@src/react-app/components/contexts/HotKeysContext";
-import { SearchOverlay } from "@src/react-app/components/SearchInputOverlay";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { useSiteNavigationContext } from "@src/react-app/components/contexts/SiteNavigationContext";
-import { NuqsAdapter } from 'nuqs/adapters/react'
-import { useQueryState } from 'nuqs'
-import { parseAsArrayOf, parseAsString } from 'nuqs'
 
 export function RootComponent({
   rootRouter,
@@ -41,8 +41,8 @@ export function RootComponent({
             <ClientProviders trpc={trpc} options={options}>
               <HotKeysContextProvider>
                 <SearchOverlay>
-                  <div className="flex flex-col w-full h-full flex-1 relative">
-                    <AppInnards rootRouter={rootRouter} options={options}/>
+                  <div className="relative flex h-full w-full flex-1 flex-col">
+                    <AppInnards rootRouter={rootRouter} options={options} />
                   </div>
                 </SearchOverlay>
               </HotKeysContextProvider>
@@ -76,7 +76,7 @@ function ClientProviders({
         if (options.transformer === "superjson") return superjson;
         return undefined;
       })(),
-    })
+    }),
   );
   const [queryClient] = useState(() => new QueryClient());
 
@@ -90,10 +90,13 @@ function ClientProviders({
   );
 }
 
-function AppInnards({ rootRouter, options }: { rootRouter: ParsedRouter, options: RenderOptions }) {
+function AppInnards({
+  rootRouter,
+  options,
+}: { rootRouter: ParsedRouter; options: RenderOptions }) {
   const [sidebarOpen, setSidebarOpen] = useLocalStorage(
     "trpc-panel.show-minimap",
-    true
+    true,
   );
   const { openAndNavigateTo } = useSiteNavigationContext();
 
@@ -104,22 +107,22 @@ function AppInnards({ rootRouter, options }: { rootRouter: ParsedRouter, options
   }, []);
 
   return (
-    <div className="flex flex-col flex-1 relative">
+    <div className="relative flex flex-1 flex-col">
       <TopBar open={sidebarOpen} setOpen={setSidebarOpen} />
-      <div className="flex flex-row flex-1 bg-mainBackground">
+      <div className="flex flex-1 flex-row bg-mainBackground">
         <SideNav
           rootRouter={rootRouter}
           open={sidebarOpen}
           setOpen={setSidebarOpen}
         />
         <div
-          className="flex flex-col flex-1 items-center overflow-scroll"
+          className="flex flex-1 flex-col items-center overflow-scroll"
           style={{
             maxHeight: "calc(100vh - 4rem)",
           }}
         >
           <div className="container max-w-6xl p-4 pt-8">
-            <RouterContainer router={rootRouter}  options={options}/>
+            <RouterContainer router={rootRouter} options={options} />
           </div>
         </div>
       </div>

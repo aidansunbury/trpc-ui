@@ -23,14 +23,7 @@
     "typescript": "^4.9.3"
   },
   "workspaces": {
-    "packages": [
-      "packages/trpc-ui",
-      "packages/test-app",
-      "packages/dev-app"
-    ],
-    "nohoist": [
-      "**/zod-to-json-schema",
-      "**/zod-to-json-schema/**"
-    ]
+    "packages": ["packages/trpc-ui", "packages/test-app", "packages/dev-app"],
+    "nohoist": ["**/zod-to-json-schema", "**/zod-to-json-schema/**"]
   }
 }

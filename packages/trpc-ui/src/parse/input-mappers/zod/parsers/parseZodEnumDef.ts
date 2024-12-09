@@ -1,10 +1,10 @@
 import { nodePropertiesFromRef } from "@src/parse/utils";
-import { ZodEnumDef } from "zod";
-import { EnumNode, ParseFunction } from "../../../parseNodeTypes";
+import type { ZodEnumDef } from "zod";
+import type { EnumNode, ParseFunction } from "../../../parseNodeTypes";
 
 export const parseZodEnumDef: ParseFunction<ZodEnumDef, EnumNode> = (
   def,
-  refs
+  refs,
 ) => {
   const values = def.values as unknown as string[];
   refs.addDataFunctions.addDescriptionIfExists(def, refs);

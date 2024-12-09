@@ -1,6 +1,6 @@
 import { defaultReferences } from "@src/parse/input-mappers/defaultReferences";
 import { parseZodNullDef } from "@src/parse/input-mappers/zod/parsers/parseZodNullDef";
-import { LiteralNode } from "@src/parse/parseNodeTypes";
+import type { LiteralNode } from "@src/parse/parseNodeTypes";
 import { z } from "zod";
 
 describe("Parse ZodNull", () => {
@@ -12,7 +12,7 @@ describe("Parse ZodNull", () => {
     };
     const schema = z.null();
     expect(parseZodNullDef(schema._def, defaultReferences())).toStrictEqual(
-      expected
+      expected,
     );
   });
 });

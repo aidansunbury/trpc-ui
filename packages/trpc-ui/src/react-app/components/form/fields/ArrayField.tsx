@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { Control, useController, useWatch } from "react-hook-form";
-import type { ParsedInputNode } from "@src/parse/parseNodeTypes";
-import { Field } from "../Field";
-import { defaultFormValuesForNode } from "@src/react-app/components/form/utils";
 import XIcon from "@mui/icons-material/CloseOutlined";
-import { InputGroupContainer } from "@src/react-app/components/InputGroupContainer";
 import DataArray from "@mui/icons-material/DataArray";
+import type { ParsedInputNode } from "@src/parse/parseNodeTypes";
 import { AddItemButton } from "@src/react-app/components/AddItemButton";
-import { FieldError } from "@src/react-app/components/form/fields/FieldError";
+import { InputGroupContainer } from "@src/react-app/components/InputGroupContainer";
 import { ROOT_VALS_PROPERTY_NAME } from "@src/react-app/components/form/ProcedureForm";
+import { FieldError } from "@src/react-app/components/form/fields/FieldError";
+import { defaultFormValuesForNode } from "@src/react-app/components/form/utils";
+import React, { useState } from "react";
+import { type Control, useController, useWatch } from "react-hook-form";
+import { Field } from "../Field";
 
-var currentKeyCount = 0;
+let currentKeyCount = 0;
 
 export function ArrayField({
   name,
@@ -37,9 +37,9 @@ export function ArrayField({
   const watch = useWatch({ control });
 
   function getValueFromWatch() {
-    var r = watch;
-    for (var p of [ROOT_VALS_PROPERTY_NAME].concat(
-      node.path.map((e) => e + "")
+    let r = watch;
+    for (const p of [ROOT_VALS_PROPERTY_NAME].concat(
+      node.path.map((e) => `${e}`),
     )) {
       r = r[p];
     }
@@ -47,9 +47,9 @@ export function ArrayField({
   }
 
   function onAddClick() {
-    setTextFieldKeys((old) => old.concat([currentKeyCount++ + ""]));
+    setTextFieldKeys((old) => old.concat([`${currentKeyCount++}`]));
     field.onChange(
-      getValueFromWatch().concat([defaultFormValuesForNode(node.childType)])
+      getValueFromWatch().concat([defaultFormValuesForNode(node.childType)]),
     );
   }
 
@@ -67,7 +67,7 @@ export function ArrayField({
       title={label}
     >
       {field.value.map((_: ParsedInputNode, i: number) => (
-        <span key={i + ""} className="flex flex-row items-start">
+        <span key={`${i}`} className="flex flex-row items-start">
           <span className="flex flex-1 flex-col">
             <Field
               key={textFieldKeys[i]}
@@ -86,7 +86,7 @@ export function ArrayField({
             className="ml-2"
             onClick={() => onDeleteClick(i)}
           >
-            <XIcon className="w-5 h-5 mt-[0.45rem] mr-2" />
+            <XIcon className="mt-[0.45rem] mr-2 h-5 w-5" />
           </button>
         </span>
       ))}

@@ -1,6 +1,6 @@
 import { defaultReferences } from "@src/parse/input-mappers/defaultReferences";
 import { parseZodObjectDef } from "@src/parse/input-mappers/zod/parsers/parseZodObjectDef";
-import { ObjectNode } from "@src/parse/parseNodeTypes";
+import type { ObjectNode } from "@src/parse/parseNodeTypes";
 import { z } from "zod";
 
 describe("Parse ZodObject", () => {
@@ -12,7 +12,7 @@ describe("Parse ZodObject", () => {
     };
     const schema = z.object({});
     expect(parseZodObjectDef(schema._def, defaultReferences())).toStrictEqual(
-      expected
+      expected,
     );
   });
   it("should parse an object with different property types", () => {
@@ -35,7 +35,7 @@ describe("Parse ZodObject", () => {
       string: z.string(),
     });
     expect(parseZodObjectDef(schema._def, defaultReferences())).toStrictEqual(
-      expected
+      expected,
     );
   });
   it("should correctly create nested object paths", () => {
@@ -69,7 +69,7 @@ describe("Parse ZodObject", () => {
       }),
     });
     expect(parseZodObjectDef(schema._def, defaultReferences())).toStrictEqual(
-      expected
+      expected,
     );
   });
 });

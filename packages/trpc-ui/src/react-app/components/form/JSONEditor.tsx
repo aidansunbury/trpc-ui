@@ -1,9 +1,11 @@
-import React, { useEffect, useRef } from 'react';
-import type JSONEditor from 'jsoneditor';
+import type JSONEditor from "jsoneditor";
+import React, { useEffect, useRef } from "react";
 
-const jsonEditorImport = import('jsoneditor').then(({ default: JSONEditor }) => JSONEditor);
+const jsonEditorImport = import("jsoneditor").then(
+  ({ default: JSONEditor }) => JSONEditor,
+);
 
-export default function JSONEditorDemo ({
+export default function JSONEditorDemo({
   value,
   onChange,
 }: {
@@ -15,10 +17,10 @@ export default function JSONEditorDemo ({
   useEffect(() => {
     let abort = false;
     let newEditor: JSONEditor;
-    jsonEditorImport.then(JSONEditor => {
+    jsonEditorImport.then((JSONEditor) => {
       if (!abort && editorRef.current) {
         newEditor = new JSONEditor(editorRef.current, {
-          mode: 'code',
+          mode: "code",
           history: false,
           onChange: () => {
             try {
@@ -36,9 +38,7 @@ export default function JSONEditorDemo ({
         newEditor.destroy();
       }
     };
-  }, [ editorRef.current, value ]);
+  }, [editorRef.current, value]);
 
-  return (
-    <div className="jsoneditor-react-container" ref={editorRef} />
-  );
+  return <div className="jsoneditor-react-container" ref={editorRef} />;
 }

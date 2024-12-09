@@ -1,17 +1,17 @@
 // a stripped down version of https://usehooks-ts.com/react-hook/use-local-storage
 import {
+  type Dispatch,
+  type SetStateAction,
   useCallback,
   useEffect,
   useState,
-  type Dispatch,
-  type SetStateAction,
 } from "react";
 
 type SetValue<T> = Dispatch<SetStateAction<T>>;
 
 export function useLocalStorage<T>(
   key: string,
-  initialValue: T
+  initialValue: T,
 ): [T, SetValue<T>] {
   // Get from local storage then
   // parse stored json or return initialValue
@@ -27,7 +27,7 @@ export function useLocalStorage<T>(
     } catch (error) {
       console.warn(
         `tRPC-Panel.useLocalStorage: Error reading localStorage key “${key}”:`,
-        error
+        error,
       );
       return initialValue;
     }
@@ -44,7 +44,7 @@ export function useLocalStorage<T>(
       // Prevent build error "window is undefined" but keeps working
       if (typeof window === "undefined") {
         console.warn(
-          `tRPC-Panel.useLocalStorage: Tried setting localStorage key “${key}” even though environment is not a client`
+          `tRPC-Panel.useLocalStorage: Tried setting localStorage key “${key}” even though environment is not a client`,
         );
       }
 
@@ -60,11 +60,11 @@ export function useLocalStorage<T>(
       } catch (error) {
         console.warn(
           `tRPC-Panel.useLocalStorage: Error setting localStorage key “${key}”:`,
-          error
+          error,
         );
       }
     },
-    [storedValue]
+    [storedValue],
   );
 
   useEffect(() => {

@@ -1,11 +1,11 @@
-import type { ParsedRouter } from "../parse/parseRouter";
 import React from "react";
 import ReactDOM from "react-dom/client";
+import type { ParsedRouter } from "../parse/parseRouter";
 import { RootComponent } from "./Root";
 import "./index.css";
-import 'jsoneditor/dist/jsoneditor.css';
-import { RenderOptions } from "@src/render";
+import "jsoneditor/dist/jsoneditor.css";
 import { trpc } from "@src/react-app/trpc";
+import type { RenderOptions } from "@src/render";
 
 // this gets replaced with the parsed router object
 const routerDefinition: ParsedRouter =
@@ -19,5 +19,5 @@ trpc;
 RootComponent;
 React;
 root.render(
-  <RootComponent rootRouter={routerDefinition} options={options} trpc={trpc} />
+  <RootComponent rootRouter={routerDefinition} options={options} trpc={trpc} />,
 );

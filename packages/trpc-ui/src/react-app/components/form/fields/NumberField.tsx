@@ -1,7 +1,7 @@
-import { Control, useController } from "react-hook-form";
-import React, { useEffect, useState } from "react";
-import { BaseTextField } from "./base/BaseTextField";
 import type { ParsedInputNode } from "@src/parse/parseNodeTypes";
+import React, { useEffect, useState } from "react";
+import { type Control, useController } from "react-hook-form";
+import { BaseTextField } from "./base/BaseTextField";
 
 export function NumberField({
   name,
@@ -26,12 +26,12 @@ export function NumberField({
   }
 
   useEffect(() => {
-    const parsed = parseFloat(stringValue);
-    if (isNaN(parsed)) {
+    const parsed = Number.parseFloat(stringValue);
+    if (Number.isNaN(parsed)) {
       field.onChange(undefined);
       return;
     }
-    field.onChange(parseFloat(stringValue));
+    field.onChange(Number.parseFloat(stringValue));
   }, [stringValue]);
 
   return (

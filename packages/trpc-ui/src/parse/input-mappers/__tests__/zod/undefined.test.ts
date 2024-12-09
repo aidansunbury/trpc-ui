@@ -1,6 +1,6 @@
 import { defaultReferences } from "@src/parse/input-mappers/defaultReferences";
 import { parseZodUndefinedDef } from "@src/parse/input-mappers/zod/parsers/parseZodUndefinedDef";
-import { LiteralNode } from "@src/parse/parseNodeTypes";
+import type { LiteralNode } from "@src/parse/parseNodeTypes";
 import { z } from "zod";
 
 describe("Parse ZodUndefined", () => {
@@ -12,7 +12,7 @@ describe("Parse ZodUndefined", () => {
     };
     const schema = z.undefined();
     expect(
-      parseZodUndefinedDef(schema._def, defaultReferences())
+      parseZodUndefinedDef(schema._def, defaultReferences()),
     ).toStrictEqual(unexpected);
   });
 });

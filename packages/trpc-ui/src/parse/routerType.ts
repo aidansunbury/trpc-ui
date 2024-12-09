@@ -4,7 +4,7 @@ import { z } from "zod";
 const ZodObjectSchema = z.object({});
 
 export function isZodObject(
-  obj: unknown
+  obj: unknown,
 ): obj is z.infer<typeof ZodObjectSchema> {
   return ZodObjectSchema.safeParse(obj).success;
 }
@@ -16,8 +16,8 @@ const SharedProcedureDefPropertiesSchema = z.object({
 
 const QueryDefSchema = SharedProcedureDefPropertiesSchema.merge(
   z.object({
-    type: z.literal('query'),
-  })
+    type: z.literal("query"),
+  }),
 );
 
 export function isQueryDef(obj: unknown): obj is QueryDef {
@@ -28,8 +28,8 @@ type QueryDef = z.infer<typeof QueryDefSchema>;
 
 const MutationDefSchema = SharedProcedureDefPropertiesSchema.merge(
   z.object({
-    type: z.literal('mutation'),
-  })
+    type: z.literal("mutation"),
+  }),
 );
 
 export function isMutationDef(obj: unknown): obj is MutationDef {
@@ -39,19 +39,19 @@ export function isMutationDef(obj: unknown): obj is MutationDef {
 export type MutationDef = z.infer<typeof MutationDefSchema>;
 
 const SubscriptionDefSchema = SharedProcedureDefPropertiesSchema.merge(
-    z.object({
-        type: z.literal('subscription'),
-    })
+  z.object({
+    type: z.literal("subscription"),
+  }),
 );
 
 type SubscriptionDef = z.infer<typeof SubscriptionDefSchema>;
 
 export function isSubscriptionDef(obj: unknown): obj is SubscriptionDef {
-    return SubscriptionDefSchema.safeParse(obj).success;
+  return SubscriptionDefSchema.safeParse(obj).success;
 }
 
 export const ProcedureDefSchema = QueryDefSchema.or(MutationDefSchema).or(
-    SubscriptionDefSchema
+  SubscriptionDefSchema,
 );
 
 export type ProcedureDefSharedProperties = z.infer<

@@ -7,20 +7,22 @@ export function defaultFormValuesForNode(node: ParsedInputNode): any {
       return [];
     case "boolean":
       return;
-    case "discriminated-union":
+    case "discriminated-union": {
       const firstValue = node.discriminatedUnionValues[0]!;
       return defaultFormValuesForNode(
-        node.discriminatedUnionChildrenMap[firstValue]!
+        node.discriminatedUnionChildrenMap[firstValue]!,
       );
+    }
     case "enum":
       return;
     // return node.enumValues[0];
-    case "object":
+    case "object": {
       const obj: any = {};
-      for (var [name, node] of Object.entries(node.children)) {
+      for (const [name, node] of Object.entries(node.children)) {
         obj[name] = defaultFormValuesForNode(node);
       }
       return obj;
+    }
     case "literal":
       return node.value;
     case "string":

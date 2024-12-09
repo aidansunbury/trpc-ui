@@ -1,8 +1,8 @@
 import { useSearch } from "@src/react-app/components/contexts/SearchStore";
 import React, {
   createContext,
-  MutableRefObject,
-  ReactNode,
+  type MutableRefObject,
+  type ReactNode,
   useCallback,
   useContext,
   useEffect,
@@ -22,7 +22,7 @@ export function HotKeysContextProvider({ children }: { children: ReactNode }) {
 
   const toggleSearch = useCallback(
     () => setSearchOpen(!searchOpen),
-    [searchOpen]
+    [searchOpen],
   );
   useHotkeys("ctrl+p, meta+p", toggleSearch, {
     preventDefault: true,
@@ -35,7 +35,7 @@ export function HotKeysContextProvider({ children }: { children: ReactNode }) {
         toggleSearch();
       }
     },
-    [toggleSearch]
+    [toggleSearch],
   );
 
   return (
@@ -62,7 +62,7 @@ export function useHotKeysContext() {
 
 export function useEnableInputGlobalHotkeys(
   ref: MutableRefObject<null | HTMLInputElement>,
-  deps?: any[]
+  deps?: any[],
 ) {
   const { attachEventListeners, removeEventListeners } = useHotKeysContext();
   useEffect(() => {

@@ -1,6 +1,6 @@
 import React, {
   createContext,
-  ReactNode,
+  type ReactNode,
   useContext,
   useRef,
   useState,
@@ -21,17 +21,24 @@ export const HeadersContext = createContext<HeadersContextType | null>(null);
 const headersLocalStorageKey = "headers";
 
 // necessary for SSR in the dev app
-const storage = typeof window !== 'undefined'? localStorage: {getItem: (v: string)=>null, setItem: (s: string)=>{}, removeItem: (v: string)=>{}};
+const storage =
+  typeof window !== "undefined"
+    ? localStorage
+    : {
+        getItem: (v: string) => null,
+        setItem: (s: string) => {},
+        removeItem: (v: string) => {},
+      };
 
 const storedHeaders = storage.getItem(headersLocalStorageKey);
 
 export function HeadersContextProvider({ children }: { children: ReactNode }) {
   const [headersPopupShown, setHeadersPopupShown] = useState(false);
   const [saveHeadersToLocalStorage, setSaveHeadersToLocalStorage] = useState(
-    !!storedHeaders
+    !!storedHeaders,
   );
   const globalHeadersRef = useRef<Headers>(
-    storedHeaders ? JSON.parse(storedHeaders) : {}
+    storedHeaders ? JSON.parse(storedHeaders) : {},
   );
 
   function setHeaders(headers: Headers) {
@@ -76,7 +83,7 @@ export function useHeadersContext() {
   const context = useContext(HeadersContext);
   if (context === null)
     throw new Error(
-      "useHeadersContext must be called from within a HeadersContextProvider"
+      "useHeadersContext must be called from within a HeadersContextProvider",
     );
   return context;
 }

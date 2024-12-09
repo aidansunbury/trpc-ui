@@ -1,11 +1,11 @@
-import express from "express";
-import { renderTrpcPanel } from "trpc-ui";
-import connectLiveReload from "connect-livereload";
-import morgan from "morgan";
 import * as trpcExpress from "@trpc/server/adapters/express";
+import connectLiveReload from "connect-livereload";
 import cors from "cors";
-import { testRouter } from "./router.js";
 import dotenv from "dotenv";
+import express from "express";
+import morgan from "morgan";
+import { renderTrpcPanel } from "trpc-ui";
+import { testRouter } from "./router.js";
 dotenv.config();
 
 const serverUrl = process.env.SERVER_URL || "http://localhost";
@@ -23,7 +23,7 @@ if (!serverUrl) throw new Error("No SERVER_URL passed.");
 if (!trpcPath) throw new Error("No TRPC_PATH passed.");
 
 async function createContext(opts: trpcExpress.CreateExpressContextOptions) {
-  const authHeader = opts.req.headers["authorization"];
+  const authHeader = opts.req.headers.authorization;
   return {
     authorized: !!authHeader,
   };
@@ -52,7 +52,7 @@ expressApp.use(
   trpcExpress.createExpressMiddleware({
     router: testRouter,
     createContext,
-  })
+  }),
 );
 
 console.log("Starting at url ");
@@ -66,7 +66,7 @@ expressApp.get("/", (_req, res) => {
         process.env.NODE_ENV === "production" ? "" : `:${port}`
       }/${trpcPath}`,
       transformer: "superjson",
-    })
+    }),
   );
 });
 

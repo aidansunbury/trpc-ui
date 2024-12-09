@@ -1,5 +1,3 @@
-import { ParsedProcedure, parseProcedure } from "@src/parse/parseProcedure";
-import { Procedure } from "@src/parse/routerType";
 import {
   parseTestRouter,
   parseTestRouterInputSchema,
@@ -8,6 +6,11 @@ import {
   testTrpcInstance,
 } from "@src/parse/__tests__/utils/router";
 import { testSchemas } from "@src/parse/__tests__/utils/schemas";
+import {
+  type ParsedProcedure,
+  parseProcedure,
+} from "@src/parse/parseProcedure";
+import type { Procedure } from "@src/parse/routerType";
 import { z } from "zod";
 import zodToJsonSchema from "zod-to-json-schema";
 
@@ -37,51 +40,61 @@ describe("Parse TRPC Procedure", () => {
       extraData: {
         ...testQueryExpectedParseResult.extraData,
         description,
-      }
+      },
     };
 
     const parsed = parseProcedure(
       testQuery as unknown as Procedure,
       ["testQuery"],
-      {}
+      {},
     );
     expect(parsed).toStrictEqual(expected);
   });
   it("should parse input descriptions if they exist for common types", () => {
     // good luck understanding this
     const description = "A description";
-    const testSchemasWithDescriptions = testSchemas.map((e, i)=>({
+    const testSchemasWithDescriptions = testSchemas.map((e, i) => ({
       ...e,
       schema: e.schema.describe(description + i),
-    }))
+    }));
     const inputSchema = z.object({
-        ...Object.fromEntries(testSchemasWithDescriptions.map((e, i) => [i, e.schema]))
-      })
+      ...Object.fromEntries(
+        testSchemasWithDescriptions.map((e, i) => [i, e.schema]),
+      ),
+    });
     const expected: ParsedProcedure = {
-      nodeType: 'procedure',
+      nodeType: "procedure",
       inputSchema: zodToJsonSchema(inputSchema),
-      pathFromRootRouter: ['testQuery'],
-      procedureType: 'query',
+      pathFromRootRouter: ["testQuery"],
+      procedureType: "query",
       extraData: {
         parameterDescriptions: {
-          ...Object.fromEntries(testSchemasWithDescriptions.map((_, i) => [i, description + i]))
-        }
+          ...Object.fromEntries(
+            testSchemasWithDescriptions.map((_, i) => [i, description + i]),
+          ),
+        },
       },
       node: {
-        type: 'object',
+        type: "object",
         path: [],
         children: {
-          ...Object.fromEntries(testSchemasWithDescriptions.map((e, i) => [i, e.parsed]))
-        }
-      }
-    }
+          ...Object.fromEntries(
+            testSchemasWithDescriptions.map((e, i) => [i, e.parsed]),
+          ),
+        },
+      },
+    };
     const testRouter = testTrpcInstance.router({
-      testQuery: testTrpcInstance.procedure.input(inputSchema).query(()=>"nothing")
+      testQuery: testTrpcInstance.procedure
+        .input(inputSchema)
+        .query(() => "nothing"),
     });
-    const parsed = parseProcedure(testRouter.testQuery as unknown as Procedure, ["testQuery"], {});
+    const parsed = parseProcedure(
+      testRouter.testQuery as unknown as Procedure,
+      ["testQuery"],
+      {},
+    );
     expect(parsed).toStrictEqual(expected);
   });
-  it("should parse descriptions from nested objects with the appropriate path", () => {
-    
-  })
+  it("should parse descriptions from nested objects with the appropriate path", () => {});
 });

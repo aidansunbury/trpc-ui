@@ -1,8 +1,8 @@
 import type { ProcedureExtraData } from "@src/parse/parseProcedure";
 import { FormLabel } from "@src/react-app/components/form/FormLabel";
 import { FormSection } from "@src/react-app/components/form/ProcedureForm/FormSection";
-import React, { ReactNode } from "react";
-import Markdown from 'react-markdown'
+import React, { type ReactNode } from "react";
+import Markdown from "react-markdown";
 export function DocumentationSection({
   extraData,
 }: {
@@ -17,9 +17,7 @@ export function DocumentationSection({
         {extraData.description && (
           <DocumentationSubsection title="Description">
             <article className="prose">
-              <Markdown>
-                {extraData.description}
-              </Markdown>
+              <Markdown>{extraData.description}</Markdown>
             </article>
           </DocumentationSubsection>
         )}
@@ -31,20 +29,18 @@ export function DocumentationSection({
                   ([key, value]) => (
                     <tr
                       key={key}
-                      className="border-b border-separatorLine flex-row space-x-2"
+                      className="flex-row space-x-2 border-separatorLine border-b"
                     >
-                      <td className="text-sm text-neutralText font-bold align-top py-2">
+                      <td className="py-2 align-top font-bold text-neutralText text-sm">
                         {`${key}: `}
                       </td>
-                      <td className="pl-4 text-sm text-gray-500 py-2">
+                      <td className="py-2 pl-4 text-gray-500 text-sm">
                         <article className="prose">
-                          <Markdown className={"prose"}>
-                            {value}
-                          </Markdown>
+                          <Markdown className={"prose"}>{value}</Markdown>
                         </article>
                       </td>
                     </tr>
-                  )
+                  ),
                 )}
               </tbody>
             </table>
@@ -65,7 +61,7 @@ function DocumentationSubsection({
   return (
     <div className="flex flex-col space-y-2">
       <FormLabel>{title}</FormLabel>
-      <span className="text-sm text-gray-500">{children}</span>
+      <span className="text-gray-500 text-sm">{children}</span>
     </div>
   );
 }

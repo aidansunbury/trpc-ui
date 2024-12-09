@@ -1,9 +1,9 @@
-import { Router, isRouter, isProcedure } from "./routerType";
+import { type Router, isProcedure, isRouter } from "./routerType";
 
-import { AnyTRPCRouter } from "@trpc/server";
-import { zodToJsonSchema } from "zod-to-json-schema";
+import type { AnyTRPCRouter } from "@trpc/server";
+import type { zodToJsonSchema } from "zod-to-json-schema";
 import { logParseError } from "./parseErrorLogs";
-import { ParsedProcedure, parseProcedure } from "./parseProcedure";
+import { type ParsedProcedure, parseProcedure } from "./parseProcedure";
 
 export type JSON7SchemaType = ReturnType<typeof zodToJsonSchema>;
 
@@ -29,12 +29,12 @@ const skipSet = new Set(["createCaller", "_def", "getErrorShape"]);
 function parseRouter(
   router: Router,
   routerPath: string[],
-  options: TrpcPanelExtraOptions
+  options: TrpcPanelExtraOptions,
 ): ParsedRouter {
   const children: ParsedRouterChildren = {};
-  var hasChild = false;
+  let hasChild = false;
   // .procedures contains procedures and routers
-  for (var [procedureOrRouterPath, child] of Object.entries(router)) {
+  for (const [procedureOrRouterPath, child] of Object.entries(router)) {
     if (skipSet.has(procedureOrRouterPath)) continue;
     const newPath = routerPath.concat([procedureOrRouterPath]);
     const parsedNode = (() => {
@@ -56,7 +56,7 @@ function parseRouter(
   if (!hasChild)
     logParseError(
       routerPath.join("."),
-      `Router doesn't have any successfully parsed children.`
+      `Router doesn't have any successfully parsed children.`,
     );
   return { children, nodeType: "router", path: routerPath };
 }
@@ -68,7 +68,7 @@ export type TrpcPanelExtraOptions = {
 
 export function parseRouterWithOptions(
   router: AnyTRPCRouter,
-  parseRouterOptions: TrpcPanelExtraOptions
+  parseRouterOptions: TrpcPanelExtraOptions,
 ) {
   if (!isRouter(router)) {
     throw new Error("Non trpc router passed to trpc panel.");

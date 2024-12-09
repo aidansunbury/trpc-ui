@@ -1,14 +1,14 @@
-import React, { useCallback } from "react";
-import type { ParsedRouter } from "../../parse/parseRouter";
 import type { ParsedProcedure } from "@src/parse/parseProcedure";
+import { Chevron } from "@src/react-app/components/Chevron";
+import { ItemTypeIcon } from "@src/react-app/components/ItemTypeIcon";
 import {
   collapsables,
   useCollapsableIsShowing,
   useSiteNavigationContext,
 } from "@src/react-app/components/contexts/SiteNavigationContext";
-import { Chevron } from "@src/react-app/components/Chevron";
 import { colorSchemeForNode } from "@src/react-app/components/style-utils";
-import { ItemTypeIcon } from "@src/react-app/components/ItemTypeIcon";
+import React, { useCallback } from "react";
+import type { ParsedRouter } from "../../parse/parseRouter";
 export function SideNav({
   rootRouter,
   open,
@@ -21,7 +21,7 @@ export function SideNav({
   return open ? (
     <div
       style={{ maxHeight: "calc(100vh - 4rem)" }}
-      className="min-w-[16rem] overflow-scroll shadow-sm flex-col flex items-start p-2 pr-4 space-y-2 bg-actuallyWhite border-r-2 border-r-panelBorder"
+      className="flex min-w-[16rem] flex-col items-start space-y-2 overflow-scroll border-r-2 border-r-panelBorder bg-actuallyWhite p-2 pr-4 shadow-sm"
     >
       <SideNavItem node={rootRouter} path={[]} />
     </div>
@@ -47,7 +47,7 @@ function SideNavItem({
     <>
       {path.length > 0 && (
         <button
-          className={`font-bold flex flex-row items-center justify-between w-full ${
+          className={`flex w-full flex-row items-center justify-between font-bold ${
             shown ? "" : "opacity-70"
           }`}
           onClick={onClick}
@@ -59,7 +59,7 @@ function SideNavItem({
 
           {node.nodeType === "router" ? (
             <Chevron
-              className={"ml-2 w-3 h-3 " + ``}
+              className={"ml-2 h-3 w-3 " + ""}
               direction={shown ? "down" : "right"}
             />
           ) : (
@@ -68,7 +68,7 @@ function SideNavItem({
         </button>
       )}
       {shown && node.nodeType === "router" && (
-        <div className="pl-2 flex flex-col items-start space-y-2 self-stretch">
+        <div className="flex flex-col items-start space-y-2 self-stretch pl-2">
           {Object.entries(node.children).map(([key, node]) => {
             return (
               <SideNavItem

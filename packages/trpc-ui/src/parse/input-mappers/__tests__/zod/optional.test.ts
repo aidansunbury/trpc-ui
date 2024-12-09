@@ -1,6 +1,6 @@
 import { defaultReferences } from "@src/parse/input-mappers/defaultReferences";
 import { parseZodOptionalDef } from "@src/parse/input-mappers/zod/parsers/parseZodOptionalDef";
-import { NumberNode, ObjectNode } from "@src/parse/parseNodeTypes";
+import type { NumberNode, ObjectNode } from "@src/parse/parseNodeTypes";
 import { z } from "zod";
 
 describe("Parse ZodOptional", () => {
@@ -12,7 +12,7 @@ describe("Parse ZodOptional", () => {
     };
     const schema = z.number().optional();
     expect(parseZodOptionalDef(schema._def, defaultReferences())).toStrictEqual(
-      expected
+      expected,
     );
   });
   it("should not apply optional: true to nodes that are not direct children", () => {
@@ -33,7 +33,7 @@ describe("Parse ZodOptional", () => {
       })
       .optional();
     expect(parseZodOptionalDef(schema._def, defaultReferences())).toStrictEqual(
-      expected
+      expected,
     );
   });
 });

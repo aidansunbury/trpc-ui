@@ -1,6 +1,6 @@
-import React from "react";
-import { Control, useController } from "react-hook-form";
 import type { ParsedInputNode } from "@src/parse/parseNodeTypes";
+import React from "react";
+import { type Control, useController } from "react-hook-form";
 import { BaseSelectField } from "./base/BaseSelectField";
 
 export function UnionField({

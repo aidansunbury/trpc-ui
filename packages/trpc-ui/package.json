@@ -21,9 +21,7 @@
       "default": "./lib/index.js"
     }
   },
-  "files": [
-    "lib/"
-  ],
+  "files": ["lib/"],
   "directories": {
     "lib": "lib"
   },

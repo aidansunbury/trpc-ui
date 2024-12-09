@@ -1,10 +1,10 @@
-import { AnyTRPCRouter } from "@trpc/server";
-import fs from "fs";
-import { fileURLToPath } from "node:url";
+import fs from "node:fs";
 import { dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+import type { AnyTRPCRouter } from "@trpc/server";
 import {
+  type TrpcPanelExtraOptions,
   parseRouterWithOptions,
-  TrpcPanelExtraOptions,
 } from "./parse/parseRouter";
 
 export type RenderOptions = {
@@ -22,9 +22,9 @@ const javascriptReplaceSymbol = "{{js}}";
 const cssReplaceSymbol = "{{css}}";
 const routerReplaceSymbol = '"{{parsed_router}}"';
 const optionsReplaceSymbol = '"{{options}}"';
-const bundlePath = __dirname + "/react-app/bundle.js";
-const indexPath = __dirname + "/react-app/index.html";
-const cssPath = __dirname + "/react-app/index.css";
+const bundlePath = `${__dirname}/react-app/bundle.js`;
+const indexPath = `${__dirname}/react-app/index.html`;
+const cssPath = `${__dirname}/react-app/index.css`;
 const bundleJs = fs.readFileSync(bundlePath).toString();
 const indexHtml = fs.readFileSync(indexPath).toString();
 const indexCss = fs.readFileSync(cssPath).toString();
@@ -35,8 +35,8 @@ type InjectionParam = {
 };
 
 function injectParams(string: string, injectionParams: InjectionParam[]) {
-  var r = string;
-  for (var param of injectionParams) {
+  let r = string;
+  for (const param of injectionParams) {
     r = injectInString(param.searchFor, r, param.injectString);
   }
   return r;
@@ -45,7 +45,7 @@ function injectParams(string: string, injectionParams: InjectionParam[]) {
 function injectInString(
   searchFor: string,
   string: string,
-  injectString: string
+  injectString: string,
 ) {
   const startIndex = string.indexOf(searchFor);
   return (
@@ -56,7 +56,7 @@ function injectInString(
 }
 
 // renders value should never change unless the server is restarted, just parse and inject once
-let cache: {
+const cache: {
   val: string | null;
 } = {
   val: null,
@@ -72,7 +72,7 @@ export function renderTrpcPanel(router: AnyTRPCRouter, options: RenderOptions) {
         parseRouterWithOptions(router, {
           ...defaultParseRouterOptions,
           ...options,
-        })
+        }),
       ),
     },
     {

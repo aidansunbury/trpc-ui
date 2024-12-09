@@ -1,9 +1,9 @@
 import { defaultReferences } from "@src/parse/input-mappers/defaultReferences";
 import {
+  type ZodDiscriminatedUnionDefUnversioned,
   parseZodDiscriminatedUnionDef,
-  ZodDiscriminatedUnionDefUnversioned,
 } from "@src/parse/input-mappers/zod/parsers/parseZodDiscriminatedUnionDef";
-import { DiscriminatedUnionNode } from "@src/parse/parseNodeTypes";
+import type { DiscriminatedUnionNode } from "@src/parse/parseNodeTypes";
 import { z } from "zod";
 
 describe("Parse Zod Discriminated Union", () => {
@@ -59,7 +59,7 @@ describe("Parse Zod Discriminated Union", () => {
     ]);
     const parsedZod = parseZodDiscriminatedUnionDef(
       zodSchema._def as unknown as ZodDiscriminatedUnionDefUnversioned,
-      defaultReferences()
+      defaultReferences(),
     );
     expect(parsedZod).toStrictEqual(expected);
   });

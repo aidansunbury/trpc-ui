@@ -1,4 +1,4 @@
-import { ColorSchemeType } from "@src/react-app/components/CollapsableSection";
+import type { ColorSchemeType } from "@src/react-app/components/CollapsableSection";
 import { textColor } from "@src/react-app/components/style-utils";
 import React from "react";
 
@@ -7,10 +7,8 @@ export function ItemTypeIcon({
 }: {
   colorScheme: ColorSchemeType;
 }) {
-  const letter = colorScheme[0]!.toUpperCase();
+  const letter = colorScheme[0]?.toUpperCase();
   return (
-    <span className={"font-bold mr-1 " + textColor(colorScheme)}>
-      {letter}
-    </span>
+    <span className={`mr-1 font-bold ${textColor(colorScheme)}`}>{letter}</span>
   );
 }

@@ -1,6 +1,6 @@
+import { type ZodBrandedDef, type ZodType, z } from "zod";
+import type { ParsedInputNode } from "../../../parseNodeTypes";
 import { defaultReferences } from "../../defaultReferences";
-import { ParsedInputNode } from "../../../parseNodeTypes";
-import { z, ZodBrandedDef, ZodType } from "zod";
 import { parseZodBrandedDef } from "../../zod/parsers/parseZodBrandedDef";
 
 describe("Parsed ZodBranded", () => {
@@ -24,10 +24,10 @@ describe("Parsed ZodBranded", () => {
         zodType: z.string().brand("string"),
       },
     ];
-    for (var testCase of testCases) {
+    for (const testCase of testCases) {
       const parsed = parseZodBrandedDef(
         testCase.zodType._def as unknown as ZodBrandedDef<any>,
-        defaultReferences()
+        defaultReferences(),
       );
       expect(parsed).toStrictEqual(testCase.node);
     }

@@ -1,6 +1,6 @@
 import { defaultReferences } from "@src/parse/input-mappers/defaultReferences";
 import { parseZodUnionDef } from "@src/parse/input-mappers/zod/parsers/parseZodUnionDef";
-import { UnionNode } from "@src/parse/parseNodeTypes";
+import type { UnionNode } from "@src/parse/parseNodeTypes";
 import { z } from "zod";
 
 describe("Parse Zod Union", () => {

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { createContext, ReactNode } from "react";
+import { type ReactNode, createContext } from "react";
 
 type ContextType = {
   path: string;
@@ -21,7 +21,7 @@ export function useProcedureFormContext() {
   const ctx = useContext(Context);
   if (!ctx)
     throw new Error(
-      "Procedure form context must be called within ProcedureFormContextProvider (this is a bug with trpc-panel, open an issue)."
+      "Procedure form context must be called within ProcedureFormContextProvider (this is a bug with trpc-panel, open an issue).",
     );
   return ctx;
 }

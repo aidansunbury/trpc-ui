@@ -1,4 +1,3 @@
-import React, { MutableRefObject, ReactNode, useEffect, useRef } from "react";
 import { Chevron } from "@src/react-app/components/Chevron";
 import {
   collapsables,
@@ -10,8 +9,13 @@ import {
   solidColorBg,
   solidColorBorder,
 } from "@src/react-app/components/style-utils";
-import { useQueryState } from 'nuqs'
-
+import { useQueryState } from "nuqs";
+import React, {
+  type MutableRefObject,
+  type ReactNode,
+  useEffect,
+  useRef,
+} from "react";
 
 export type ColorSchemeType =
   | "query"
@@ -38,15 +42,13 @@ export function CollapsableSection({
   const shown = useCollapsableIsShowing(fullPath);
   const [_path, setPath] = useQueryState("path");
 
-
   const containerRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     if (shown && containerRef.current) {
       if (scrollToPathIfMatches(fullPath, containerRef.current)) {
         // timeout or it'll immediately submit the form (which shows error messages)
         const firstChild =
-          focusOnScrollRef &&
-          focusOnScrollRef.current &&
+          focusOnScrollRef?.current &&
           findFirstFormChildInput(focusOnScrollRef.current);
         if (firstChild) {
           setTimeout(() => {
@@ -62,13 +64,11 @@ export function CollapsableSection({
   return (
     <div
       ref={containerRef}
-      className={
-        "flex flex-col drop-shadow-sm " +
-        (collapsable
+      className={`flex flex-col drop-shadow-sm ${
+        collapsable
           ? `${solidColorBorder(sectionType)} ${backgroundColor(sectionType)}`
-          : "") +
-        (!isRoot ? ` border rounded-[0.25rem]` : "")
-      }
+          : ""
+      }${!isRoot ? " rounded-[0.25rem] border" : ""}`}
     >
       {collapsable ? (
         <button
@@ -76,7 +76,7 @@ export function CollapsableSection({
             collapsables.toggle(fullPath);
             setPath(fullPath.join("."));
           }}
-          className="flex flex-row justify-between items-center p-1 "
+          className="flex flex-row items-center justify-between p-1 "
         >
           <span className="flex flex-row">
             <SectionTypeLabel className="mr-2" sectionType={sectionType} />
@@ -84,7 +84,7 @@ export function CollapsableSection({
           </span>
 
           <Chevron
-            className={"w-4 h-4 mr-2 animate-transform transition-transform"}
+            className={"mr-2 h-4 w-4 animate-transform transition-transform"}
             direction={shown ? "up" : "down"}
           />
         </button>
@@ -93,11 +93,7 @@ export function CollapsableSection({
       )}
 
       <div
-        className={
-          "flex-col justify-between " +
-          (collapsable ? ` border-t ${solidColorBorder(sectionType)}` : "") +
-          (shown || !collapsable ? " flex" : " hidden")
-        }
+        className={`flex-col justify-between ${collapsable ? ` border-t ${solidColorBorder(sectionType)}` : ""}${shown || !collapsable ? " flex" : " hidden"}`}
       >
         {children}
       </div>
@@ -114,11 +110,7 @@ export function SectionTypeLabel({
 }) {
   return (
     <span
-      className={
-        "p-1 font-bold rounded-md text-base flex flex-row justify-center w-32 text-light " +
-        solidColorBg(sectionType) +
-        (className ? ` ${className}` : "")
-      }
+      className={`flex w-32 flex-row justify-center rounded-md p-1 font-bold text-base text-light ${solidColorBg(sectionType)}${className ? ` ${className}` : ""}`}
     >
       {sectionType.toUpperCase()}
     </span>
