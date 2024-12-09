@@ -11,6 +11,7 @@
     "start:test-app": "node ./packages/test-app/lib/server.ts",
     "start:docs": "cd packages/docs && yarn serve",
     "biome:check": "biome check",
+    "biome:check:changed": "biome check --changed",
     "biome:check:fix": "biome check --write --unsafe"
   },
   "private": true,
