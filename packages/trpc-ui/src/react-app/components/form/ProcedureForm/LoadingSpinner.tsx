@@ -1,11 +1,11 @@
 import React from "react";
 
 export function LoadingSpinner() {
-    return (
-        <div className="absolute left-0 right-0 top-0 bottom-0 flex justify-center items-center">
-            <span className="lds-dual-ring w-6 h-6" />
-            <style>
-                {`
+  return (
+    <div className="absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center">
+      <span className="lds-dual-ring h-6 w-6" />
+      <style>
+        {`
 .lds-dual-ring {
   display: inline-block;
   width: 1.5rem;
@@ -31,7 +31,7 @@ export function LoadingSpinner() {
   }
 }
 `}
-            </style>
-        </div>
-    );
+      </style>
+    </div>
+  );
 }

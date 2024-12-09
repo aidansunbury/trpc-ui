@@ -1,6 +1,6 @@
 import { defaultReferences } from "@src/parse/input-mappers/defaultReferences";
 import { parseZodStringDef } from "@src/parse/input-mappers/zod/parsers/parseZodStringDef";
-import { StringNode } from "@src/parse/parseNodeTypes";
+import type { StringNode } from "@src/parse/parseNodeTypes";
 import { z } from "zod";
 
 describe("Parse ZodString", () => {
@@ -11,7 +11,7 @@ describe("Parse ZodString", () => {
     };
     const schema = z.string();
     expect(parseZodStringDef(schema._def, defaultReferences())).toStrictEqual(
-      expected
+      expected,
     );
   });
 });

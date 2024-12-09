@@ -1,23 +1,23 @@
-import {
-  Procedure,
-  isQueryDef,
-  isMutationDef,
-  isSubscriptionDef,
-} from "./routerType";
-import {
+import type {
   JSON7SchemaType,
   ProcedureType,
   TrpcPanelExtraOptions,
 } from "./parseRouter";
-
-import { AnyZodObject, z } from "zod";
-import { zodSelectorFunction } from "./input-mappers/zod/selector";
 import {
+  type Procedure,
+  isMutationDef,
+  isQueryDef,
+  isSubscriptionDef,
+} from "./routerType";
+
+import type {
+  AddDataFunctions,
   ParseReferences,
   ParsedInputNode,
-  AddDataFunctions,
 } from "@src/parse/parseNodeTypes";
+import { type AnyZodObject, z } from "zod";
 import { zodToJsonSchema } from "zod-to-json-schema";
+import { zodSelectorFunction } from "./input-mappers/zod/selector";
 
 export type ProcedureExtraData = {
   parameterDescriptions: { [path: string]: string };
@@ -60,7 +60,7 @@ function nodeAndInputSchemaFromInputs(
   inputs: unknown[],
   _routerPath: string[],
   options: TrpcPanelExtraOptions,
-  addDataFunctions: AddDataFunctions
+  addDataFunctions: AddDataFunctions,
 ): NodeAndInputSchemaFromInputs {
   if (!inputs.length) {
     return {
@@ -69,7 +69,7 @@ function nodeAndInputSchemaFromInputs(
         errorMessages: true,
         $refStrategy: "none",
       }),
-      node: inputParserMap["zod"](emptyZodObject, {
+      node: inputParserMap.zod(emptyZodObject, {
         path: [],
         options,
         addDataFunctions,
@@ -84,7 +84,7 @@ function nodeAndInputSchemaFromInputs(
 
   if (inputs.length > 1) {
     const allInputsAreZodObjects = inputs.every(
-      (input) => input instanceof z.ZodObject
+      (input) => input instanceof z.ZodObject,
     );
     if (!allInputsAreZodObjects) {
       return { parseInputResult: "failure" };
@@ -92,12 +92,12 @@ function nodeAndInputSchemaFromInputs(
 
     input = inputs.reduce(
       (acc, input: z.AnyZodObject) => (acc as z.AnyZodObject).merge(input),
-      emptyZodObject
+      emptyZodObject,
     );
   }
 
   const iType = inputType(input);
-  if (iType == "unsupported") {
+  if (iType === "unsupported") {
     return { parseInputResult: "failure" };
   }
 
@@ -118,7 +118,7 @@ function nodeAndInputSchemaFromInputs(
 export function parseProcedure(
   procedure: Procedure,
   path: string[],
-  options: TrpcPanelExtraOptions
+  options: TrpcPanelExtraOptions,
 ): ParsedProcedure | null {
   const { _def } = procedure;
   const { inputs } = _def;

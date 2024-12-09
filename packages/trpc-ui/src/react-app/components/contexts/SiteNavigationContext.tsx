@@ -1,7 +1,7 @@
 import { useAllPaths } from "@src/react-app/components/contexts/AllPathsContext";
 import React, {
   createContext,
-  ReactNode,
+  type ReactNode,
   useContext,
   useMemo,
   useRef,
@@ -16,7 +16,7 @@ const Context = createContext<{
 
 function forAllPaths(path: string[], callback: (current: string) => void) {
   const cur: string[] = [];
-  for (var next of path) {
+  for (const next of path) {
     cur.push(next);
     const joined = cur.join(".");
     callback(joined);
@@ -73,7 +73,7 @@ export const collapsables = (() => {
     hide,
     show,
     toggle(path: string[]) {
-      const state = collapsablesStore.current!.getState() as any;
+      const state = collapsablesStore.current?.getState() as any;
       if (state[path.join(".")]) {
         hide(path);
       } else {
@@ -86,7 +86,7 @@ export const collapsables = (() => {
       for (const path in state) {
         newValue[path] = false;
       }
-      collapsablesStore.current!.setState(newValue);
+      collapsablesStore.current?.setState(newValue);
     },
   };
 })();
@@ -95,7 +95,7 @@ export function useCollapsableIsShowing(path: string[]) {
   const p = useMemo(() => {
     return path.join(".");
   }, []);
-  return collapsablesStore.current!((s) => (s as any)[p]);
+  return collapsablesStore.current?.((s) => (s as any)[p]);
 }
 
 export function SiteNavigationContextProvider({
@@ -154,7 +154,7 @@ export function useSiteNavigationContext() {
   const context = useContext(Context);
   if (context === null)
     throw new Error(
-      "useCollapsableContext must be called from within a CollapsableContext"
+      "useCollapsableContext must be called from within a CollapsableContext",
     );
   return context;
 }

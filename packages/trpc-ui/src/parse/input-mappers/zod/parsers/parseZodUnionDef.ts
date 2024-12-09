@@ -1,17 +1,21 @@
 import { nodePropertiesFromRef } from "@src/parse/utils";
-import { ZodUnionDef } from "zod";
-import { UnionNode, ParseFunction, LiteralNode } from "../../../parseNodeTypes";
+import type { ZodUnionDef } from "zod";
+import type {
+  LiteralNode,
+  ParseFunction,
+  UnionNode,
+} from "../../../parseNodeTypes";
 import { zodSelectorFunction } from "../selector";
 
 export const parseZodUnionDef: ParseFunction<ZodUnionDef, UnionNode> = (
   def,
-  refs
+  refs,
 ) => {
   refs.addDataFunctions.addDescriptionIfExists(def, refs);
   return {
     type: "union",
     values: def.options.map(
-      (o) => zodSelectorFunction(o._def, { ...refs, path: [] }) as LiteralNode
+      (o) => zodSelectorFunction(o._def, { ...refs, path: [] }) as LiteralNode,
     ),
     ...nodePropertiesFromRef(refs),
   };

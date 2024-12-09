@@ -1,12 +1,12 @@
 import React from "react";
-import { SendIcon } from "../../icons/SendIcon";
 import { Button } from "../../Button";
+import type { ColorSchemeType } from "../../CollapsableSection";
+import { SendIcon } from "../../icons/SendIcon";
 import { LoadingSpinner } from "./LoadingSpinner";
-import { ColorSchemeType } from "../../CollapsableSection";
 
 export function ProcedureFormButton({
   text,
-  colorScheme: colorScheme,
+  colorScheme,
   loading,
 }: {
   text: string;
@@ -17,16 +17,14 @@ export function ProcedureFormButton({
     <Button
       variant={colorScheme}
       type="submit"
-      className="relative rounded-md self-stretch justify-center"
+      className="relative justify-center self-stretch rounded-md"
       disabled={loading}
     >
       <div
-        className={
-          "flex flex-row" + (loading ? " opacity-0 pointer-events-none" : "")
-        }
+        className={`flex flex-row${loading ? " pointer-events-none opacity-0" : ""}`}
       >
         {text}
-        <SendIcon className="w-5 h-5 ml-2" />
+        <SendIcon className="ml-2 h-5 w-5" />
       </div>
       {loading && <LoadingSpinner />}
     </Button>

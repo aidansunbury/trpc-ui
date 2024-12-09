@@ -1,16 +1,16 @@
+import { ItemTypeIcon } from "@src/react-app/components/ItemTypeIcon";
 import { useAllPaths } from "@src/react-app/components/contexts/AllPathsContext";
 import { useEnableInputGlobalHotkeys } from "@src/react-app/components/contexts/HotKeysContext";
 import { useSearch } from "@src/react-app/components/contexts/SearchStore";
 import { useSiteNavigationContext } from "@src/react-app/components/contexts/SiteNavigationContext";
-import { ItemTypeIcon } from "@src/react-app/components/ItemTypeIcon";
 import fuzzysort from "fuzzysort";
 import React, {
   useMemo,
   useState,
   useRef,
   useEffect,
-  FocusEventHandler,
-  ReactNode,
+  type FocusEventHandler,
+  type ReactNode,
 } from "react";
 
 export function useFuzzySort({
@@ -36,7 +36,7 @@ export function SearchOverlay({ children }: { children: ReactNode }) {
     <>
       {children}
       {searchOpen && (
-        <div className="fixed flex flex-col pt-3 left-0 right-0 top-0 pointer-events-none items-center">
+        <div className="pointer-events-none fixed top-0 right-0 left-0 flex flex-col items-center pt-3">
           <SearchInput />
         </div>
       )}
@@ -111,7 +111,7 @@ function SearchInput() {
 
   useEffect(() => {
     const node = document.getElementById(
-      "search-result-" + selectedResultIndex
+      `search-result-${selectedResultIndex}`,
     );
     node?.scrollIntoView({
       block: "nearest",
@@ -140,10 +140,10 @@ function SearchInput() {
   return (
     <div
       ref={divRef}
-      className="min-w-[40rem] pointer-events-auto overflow-visible rounded-md flex flex-col border-neutralBgVeryDark border drop-shadow-md bg-white p-1 rounded-t-md z-50"
+      className="pointer-events-auto z-50 flex min-w-[40rem] flex-col overflow-visible rounded-md rounded-t-md border border-neutralBgVeryDark bg-white p-1 drop-shadow-md"
     >
       <input
-        className="p-1 rounded-sm border self-stretch bg-neutralBgDark"
+        className="self-stretch rounded-sm border bg-neutralBgDark p-1"
         value={searchText}
         onChange={(e) => onTextChange(e.target.value)}
         ref={inputRef}
@@ -154,21 +154,20 @@ function SearchInput() {
           {results.map((e, i) => (
             <li
               key={e.target}
-              className="truncate h-[1.8rem] mt-[0.2rem] px-1 flex-row"
+              className="mt-[0.2rem] h-[1.8rem] flex-row truncate px-1"
             >
               <button
                 ref={i === 0 ? firstResultRef : undefined}
                 onBlur={onBlur}
                 onFocus={() => setSelectedResultIndex(i)}
-                className={
-                  "w-full text-left h-full flex flex-row rounded-sm items-center  px-1 focus:outline-none border-transparent focus:border-transparent focus:ring-0 " +
-                  (i === selectedResultIndex
+                className={`flex h-full w-full flex-row items-center rounded-sm border-transparent px-1 text-left focus:border-transparent focus:outline-none focus:ring-0 ${
+                  i === selectedResultIndex
                     ? "bg-selectedListItem text-white"
-                    : "text-neutralSolid")
-                }
+                    : "text-neutralSolid"
+                }`}
                 type="button"
                 // seems easier than an array of refs?
-                id={"search-result-" + i}
+                id={`search-result-${i}`}
                 onClick={() => pathSelectedHandler(i)}
               >
                 <ItemTypeIcon

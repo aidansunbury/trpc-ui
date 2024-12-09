@@ -1,8 +1,8 @@
-import React, { ReactNode } from "react";
-import { Control } from "react-hook-form";
+import ObjectIcon from "@mui/icons-material/DataObjectOutlined";
 import type { ParsedInputNode } from "@src/parse/parseNodeTypes";
 import { Field } from "@src/react-app/components/form/Field";
-import ObjectIcon from "@mui/icons-material/DataObjectOutlined";
+import React, { type ReactNode } from "react";
+import type { Control } from "react-hook-form";
 import { InputGroupContainer } from "../../InputGroupContainer";
 
 export function ObjectField({
@@ -20,7 +20,7 @@ export function ObjectField({
 }) {
   if (topLevel) {
     return (
-      <div className={"space-y-2 flex-col flex p-1 "}>
+      <div className={"flex flex-col space-y-2 p-1 "}>
         {Object.entries(node.children).map(([name, e]) => (
           <Field
             inputNode={{

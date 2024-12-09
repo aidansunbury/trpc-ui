@@ -1,27 +1,27 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Control, useForm, useFormState } from "react-hook-form";
-import type { ParsedProcedure } from "@src/parse/parseProcedure";
 import { ajvResolver } from "@hookform/resolvers/ajv";
-import { defaultFormValuesForNode } from "@src/react-app/components/form/utils";
-import { trpc } from "@src/react-app/trpc";
-import { UseMutationResult, UseQueryResult } from "@tanstack/react-query";
-import { z } from "zod";
-import { ProcedureFormButton } from "./ProcedureFormButton";
-import { Response } from "./Response";
-import { FormSection } from "./FormSection";
-import { Error } from "./Error";
+import type { ParsedInputNode } from "@src/parse/parseNodeTypes";
+import type { ParsedProcedure } from "@src/parse/parseProcedure";
 import { CollapsableSection } from "@src/react-app/components/CollapsableSection";
+import { Field } from "@src/react-app/components/form/Field";
+import { DocumentationSection } from "@src/react-app/components/form/ProcedureForm/DescriptionSection";
+import { ProcedureFormContextProvider } from "@src/react-app/components/form/ProcedureForm/ProcedureFormContext";
+import { ObjectField } from "@src/react-app/components/form/fields/ObjectField";
+import { defaultFormValuesForNode } from "@src/react-app/components/form/utils";
 import { CloseIcon } from "@src/react-app/components/icons/CloseIcon";
 import { ToggleJsonIcon } from "@src/react-app/components/icons/ToggleJsonIcon";
-import { ObjectField } from "@src/react-app/components/form/fields/ObjectField";
+import { trpc } from "@src/react-app/trpc";
+import type { RenderOptions } from "@src/render";
+import type { UseMutationResult, UseQueryResult } from "@tanstack/react-query";
 import { fullFormats } from "ajv-formats/dist/formats";
-import type { ParsedInputNode } from "@src/parse/parseNodeTypes";
-import { DocumentationSection } from "@src/react-app/components/form/ProcedureForm/DescriptionSection";
-import { Field } from "@src/react-app/components/form/Field";
-import { ProcedureFormContextProvider } from "@src/react-app/components/form/ProcedureForm/ProcedureFormContext";
+import React, { useEffect, useRef, useState } from "react";
+import { type Control, useForm, useFormState } from "react-hook-form";
 import getSize from "string-byte-length";
+import { z } from "zod";
 import JSONEditor from "../JSONEditor";
-import { RenderOptions } from "@src/render";
+import { Error } from "./Error";
+import { FormSection } from "./FormSection";
+import { ProcedureFormButton } from "./ProcedureFormButton";
+import { Response } from "./Response";
 
 const TRPCErrorSchema = z.object({
   meta: z.object({
@@ -39,7 +39,7 @@ const TRPCErrorSchema = z.object({
               message: z.string().optional(),
             }),
           }),
-        })
+        }),
       )
       .min(1),
   }),
@@ -74,8 +74,8 @@ export function ProcedureForm({
   const [opDuration, setOpDuration] = useState<number | undefined>();
 
   function getProcedure() {
-    var cur: typeof trpc | (typeof trpc)[string] = trpc;
-    for (var p of procedure.pathFromRootRouter) {
+    let cur: typeof trpc | (typeof trpc)[string] = trpc;
+    for (const p of procedure.pathFromRootRouter) {
       // TODO - Maybe figure out these typings?
       //@ts-ignore
       cur = cur[p];
@@ -95,8 +95,8 @@ export function ProcedureForm({
   })() as UseQueryResult<any>;
 
   function invalidateQuery(input: any) {
-    var cur: any = context;
-    for (var p of procedure.pathFromRootRouter) {
+    let cur: any = context;
+    for (const p of procedure.pathFromRootRouter) {
       cur = cur[p];
     }
     cur.invalidate(input);
@@ -151,7 +151,7 @@ export function ProcedureForm({
           keepValues: false,
           keepDirtyValues: false,
           keepDefaultValues: false,
-        }
+        },
       );
       setShouldReset(false);
     }
@@ -161,14 +161,13 @@ export function ProcedureForm({
     setQueryEnabled(false);
   }
 
-  let data: any; 
+  let data: any;
   if (procedure.procedureType === "query") {
     data = query.data ?? null;
     if (options.transformer === "superjson" && data) {
       data = data.json;
-    } 
-  }
-  else {
+    }
+  } else {
     data = mutationResponse;
     if (options.transformer === "superjson" && data) {
       data = data.json;
@@ -199,7 +198,7 @@ export function ProcedureForm({
     <ProcedureFormContextProvider path={procedure.pathFromRootRouter.join(".")}>
       <CollapsableSection
         titleElement={
-          <span className="font-bold text-lg flex flex-row items-center">
+          <span className="flex flex-row items-center font-bold text-lg">
             {name}
           </span>
         }
@@ -293,10 +292,10 @@ function XButton({
   }
 
   return (
-    <div className="w-6 h-6">
+    <div className="h-6 w-6">
       {isDirty && (
         <button type="button" onClick={onClickClear}>
-          <CloseIcon className="w-6 h-6" />
+          <CloseIcon className="h-6 w-6" />
         </button>
       )}
     </div>
@@ -305,16 +304,16 @@ function XButton({
 
 function ToggleRawInput({ onClick }: { onClick: () => void }) {
   return (
-    <div className="w-6 h-6">
+    <div className="h-6 w-6">
       <button type="button" onClick={onClick}>
-        <ToggleJsonIcon className="w-6 h-6" />
+        <ToggleJsonIcon className="h-6 w-6" />
       </button>
     </div>
   );
 }
 
 function wrapJsonSchema(jsonSchema: any) {
-  delete jsonSchema["$schema"];
+  jsonSchema.$schema = undefined;
 
   return {
     type: "object",

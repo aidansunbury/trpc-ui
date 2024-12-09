@@ -1,11 +1,11 @@
-import React from "react";
-import { useHeadersContext } from "@src/react-app/components/contexts/HeadersContext";
 import MailLockIcon from "@mui/icons-material/MailLockOutlined";
-import { LogoSvg } from "@src/react-app/components/LogoSvg";
-import { useIsMac } from "@src/react-app/components/hooks/useIsMac";
-import { Chevron } from "@src/react-app/components/Chevron";
 import Search from "@mui/icons-material/Search";
+import { Chevron } from "@src/react-app/components/Chevron";
+import { LogoSvg } from "@src/react-app/components/LogoSvg";
+import { useHeadersContext } from "@src/react-app/components/contexts/HeadersContext";
 import { useSearch } from "@src/react-app/components/contexts/SearchStore";
+import { useIsMac } from "@src/react-app/components/hooks/useIsMac";
+import type React from "react";
 
 export function TopBar({
   open,
@@ -16,33 +16,32 @@ export function TopBar({
 }) {
   const { setHeadersPopupShown } = useHeadersContext();
   return (
-    <div className="w-full px-4 pr-8 flex flex-row justify-between items-center position-fixed left-0 h-16 right-0 top-0 bg-gray-50 drop-shadow-sm bg-actuallyWhite border-b border-b-panelBorder">
+    <div className="position-fixed top-0 right-0 left-0 flex h-16 w-full flex-row items-center justify-between border-b border-b-panelBorder bg-actuallyWhite bg-gray-50 px-4 pr-8 drop-shadow-sm">
       <div className="flex flex-row items-center gap-4">
         <button
           type="button"
-          role="button"
           onClick={() => setOpen((prev) => !prev)}
           aria-label="Toggle sidebar"
           aria-pressed={open}
         >
           {open ? (
-            <Chevron className="w-4 h-4" direction="left" />
+            <Chevron className="h-4 w-4" direction="left" />
           ) : (
-            <Chevron className="w-4 h-4" direction="right" />
+            <Chevron className="h-4 w-4" direction="right" />
           )}
         </button>
-        <span className="flex flex-row items-center text-lg font-bold font-mono">
-          <LogoSvg className="rounded-lg w-10 h-10 mr-2" />
+        <span className="flex flex-row items-center font-bold font-mono text-lg">
+          <LogoSvg className="mr-2 h-10 w-10 rounded-lg" />
           tRPC.panel()
         </span>
       </div>
       <RouterSearchTooltip />
       <button
         onClick={() => setHeadersPopupShown(true)}
-        className="border border-neutralSolidTransparent py-2 px-4 text-neutralText font-bold rounded-sm shadow-sm"
+        className="rounded-sm border border-neutralSolidTransparent px-4 py-2 font-bold text-neutralText shadow-sm"
       >
         Headers
-        <MailLockIcon className="w-6 h-6 ml-1" />
+        <MailLockIcon className="ml-1 h-6 w-6" />
       </button>
     </div>
   );
@@ -62,7 +61,7 @@ export function RouterSearchTooltip() {
       type="button"
       className="flex flex-row items-center text-neutralSolidTransparent"
     >
-      <Search fontSize="small" className="mr-2 color-neutralSolidTransparent" />
+      <Search fontSize="small" className="color-neutralSolidTransparent mr-2" />
       {helperText}
     </button>
   );

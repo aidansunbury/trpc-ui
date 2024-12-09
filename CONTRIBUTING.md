@@ -41,3 +41,15 @@ yarn test:panel
 ```
 
 at the root of the monorepo.
+
+## Linting and Formatting
+
+trpc-ui uses biome as a linter and formatter. To just check for errors, run
+```bash
+yarn biome:check
+```
+
+To fix them, run
+```bash
+yarn biome:fix
+```

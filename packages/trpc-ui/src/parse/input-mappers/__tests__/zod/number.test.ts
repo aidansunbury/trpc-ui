@@ -1,6 +1,6 @@
 import { defaultReferences } from "@src/parse/input-mappers/defaultReferences";
 import { parseZodNumberDef } from "@src/parse/input-mappers/zod/parsers/parseZodNumberDef";
-import { NumberNode } from "@src/parse/parseNodeTypes";
+import type { NumberNode } from "@src/parse/parseNodeTypes";
 import { z } from "zod";
 
 describe("Parse ZodNumber", () => {
@@ -11,7 +11,7 @@ describe("Parse ZodNumber", () => {
     };
     const schema = z.number();
     expect(parseZodNumberDef(schema._def, defaultReferences())).toStrictEqual(
-      expected
+      expected,
     );
   });
 });

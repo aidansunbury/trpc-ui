@@ -1,4 +1,4 @@
-import { ParseReferences } from "@src/parse/parseNodeTypes";
+import type { ParseReferences } from "@src/parse/parseNodeTypes";
 
 export function defaultReferences(): ParseReferences {
   return {
@@ -6,6 +6,6 @@ export function defaultReferences(): ParseReferences {
     options: {},
     addDataFunctions: {
       addDescriptionIfExists: () => {},
-    }
+    },
   };
 }

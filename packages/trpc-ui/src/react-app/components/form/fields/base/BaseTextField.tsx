@@ -1,6 +1,6 @@
-import React, { InputHTMLAttributes, useRef } from "react";
 import { default as MUITextField } from "@mui/material/TextField";
 import { useEnableInputGlobalHotkeys } from "@src/react-app/components/contexts/HotKeysContext";
+import React, { type InputHTMLAttributes, useRef } from "react";
 
 export function BaseTextField({
   value,
@@ -32,10 +32,7 @@ export function BaseTextField({
       id={fieldId}
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className={
-        "border border-grey-700 rounded-sm p-2 flex flex-col" +
-        (className ? ` ${className}` : "")
-      }
+      className={`flex rounded-sm border border-grey-700 p-2 flex-col${className ? ` ${className}` : ""}`}
       placeholder={label ? `Enter value for ${label}` : undefined}
       {...inputProps}
       color="primary"

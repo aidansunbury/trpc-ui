@@ -14,7 +14,7 @@
  *
  * These allow you to access things when processing a request, like the database, the session, etc.
  */
-import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
+import type { CreateNextContextOptions } from "@trpc/server/adapters/next";
 
 /** Replace this with an object if you want to pass things to `createContextInner`. */
 type CreateContextOptions = Record<string, never>;
@@ -52,24 +52,26 @@ export const createTRPCContext = (_opts: CreateNextContextOptions) => {
  */
 import { initTRPC } from "@trpc/server";
 import superjson from "superjson";
-import { ZodError } from "zod";
 import type { TRPCPanelMeta } from "trpc-ui";
+import { ZodError } from "zod";
 
-
-const t = initTRPC.context<typeof createTRPCContext>().meta<TRPCPanelMeta>().create({
-  transformer: superjson,
-  errorFormatter({ shape, error }) {
-    return {
-      ...shape,
-      data: {
-        ...shape.data,
-        zodError:
-          error.cause instanceof ZodError ? error.cause.flatten() : null,
-      },
-    };
-  },
-  allowOutsideOfServer: true,
-});
+const t = initTRPC
+  .context<typeof createTRPCContext>()
+  .meta<TRPCPanelMeta>()
+  .create({
+    transformer: superjson,
+    errorFormatter({ shape, error }) {
+      return {
+        ...shape,
+        data: {
+          ...shape.data,
+          zodError:
+            error.cause instanceof ZodError ? error.cause.flatten() : null,
+        },
+      };
+    },
+    allowOutsideOfServer: true,
+  });
 
 /**
  * 3. ROUTER & PROCEDURE (THE IMPORTANT BIT)

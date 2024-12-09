@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
-import { ParsedProcedure } from "@src/parse/parseProcedure";
-import { ParsedRouter } from "@src/parse/parseRouter";
-import { createContext, ReactNode, useMemo } from "react";
-import { ColorSchemeType } from "@src/react-app/components/CollapsableSection";
+import type { ParsedProcedure } from "@src/parse/parseProcedure";
+import type { ParsedRouter } from "@src/parse/parseRouter";
+import type { ColorSchemeType } from "@src/react-app/components/CollapsableSection";
 import { colorSchemeForNode } from "@src/react-app/components/style-utils";
+import React, { useContext } from "react";
+import { type ReactNode, createContext, useMemo } from "react";
 
 const Context = createContext<{
   pathsArray: string[];
@@ -11,9 +11,9 @@ const Context = createContext<{
 } | null>(null);
 
 function flatten(
-  node: ParsedRouter | ParsedProcedure
+  node: ParsedRouter | ParsedProcedure,
 ): [string, ColorSchemeType][] {
-  let r: [string, ColorSchemeType][] = [];
+  const r: [string, ColorSchemeType][] = [];
   const colorSchemeType = colorSchemeForNode(node);
   if (node.nodeType === "router") {
     const o = Object.values(node.children)

@@ -1,16 +1,16 @@
 import { create } from "zustand";
 
-(()=>{
+(() => {
   // ssr for dev app
-  if(typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return;
   }
-  document.addEventListener("keydown", function (event) {
+  document.addEventListener("keydown", (event) => {
     if (event.key === "p" && event.metaKey) {
       event.preventDefault();
     }
   });
-})()
+})();
 
 interface SearchStore {
   searchOpen: boolean;

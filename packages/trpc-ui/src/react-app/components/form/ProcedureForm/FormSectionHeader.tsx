@@ -1,17 +1,15 @@
 import React from "react";
 
 export function FormSectionHeader({
-    children,
-    className,
+  children,
+  className,
 }: {
-    children: string;
-    className?: string;
+  children: string;
+  className?: string;
 }) {
-    return (
-        <h2
-            className={"font-bold text-lg" + (className ? ` ${className}` : "")}
-        >
-            {children}
-        </h2>
-    );
+  return (
+    <h2 className={`font-bold text-lg${className ? ` ${className}` : ""}`}>
+      {children}
+    </h2>
+  );
 }

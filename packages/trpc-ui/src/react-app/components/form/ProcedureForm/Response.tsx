@@ -1,8 +1,8 @@
-import React from "react";
-import { FormSection } from "./FormSection";
 import { JsonViewer } from "@textea/json-viewer";
 import prettyBytes from "pretty-bytes";
 import prettyMs from "pretty-ms";
+import React from "react";
+import { FormSection } from "./FormSection";
 
 export function Response({
   children,
@@ -18,8 +18,8 @@ export function Response({
       ? `Response (${prettyBytes(size)}, ${prettyMs(time)})`
       : `Response (${prettyBytes(size)})`
     : time
-    ? `Response (${prettyMs(time)})`
-    : `Response`;
+      ? `Response (${prettyMs(time)})`
+      : "Response";
 
   if (typeof children === "object") {
     return (
@@ -31,7 +31,7 @@ export function Response({
 
   return (
     <FormSection title={title}>
-      <p className="font-mono whitespace-pre-wrap break-words">{children}</p>
+      <p className="whitespace-pre-wrap break-words font-mono">{children}</p>
     </FormSection>
   );
 }

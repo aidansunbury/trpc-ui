@@ -1,13 +1,13 @@
-import typescript from "@rollup/plugin-typescript";
-import json from "@rollup/plugin-json";
+import path from "node:path";
 import babel from "@rollup/plugin-babel";
-import { nodeResolve } from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
-import copy from "rollup-plugin-copy";
+import json from "@rollup/plugin-json";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
 import replace from "@rollup/plugin-replace";
 import terser from "@rollup/plugin-terser";
+import typescript from "@rollup/plugin-typescript";
+import copy from "rollup-plugin-copy";
 import postcss from "rollup-plugin-postcss";
-import path from "path";
 const isWatching = process.env.ROLLUP_WATCH;
 
 export default [

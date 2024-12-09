@@ -1,12 +1,12 @@
-import { useHeadersContext } from "@src/react-app/components/contexts/HeadersContext";
-import React, { useEffect, useState } from "react";
-import { BaseTextField } from "@src/react-app/components/form/fields/base/BaseTextField";
-import { FieldError } from "@src/react-app/components/form/fields/FieldError";
-import { Button } from "@src/react-app/components/Button";
-import toast from "react-hot-toast";
-import SaveIcon from "@mui/icons-material/Lock";
 import XIcon from "@mui/icons-material/Close";
+import SaveIcon from "@mui/icons-material/Lock";
 import { AddItemButton } from "@src/react-app/components/AddItemButton";
+import { Button } from "@src/react-app/components/Button";
+import { useHeadersContext } from "@src/react-app/components/contexts/HeadersContext";
+import { FieldError } from "@src/react-app/components/form/fields/FieldError";
+import { BaseTextField } from "@src/react-app/components/form/fields/base/BaseTextField";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export function HeadersPopup() {
   const {
@@ -34,7 +34,7 @@ export function HeadersPopup() {
   function update(index: number, value: string, type: "key" | "value") {
     const newHeaders = [...headers];
     const newValue = newHeaders[index]!;
-    newValue[type == "key" ? 0 : 1] = value;
+    newValue[type === "key" ? 0 : 1] = value;
     newHeaders[index] = newValue;
     setHeaders(newHeaders);
     clearErrorIfNecessary(index);
@@ -54,9 +54,9 @@ export function HeadersPopup() {
   }
 
   function onConfirmClick() {
-    var newErrors: boolean[] = [...errors];
-    var i = 0;
-    for (var [headerKey, headerValue] of headers) {
+    const newErrors: boolean[] = [...errors];
+    let i = 0;
+    for (const [headerKey, headerValue] of headers) {
       if (!headerKey || !headerValue) {
         newErrors[i] = true;
       }
@@ -78,23 +78,23 @@ export function HeadersPopup() {
   }, [headersPopupShown]);
   if (!headersPopupShown) return null;
   return (
-    <div className="fixed flex left-0 right-0 top-0 bottom-0 items-center border border-panelBorder drop-shadow-lg justify-center bg-overlayBackground bg-opacity-70">
+    <div className="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center border border-panelBorder bg-overlayBackground bg-opacity-70 drop-shadow-lg">
       <form
         onSubmit={(e) => {
           e.preventDefault();
           onConfirmClick();
         }}
-        className="max-w-2xl w-full bg-white flex flex-col rounded-md space-y-4"
+        className="flex w-full max-w-2xl flex-col space-y-4 rounded-md bg-white"
       >
-        <div className="flex flex-row justify-between border-b p-4 border-panelBorder">
-          <h1 className="text-lg font-bold">Headers</h1>
+        <div className="flex flex-row justify-between border-panelBorder border-b p-4">
+          <h1 className="font-bold text-lg">Headers</h1>
           <button type="button" onClick={onExitPress}>
-            <XIcon className="w-6 h-6" />
+            <XIcon className="h-6 w-6" />
           </button>
         </div>
-        <div className="px-4 py-2 flex flex-col space-y-2">
+        <div className="flex flex-col space-y-2 px-4 py-2">
           {headers.map(([headerKey, headerValue], i) => (
-            <div className="flex flex-col" key={i + ""}>
+            <div className="flex flex-col" key={`${i}`}>
               <div className="flex flex-row items-start">
                 <BaseTextField
                   className="flex-1"
@@ -102,7 +102,7 @@ export function HeadersPopup() {
                   value={headerKey}
                   onChange={(value) => update(i, value, "key")}
                 />
-                <span className="w-2 h-1" />
+                <span className="h-1 w-2" />
                 <BaseTextField
                   label="Value"
                   className="flex-1"
@@ -114,7 +114,7 @@ export function HeadersPopup() {
                   className="ml-2"
                   onClick={() => deleteHeader(i)}
                 >
-                  <XIcon className="w-5 h-5 mt-[0.45rem] mr-2" />
+                  <XIcon className="mt-[0.45rem] mr-2 h-5 w-5" />
                 </button>
               </div>
               {errors[i] && (
@@ -124,7 +124,7 @@ export function HeadersPopup() {
           ))}
           <AddItemButton onClick={addHeader} />
         </div>
-        <div className="p-4 flex flex-row justify-between border-t border-t-panelBorder">
+        <div className="flex flex-row justify-between border-t border-t-panelBorder p-4">
           <span className="flex flex-row items-center">
             Save Headers
             <input

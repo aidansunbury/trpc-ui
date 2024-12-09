@@ -1,8 +1,8 @@
 import React from "react";
 import { ErrorRow } from "./ErrorRow";
-import { StackTrace } from "./StackTrace";
 import { FormSection } from "./FormSection";
-import { TRPCErrorType } from "./index";
+import { StackTrace } from "./StackTrace";
+import type { TRPCErrorType } from "./index";
 
 export function Error({ error }: { error: TRPCErrorType }) {
   const json = error.meta.responseJSON[0]?.error.json ?? ({} as any);
@@ -16,14 +16,14 @@ export function Error({ error }: { error: TRPCErrorType }) {
       {msg && (
         <ErrorRow
           title="Message"
-          text={msg + ` (code: ${code})`}
+          text={`${msg} (code: ${code})`}
           padTitleTo={padTo}
         />
       )}
       <ErrorRow title="Code" text={data.code} padTitleTo={padTo} />
       <ErrorRow
         title="HTTP Status Code"
-        text={data.httpStatus + ""}
+        text={`${data.httpStatus}`}
         padTitleTo={padTo}
       />
       {data.stack && <StackTrace text={data.stack} />}

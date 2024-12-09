@@ -1,10 +1,10 @@
 import { initTRPC } from "@trpc/server";
 import { z } from "zod";
 
-import * as trpcExpress from "@trpc/server/adapters/express";
+import { EventEmitter } from "node:events";
 import { TRPCError } from "@trpc/server";
+import type * as trpcExpress from "@trpc/server/adapters/express";
 import { observable } from "@trpc/server/observable";
-import { EventEmitter } from "events";
 import superjson from "superjson";
 
 type TRPCMeta = Record<string, unknown>;
@@ -18,7 +18,7 @@ const t = initTRPC
   .create({ transformer: superjson, isServer: true });
 
 async function createContext(opts: trpcExpress.CreateExpressContextOptions) {
-  const authHeader = opts.req.headers["authorization"];
+  const authHeader = opts.req.headers.authorization;
   const authorized = authHeader !== undefined && authHeader !== "";
   console.log("Request headers: ");
   console.log(authHeader);
@@ -101,7 +101,7 @@ const postsRouter = t.router({
     .input(
       z.object({
         text: z.string(),
-      })
+      }),
     )
     .mutation(({ input }) => {
       return {
@@ -206,7 +206,7 @@ export const testRouter = t.router({
           anObject: z.object({
             numberArray: z.number().array(),
           }),
-        })
+        }),
       )
       .query(() => {
         return "It's an input";
@@ -226,7 +226,7 @@ export const testRouter = t.router({
               }),
             }),
           ]),
-        })
+        }),
       )
       .query(({ input }) => {
         return "It's an input";
@@ -235,7 +235,7 @@ export const testRouter = t.router({
       .input(
         z.object({
           email: z.string().email("That's an invalid email (custom message)"),
-        })
+        }),
       )
       .query(({ input }) => {
         return "It's good";
@@ -256,7 +256,7 @@ export const testRouter = t.router({
     .input(
       z.object({
         ok: z.string(),
-      })
+      }),
     )
     .query(() => {
       throw new TRPCError({
@@ -295,10 +295,10 @@ export const testRouter = t.router({
                 .describe("Selecting two gives you an enum input"),
             })
             .describe(
-              'The "disc" property on the zod discriminated union determines the shape of the rest of the zod validator and inputs.'
+              'The "disc" property on the zod discriminated union determines the shape of the rest of the zod validator and inputs.',
             ),
         ]),
-      })
+      }),
     )
     .query(({ input }) => ({ ...input })),
   authorizedProcedure: t.procedure
@@ -310,23 +310,24 @@ export const testRouter = t.router({
       if (!ctx.authorized) throw new TRPCError({ code: "UNAUTHORIZED" });
       return "Authorized!";
     }),
-    procedureWithDescription: t.procedure
-      .meta({
-        description: "# This is a description\n\nIt's a **good** one.\nIt may be overkill in certain situations, but procedures descriptions can render markdown thanks to [react-markdown](https://github.com/remarkjs/react-markdown) and [tailwindcss-typography](https://github.com/tailwindlabs/tailwindcss-typography)\n1. Lists\n2. Are\n3. Supported\n but I *personally* think that [links](https://github.com/aidansunbury/trpc-ui) and images ![Image example](https://private-user-images.githubusercontent.com/64103161/384591987-7dc0e751-d493-4337-ac8d-a1f16924bf48.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzExNDM3OTMsIm5iZiI6MTczMTE0MzQ5MywicGF0aCI6Ii82NDEwMzE2MS8zODQ1OTE5ODctN2RjMGU3NTEtZDQ5My00MzM3LWFjOGQtYTFmMTY5MjRiZjQ4LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDExMDklMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMTA5VDA5MTEzM1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTE4YmM4OTlkZmYyNmJjOWI5YzgwZDUxOTVlYTBjODlkMTVkMzNlNmJjZDhkZDJiNTRhNzFmNDZhMzllNDc2ZGYmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.FsvDvXo6S7n4uOsi3LMUUOeEhjXq6LF88MlU60gzZ2k)\n are the most useful for documentation purposes",
-      })
-      .input(
-        z.object({
-          id: z.string().describe("The id of the thing."),
-          searchTerm: z
-            .string()
-            .optional()
-            .describe(
-              "Even term descriptions *can* render basic markdown, but don't get too fancy"
-            ),
-        })
-      )
-      .query(() => {
-        return "Was that described well enough?";
+  procedureWithDescription: t.procedure
+    .meta({
+      description:
+        "# This is a description\n\nIt's a **good** one.\nIt may be overkill in certain situations, but procedures descriptions can render markdown thanks to [react-markdown](https://github.com/remarkjs/react-markdown) and [tailwindcss-typography](https://github.com/tailwindlabs/tailwindcss-typography)\n1. Lists\n2. Are\n3. Supported\n but I *personally* think that [links](https://github.com/aidansunbury/trpc-ui) and images ![Image example](https://private-user-images.githubusercontent.com/64103161/384591987-7dc0e751-d493-4337-ac8d-a1f16924bf48.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzExNDM3OTMsIm5iZiI6MTczMTE0MzQ5MywicGF0aCI6Ii82NDEwMzE2MS8zODQ1OTE5ODctN2RjMGU3NTEtZDQ5My00MzM3LWFjOGQtYTFmMTY5MjRiZjQ4LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDExMDklMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMTA5VDA5MTEzM1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTE4YmM4OTlkZmYyNmJjOWI5YzgwZDUxOTVlYTBjODlkMTVkMzNlNmJjZDhkZDJiNTRhNzFmNDZhMzllNDc2ZGYmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.FsvDvXo6S7n4uOsi3LMUUOeEhjXq6LF88MlU60gzZ2k)\n are the most useful for documentation purposes",
+    })
+    .input(
+      z.object({
+        id: z.string().describe("The id of the thing."),
+        searchTerm: z
+          .string()
+          .optional()
+          .describe(
+            "Even term descriptions *can* render basic markdown, but don't get too fancy",
+          ),
+      }),
+    )
+    .query(() => {
+      return "Was that described well enough?";
     }),
   nonObjectInput: t.procedure
     .meta({
@@ -344,17 +345,17 @@ export const testRouter = t.router({
     .input(
       z.object({
         userId: z.string(),
-      })
+      }),
     )
     .input(
       z.object({
         organizationId: z.string(),
-      })
+      }),
     )
     .input(
       z.object({
         postId: z.string(),
-      })
+      }),
     )
     .query(({ input }) => {
       return input;

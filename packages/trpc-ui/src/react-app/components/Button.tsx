@@ -1,7 +1,7 @@
-import React from "react";
-import { ButtonHTMLAttributes } from "react";
-import { ColorSchemeType } from "@src/react-app/components/CollapsableSection";
+import type { ColorSchemeType } from "@src/react-app/components/CollapsableSection";
 import { solidColorBg } from "@src/react-app/components/style-utils";
+import React from "react";
+import type { ButtonHTMLAttributes } from "react";
 
 export function Button({
   variant,
@@ -10,11 +10,7 @@ export function Button({
   return (
     <button
       {...props}
-      className={
-        "p-2 text-white rounded-md text-base flex flex-row items-center self-end border-2 border-transparent focus:border-yellow-500" +
-        (props.className ? ` ${props.className}` : "") +
-        ` ${solidColorBg(variant)}`
-      }
+      className={`flex flex-row items-center self-end rounded-md border-2 border-transparent p-2 text-base text-white focus:border-yellow-500${props.className ? ` ${props.className}` : ""} ${solidColorBg(variant)}`}
     />
   );
 }

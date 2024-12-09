@@ -1,6 +1,6 @@
 import { defaultReferences } from "@src/parse/input-mappers/defaultReferences";
 import { parseZodNullableDef } from "@src/parse/input-mappers/zod/parsers/parseZodNullableDef";
-import { NumberNode } from "@src/parse/parseNodeTypes";
+import type { NumberNode } from "@src/parse/parseNodeTypes";
 import { z } from "zod";
 
 describe("Parse ZodNullable", () => {
@@ -11,7 +11,7 @@ describe("Parse ZodNullable", () => {
     };
     const schema = z.number().nullable();
     expect(parseZodNullableDef(schema._def, defaultReferences())).toStrictEqual(
-      expected
+      expected,
     );
   });
 });

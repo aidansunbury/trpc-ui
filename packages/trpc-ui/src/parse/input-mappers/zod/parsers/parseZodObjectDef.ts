@@ -1,9 +1,9 @@
 import { nodePropertiesFromRef } from "@src/parse/utils";
-import { ZodObjectDef } from "zod";
-import {
+import type { ZodObjectDef } from "zod";
+import type {
   ObjectNode,
-  ParsedInputNode,
   ParseFunction,
+  ParsedInputNode,
   UnsupportedNode,
 } from "../../../parseNodeTypes";
 import { zodSelectorFunction } from "../selector";
@@ -14,8 +14,8 @@ export const parseZodObjectDef: ParseFunction<
 > = (def, refs) => {
   const shape = def.shape();
   const children: { [propertyName: string]: ParsedInputNode } = {};
-  for (var propertyName of Object.keys(shape)) {
-    const node = zodSelectorFunction(shape[propertyName]!._def, {
+  for (const propertyName of Object.keys(shape)) {
+    const node = zodSelectorFunction(shape[propertyName]?._def, {
       ...refs,
       path: refs.path.concat([propertyName]),
     });

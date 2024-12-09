@@ -1,13 +1,13 @@
-import React from "react";
-import { Control, useController } from "react-hook-form";
-import type { ParsedInputNode } from "@src/parse/parseNodeTypes";
-import { BaseSelectField } from "@src/react-app/components/form/fields/base/BaseSelectField";
-import { ObjectField } from "@src/react-app/components/form/fields/ObjectField";
-import { defaultFormValuesForNode } from "@src/react-app/components/form/utils";
-import { InputGroupContainer } from "@src/react-app/components/InputGroupContainer";
-import CirclesIcon from "@mui/icons-material/JoinRight";
 import MoonIcon from "@mui/icons-material/Brightness2";
+import CirclesIcon from "@mui/icons-material/JoinRight";
+import type { ParsedInputNode } from "@src/parse/parseNodeTypes";
+import { InputGroupContainer } from "@src/react-app/components/InputGroupContainer";
 import { FieldError } from "@src/react-app/components/form/fields/FieldError";
+import { ObjectField } from "@src/react-app/components/form/fields/ObjectField";
+import { BaseSelectField } from "@src/react-app/components/form/fields/base/BaseSelectField";
+import { defaultFormValuesForNode } from "@src/react-app/components/form/utils";
+import React from "react";
+import { type Control, useController } from "react-hook-form";
 
 export function DiscriminatedUnionField({
   name,
@@ -54,14 +54,11 @@ export function DiscriminatedUnionField({
         control={control}
         node={children}
         overrideIconElement={<MoonIcon className="mr-1" />}
-        label={``}
+        label={""}
       />
       {fieldState.error?.message && (
         <FieldError
-          errorMessage={
-            fieldState.error.message +
-            ` (make sure to pass required properties)`
-          }
+          errorMessage={`${fieldState.error.message} (make sure to pass required properties)`}
         />
       )}
     </InputGroupContainer>

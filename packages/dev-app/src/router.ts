@@ -1,34 +1,38 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createTRPCRouter, procedure } from "~/server/api/trpc";
-import { TRPCError } from "@trpc/server";
 
 const postsRouter = createTRPCRouter({
-  meta: procedure.meta({
-    description: "This is a router that contains posts"
-  }).query(() => null),
-  getAllPosts: procedure.meta({
-      description: "Simple procedure that returns a list of posts"
-    }).query(() => {
-    return [
-      {
-        id: "asodifjaosdf",
-        text: "Post Id",
-      },
-      {
-        id: "asodifjaosdf",
-        text: "Post Id",
-      },
-      {
-        id: "asodifjaosdf",
-        text: "Post Id",
-      },
-    ];
-  }),
+  meta: procedure
+    .meta({
+      description: "This is a router that contains posts",
+    })
+    .query(() => null),
+  getAllPosts: procedure
+    .meta({
+      description: "Simple procedure that returns a list of posts",
+    })
+    .query(() => {
+      return [
+        {
+          id: "asodifjaosdf",
+          text: "Post Id",
+        },
+        {
+          id: "asodifjaosdf",
+          text: "Post Id",
+        },
+        {
+          id: "asodifjaosdf",
+          text: "Post Id",
+        },
+      ];
+    }),
   createPost: procedure
     .input(
       z.object({
         text: z.string(),
-      })
+      }),
     )
     .mutation(({ input }) => {
       return {
@@ -40,12 +44,12 @@ const postsRouter = createTRPCRouter({
     .input(
       z.object({
         text: z.string(),
-      })
+      }),
     )
     .input(
       z.object({
         title: z.string(),
-      })
+      }),
     )
     .mutation(({ input }) => {
       return {
@@ -89,7 +93,7 @@ export const appRouter = createTRPCRouter({
           anObject: z.object({
             numberArray: z.number().array(),
           }),
-        })
+        }),
       )
       .query(() => {
         return "It's an input";
@@ -112,7 +116,7 @@ export const appRouter = createTRPCRouter({
               discriminatedField: z.literal("Three"),
             }),
           ]),
-        })
+        }),
       )
       .query(() => {
         return "It's an input";
@@ -121,7 +125,7 @@ export const appRouter = createTRPCRouter({
       .input(
         z.object({
           aUnion: z.union([z.literal("one"), z.literal(2)]),
-        })
+        }),
       )
       .query(({ input }) => {
         return input;
@@ -130,7 +134,7 @@ export const appRouter = createTRPCRouter({
       .input(
         z.object({
           email: z.string().email("That's an invalid email (custom message)"),
-        })
+        }),
       )
       .query(() => {
         return "It's good";
@@ -144,7 +148,7 @@ export const appRouter = createTRPCRouter({
       z.object({
         title: z.string(),
         content: z.string(),
-      })
+      }),
     )
     .mutation(({ input: { title, content } }) => {
       return {
@@ -154,7 +158,8 @@ export const appRouter = createTRPCRouter({
     }),
   procedureWithDescription: procedure
     .meta({
-      description: "# This is a description\n\nIt's a **good** one.\nIt may be overkill in certain situations, but procedures descriptions can render markdown thanks to [react-markdown](https://github.com/remarkjs/react-markdown) and [tailwindcss-typography](https://github.com/tailwindlabs/tailwindcss-typography)\n1. Lists\n2. Are\n3. Supported\n but I *personally* think that [links](https://github.com/aidansunbury/trpc-ui) and images ![Image example](https://private-user-images.githubusercontent.com/64103161/384591987-7dc0e751-d493-4337-ac8d-a1f16924bf48.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzExNDM3OTMsIm5iZiI6MTczMTE0MzQ5MywicGF0aCI6Ii82NDEwMzE2MS8zODQ1OTE5ODctN2RjMGU3NTEtZDQ5My00MzM3LWFjOGQtYTFmMTY5MjRiZjQ4LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDExMDklMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMTA5VDA5MTEzM1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTE4YmM4OTlkZmYyNmJjOWI5YzgwZDUxOTVlYTBjODlkMTVkMzNlNmJjZDhkZDJiNTRhNzFmNDZhMzllNDc2ZGYmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.FsvDvXo6S7n4uOsi3LMUUOeEhjXq6LF88MlU60gzZ2k)\n are the most useful for documentation purposes",
+      description:
+        "# This is a description\n\nIt's a **good** one.\nIt may be overkill in certain situations, but procedures descriptions can render markdown thanks to [react-markdown](https://github.com/remarkjs/react-markdown) and [tailwindcss-typography](https://github.com/tailwindlabs/tailwindcss-typography)\n1. Lists\n2. Are\n3. Supported\n but I *personally* think that [links](https://github.com/aidansunbury/trpc-ui) and images ![Image example](https://private-user-images.githubusercontent.com/64103161/384591987-7dc0e751-d493-4337-ac8d-a1f16924bf48.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzExNDM3OTMsIm5iZiI6MTczMTE0MzQ5MywicGF0aCI6Ii82NDEwMzE2MS8zODQ1OTE5ODctN2RjMGU3NTEtZDQ5My00MzM3LWFjOGQtYTFmMTY5MjRiZjQ4LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDExMDklMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMTA5VDA5MTEzM1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTE4YmM4OTlkZmYyNmJjOWI5YzgwZDUxOTVlYTBjODlkMTVkMzNlNmJjZDhkZDJiNTRhNzFmNDZhMzllNDc2ZGYmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.FsvDvXo6S7n4uOsi3LMUUOeEhjXq6LF88MlU60gzZ2k)\n are the most useful for documentation purposes",
     })
     .input(
       z.object({
@@ -163,15 +168,15 @@ export const appRouter = createTRPCRouter({
           .string()
           .optional()
           .describe(
-            "Even term descriptions *can* render basic markdown, but don't get too fancy"
+            "Even term descriptions *can* render basic markdown, but don't get too fancy",
           ),
         searchTerm2: z
           .string()
           .optional()
           .describe(
-            "The name of the thing to search for. Really really long long long boi long boi long Really really long long long boi long boi long Really really long long long boi long boi long Really really long long long boi long boi long"
+            "The name of the thing to search for. Really really long long long boi long boi long Really really long long long boi long boi long Really really long long long boi long boi long Really really long long long boi long boi long",
           ),
-      })
+      }),
     )
     .query(() => {
       return "Was that described well enough?";
@@ -181,7 +186,7 @@ export const appRouter = createTRPCRouter({
     .input(
       z.object({
         name: z.string(),
-      })
+      }),
     )
     .query(async ({ input }) => {
       // two second delay
@@ -192,7 +197,7 @@ export const appRouter = createTRPCRouter({
     .input(
       z.object({
         ok: z.string(),
-      })
+      }),
     )
     .query(() => {
       throw new TRPCError({
@@ -224,7 +229,7 @@ export const appRouter = createTRPCRouter({
           }),
         ]),
         union: z.union([z.literal("one"), z.literal(2)]),
-      })
+      }),
     )
     .query(() => ({ goodJob: "yougotthedata" })),
 });
