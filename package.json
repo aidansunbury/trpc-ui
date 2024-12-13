@@ -7,13 +7,14 @@
     "build:panel": "yarn && npx nx build --project trpc-ui",
     "build:test-app": "yarn && npx nx build --project test-trpc-panel",
     "dev:dev-app": "yarn workspace dev-app dev",
+    "dev:test-app": "yarn workspace test-trpc-panel dev",
     "build:docs": "yarn && npx nx build --project docs",
     "cpy:readme": "cp README.MD packages/trpc-ui/README.md",
     "start:test-app": "node ./packages/test-app/lib/server.ts",
     "start:docs": "cd packages/docs && yarn serve",
-    "biome:check": "biome check",
-    "biome:check:changed": "biome check --changed",
-    "biome:check:fix": "biome check --write --unsafe"
+    "biome:check": "biome check --max-diagnostics=none",
+    "biome:check:changed": "biome check --changed --max-diagnostics=none",
+    "biome:check:fix": "biome check --write --unsafe --max-diagnostics=none"
   },
   "private": true,
   "devDependencies": {
@@ -21,7 +22,6 @@
     "@nrwl/nx-cloud": "latest",
     "@tsconfig/docusaurus": "^1.0.6",
     "nx": "15.2.4",
-    "prettier": "^2.6.2",
     "typescript": "^4.9.3"
   },
   "workspaces": {

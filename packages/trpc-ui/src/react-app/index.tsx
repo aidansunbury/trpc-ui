@@ -13,6 +13,7 @@ const routerDefinition: ParsedRouter =
 
 // Here are other options
 export const options = "{{options}}" as unknown as RenderOptions;
+// biome-ignore lint/style/noNonNullAssertion: <Root non-null>
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root;
 trpc;

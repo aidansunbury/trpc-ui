@@ -18,7 +18,8 @@ export function defaultFormValuesForNode(node: ParsedInputNode): any {
     // return node.enumValues[0];
     case "object": {
       const obj: any = {};
-      for (const [name, node] of Object.entries(node.children)) {
+      // biome-ignore lint/style/noVar: <This errors when not using var, leave it unless you are going to properly fix it>
+      for (var [name, node] of Object.entries(node.children)) {
         obj[name] = defaultFormValuesForNode(node);
       }
       return obj;

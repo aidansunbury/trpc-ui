@@ -20,6 +20,12 @@
           }
         }
       },
+      "correctness": {
+        "useExhaustiveDependencies": "warn"
+      },
+      "suspicious": {
+        "noExplicitAny": "warn"
+      },
       "recommended": true
     }
   },
@@ -29,6 +35,6 @@
     "indentStyle": "space"
   },
   "files": {
-    "ignore": ["package.json"]
+    "ignore": ["package.json", ".next/", "tsconfig.buildPanel.json"]
   }
 }

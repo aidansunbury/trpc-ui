@@ -9,6 +9,7 @@ export function SendIcon({ className }: { className?: string }) {
       viewBox="0 0 495.003 495.003"
       className={className}
     >
+      <title>Send Icon</title>
       <g id="XMLID_51_">
         <path
           fill="white"
