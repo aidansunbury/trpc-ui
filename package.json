@@ -6,6 +6,7 @@
     "test:panel": "yarn && npx nx test --project trpc-ui",
     "build:panel": "yarn && npx nx build --project trpc-ui",
     "build:test-app": "yarn && npx nx build --project test-trpc-panel",
+    "dev:dev-app": "yarn workspace dev-app dev",
     "build:docs": "yarn && npx nx build --project docs",
     "cpy:readme": "cp README.MD packages/trpc-ui/README.md",
     "start:test-app": "node ./packages/test-app/lib/server.ts",

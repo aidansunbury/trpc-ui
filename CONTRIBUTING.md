@@ -1,10 +1,15 @@
 # Contributing
 
-TRPC Panel welcomes and encourages open source contributions.
+`trpc-ui` is open to contributions! Before getting started, check the open issues, or create a new one for bug fixes or feature improvements. @aidansunbury to be assigned to the issue.
 
-## Local Development
+## Repo Overview
 
-The repo is configured to work with yarn v1 workspaces. To install dependencies, run:
+There are three main packages in this repo:
+1. `trpc-ui`: The main package that is [published to npm](https://www.npmjs.com/package/trpc-ui)
+2. `dev-app`: A development app that makes it easy to work on `trpc-ui` locally. It uses the `trpc-ui` package.
+3. `test-app`: A [showcase application](https://trpc.aidansunbury.dev/) to demonstrate the capabilities of `trpc-ui`
+
+The repo is configured to work with yarn v1 workspaces. To install dependencies for all three packages, run:
 
 ```sh
 yarn
@@ -20,7 +25,7 @@ cd packages/dev-app && yarn dev
 
 This will run the app in your browser.
 
-To add / remove procedures from the dev app's panel, modify its router in `packages/dev-app/src/router.ts`. Please do not commit changes to this file.
+To add / remove procedures from the dev app's panel, modify its router in [router.ts](./packages/dev-app/src/router.ts). Please do not commit changes to this file.
 
 ## Front end contributions
 
