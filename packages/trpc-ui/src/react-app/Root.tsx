@@ -20,6 +20,7 @@ import React, { type ReactNode, useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import superjson from "superjson";
 import type { ParsedRouter } from "../parse/parseRouter";
+import { MetaHeader } from "./components/MetaHeader";
 import { RouterContainer } from "./components/RouterContainer";
 import { SideNav } from "./components/SideNav";
 import { TopBar } from "./components/TopBar";
@@ -122,6 +123,7 @@ function AppInnards({
           }}
         >
           <div className="container max-w-6xl p-4 pt-8">
+            <MetaHeader meta={options.meta} />
             <RouterContainer router={rootRouter} options={options} />
           </div>
         </div>

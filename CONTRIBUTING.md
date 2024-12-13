@@ -15,6 +15,8 @@ The repo is configured to work with yarn v1 workspaces. To install dependencies 
 yarn
 ```
 
+When adding new dependencies, be sure to add them in the correct package, and not the top level `package.json`.
+
 ### Development App
 
 Included in this repo there is a development app that makes it easy to work on `trpc-ui` locally. It is a `next.js` app that will render the router included in the dev app. To run it, do:

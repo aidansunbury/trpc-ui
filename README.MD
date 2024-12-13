@@ -51,12 +51,17 @@ import { renderTrpcPanel } from "trpc-ui";
 // ...
 app.use("/panel", (_, res) => {
   return res.send(
-    renderTrpcPanel(myTrpcRouter, { url: "http://localhost:4000/trpc" })
+    renderTrpcPanel(myTrpcRouter, { url: "http://localhost:4000/trpc", meta: {
+      title: "My Backend Title",
+      description: "This is a description of my API, which supports [markdown](https://en.wikipedia.org/wiki/Markdown).",
+    }})
   );
 });
 ```
 
 `trpc-ui` just renders as a string, so it can be used with any backend.
+
+To document your entire backend, you can pass in a metadata object with a title and description. To document individual procedures, see the [documenting procedures](#documenting-procedures).
 
 ## NextJS / create-t3-app example
 

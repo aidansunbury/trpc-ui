@@ -12575,6 +12575,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tailwind-merge@npm:^2.5.5":
+  version: 2.5.5
+  resolution: "tailwind-merge@npm:2.5.5"
+  checksum: c835c763642988aa7185f242f93a61a6ce45d577edbefa4016727e664d9e130fa153b0d3a8bbcfcefd1de6a204e9d302971826d4d1068b6fd92ef66a27f35351
+  languageName: node
+  linkType: hard
+
 "tailwindcss@npm:^3.2.4, tailwindcss@npm:^3.3.1":
   version: 3.4.14
   resolution: "tailwindcss@npm:3.4.14"
@@ -12962,6 +12969,7 @@ __metadata:
     ajv: ^8.11.2
     ajv-formats: ^2.1.1
     autoprefixer: ^10.4.13
+    clsx: ^2.1.1
     devalue: ^4.2.0
     fuzzysort: ^2.0.4
     gulp: ^4.0.2
@@ -12990,6 +12998,7 @@ __metadata:
     rollup-plugin-visualizer: ^5.8.3
     string-byte-length: ^1.6.0
     superjson: ^1.12.0
+    tailwind-merge: ^2.5.5
     tailwindcss: ^3.2.4
     ts-jest: ^29.0.3
     tslib: ^2.4.1

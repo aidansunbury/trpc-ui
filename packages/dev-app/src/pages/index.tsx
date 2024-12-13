@@ -13,6 +13,11 @@ const App = dynamic(
       options={{
         url: "http://localhost:3000/api/trpc",
         transformer: "superjson",
+        meta: {
+          title: "Dev App Title",
+          description:
+            "Dev App Description is longer and should support [markdown](https://github.com/aidansunbury/trpc-ui) \n## Heading 2\n### Heading 3 \n - list item 1\n - list item 2\n",
+        },
       }}
       trpc={trpc}
     />

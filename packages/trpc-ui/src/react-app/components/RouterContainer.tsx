@@ -3,6 +3,7 @@ import { ProcedureForm } from "@src/react-app/components/form/ProcedureForm";
 import type { RenderOptions } from "@src/render";
 import React from "react";
 import type { ParsedRouter } from "../../parse/parseRouter";
+import { cn } from "../utils/utils";
 
 export function RouterContainer({
   router,
@@ -28,7 +29,9 @@ export function RouterContainer({
       isRoot={isRoot}
     >
       <div
-        className={`space-y-3${!isRoot ? "space-y-1 border-l-grey-400 p-1" : ""}`}
+        className={cn("space-y-3", {
+          "space-y-1 border-l-grey-400 p-1": !isRoot,
+        })}
       >
         {Object.entries(router.children).map(
           ([childName, routerOrProcedure]) => {

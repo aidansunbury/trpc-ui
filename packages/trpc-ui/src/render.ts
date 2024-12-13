@@ -7,9 +7,15 @@ import {
   parseRouterWithOptions,
 } from "./parse/parseRouter";
 
+export type Info = {
+  title?: string;
+  description?: string;
+};
+
 export type RenderOptions = {
   url: string;
   cache?: boolean;
+  meta?: Info;
 } & TrpcPanelExtraOptions;
 
 const defaultParseRouterOptions: Partial<TrpcPanelExtraOptions> = {
