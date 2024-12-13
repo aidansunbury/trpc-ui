@@ -4,6 +4,10 @@
   "description": "UI for testing tRPC backends",
   "main": "lib/index.js",
   "module": "lib/index.mjs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aidansunbury/trpc-ui/"
+  },
   "typings": "lib/src/index.d.ts",
   "scripts": {
     "test": "jest",
