@@ -91,7 +91,6 @@
     "ts-jest": "^29.0.3",
     "tslib": "^2.4.1",
     "typescript": "^5.4.5",
-    "url": "^0.11.0",
     "zustand": "^4.1.5"
   },
   "dependencies": {
