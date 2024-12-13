@@ -155,9 +155,18 @@ app.use("/panel", (_, res) => {
 
 `trpc-ui` welcomes and encourages open source contributions. Please see our [contributing](./CONTRIBUTING.md) guide for information on how to develop locally.
 
+## Comparisons
+
+### trpc-openapi
+[trpc-openapi](https://github.com/trpc/trpc-openapi) is designed for producing a REST API for external consumption from your trpc routers, not quickly testing your backed. If you do not care about exposing your API outside of your application, the additional overhead required to use `trpc-openapi` is not worth the effort. `trpc-ui` can be used with `trpc-openapi`, but the two libraries serve different purposes.
+
+### trpc-playground
+
+[trpc-playground](https://github.com/sachinraja/trpc-playground) is a great tool for testing your queries, but it requires writing code in the browser. `trpc-ui` automatically generates intuitive typesafe forms for your procedures, allowing you to run tests without writing any code.
+
 ## Limitations
 
-Currently, tRPC panel only works with zod input schemas. With it's current design it would be feasible to easily add support for other input types as well
+Currently, tRPC panel only works with zod input schemas. There is no current plan to support other input validators, as zod remains the most popular choice for tRPC developers, and however if you would like to see support for another input validator, feel free to open an issue, and look into how we could reduce the amount of validator specific code that needs to be maintained by using something like [standard-schema](https://github.com/standard-schema/standard-schema).
 
 ### Supported zod types
 

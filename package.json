@@ -8,10 +8,8 @@
     "build:test-app": "yarn && npx nx build --project test-trpc-panel",
     "dev:dev-app": "yarn workspace dev-app dev",
     "dev:test-app": "yarn workspace test-trpc-panel dev",
-    "build:docs": "yarn && npx nx build --project docs",
     "cpy:readme": "cp README.MD packages/trpc-ui/README.md",
     "start:test-app": "node ./packages/test-app/lib/server.ts",
-    "start:docs": "cd packages/docs && yarn serve",
     "biome:check": "biome check --max-diagnostics=none",
     "biome:check:changed": "biome check --changed --max-diagnostics=none",
     "biome:check:fix": "biome check --write --unsafe --max-diagnostics=none"
