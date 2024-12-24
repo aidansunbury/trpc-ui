@@ -11,7 +11,7 @@ import { useSiteNavigationContext } from "@src/react-app/components/contexts/Sit
 import { useLocalStorage } from "@src/react-app/components/hooks/useLocalStorage";
 import type { RenderOptions } from "@src/render";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { type createTRPCReact, httpBatchLink } from "@trpc/react-query";
 import { useQueryState } from "nuqs";
 import { parseAsArrayOf, parseAsString } from "nuqs";
@@ -85,7 +85,7 @@ function ClientProviders({
     <trpc.Provider queryClient={queryClient} client={trpcClient}>
       <QueryClientProvider client={queryClient}>
         {children}
-        <ReactQueryDevtools initialIsOpen={false} />
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       </QueryClientProvider>
     </trpc.Provider>
   );
