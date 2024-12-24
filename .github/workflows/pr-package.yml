@@ -24,4 +24,5 @@ jobs:
         run: |
             cd packages/trpc-ui
             yarn install
-            yarn pkg-pr-new publish
+            cd ../../
+            npx pkg-pr-new publish './packages/trpc-ui'
