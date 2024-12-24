@@ -12,7 +12,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 20
-      - run: yarn test:panel
+      - run: pnpm test:panel
 
   publish-npm:
     needs: test
@@ -30,14 +30,14 @@ jobs:
           git config user.email "<>"
       - name: Build App
         run: |
-          yarn build:panel
+          pnpm build:panel
       - name: Copy Readme
         run: |
-          yarn cpy:readme
-      - name: Publish with yarn
+          pnpm cpy:readme
+      - name: Publish with pnpm
         run: |
           cd packages/trpc-ui
           echo "publishing with version ${{ github.event.release.tag_name }}"
-          yarn publish --access public --new-version ${{ github.event.release.tag_name }}
+          pnpm publish --access public --new-version ${{ github.event.release.tag_name }}
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}

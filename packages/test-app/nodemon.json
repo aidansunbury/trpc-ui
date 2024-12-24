@@ -1,4 +1,0 @@
-{
-  "ignoreRoot": [".git"],
-  "ext": "ts,tsx,js,json"
-}

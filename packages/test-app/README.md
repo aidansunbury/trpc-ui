@@ -5,7 +5,7 @@ This app is used as the example app for tRPC (panel) as well as is convenient fo
 ## Run
 
 ```sh
-yarn dev
+pnpm dev
 ```
 
 If you want to change any of the environment variables for local development

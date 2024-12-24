@@ -13,15 +13,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "yarn"
+          cache: "pnpm"
 
       - name: Build App
         run: |
-          yarn build:panel
+          pnpm build:panel
     
 
-      - name: Publish with yarn
+      - name: Publish with pnpm
         run: |
             cd packages/trpc-ui
-            yarn install
-            yarn pkg-pr-new publish --packageManager=yarn
+            pnpm install
+            pnpm pkg-pr-new publish --pnpm --packageManager=pnpm
