@@ -25,3 +25,7 @@ If applicable, add screenshots to help explain your problem.
 
 **Additional context**
 Add any other context about the problem here.
+
+👍: I have this issue
+👎: This issue has already been fixed
+🚀: I would like to work on / be assigned this issue (@aidansunbury to get assigned)

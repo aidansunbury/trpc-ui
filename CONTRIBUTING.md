@@ -2,6 +2,8 @@
 
 `trpc-ui` is open to contributions! Before getting started, check the open issues, or create a new one for bug fixes or feature improvements. @aidansunbury to be assigned to the issue.
 
+It is also extremely helpful to upvote (👍) or downvote (👎) existing bugs and features, to ensure that the most in demand features or problematic bugs get addressed first.
+
 ## Repo Overview
 
 There are three main packages in this repo:

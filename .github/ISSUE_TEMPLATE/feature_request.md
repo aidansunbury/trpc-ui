@@ -15,3 +15,7 @@ A clear and concise description of what you want to happen.
 
 **Additional context**
 Add any other context or screenshots about the feature request here.
+
+👍: I would use this feature
+👎: I would not use this feature
+🚀: I would like to work on / be assigned this feature (@aidansunbury to get assigned)
