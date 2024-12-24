@@ -24,4 +24,4 @@ jobs:
         run: |
             cd packages/trpc-ui
             yarn install
-            yarn pkg-pr-new publish --packageManager=pnpm --pnpm
+            yarn pkg-pr-new publish --packageManager=bun
