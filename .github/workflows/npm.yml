@@ -8,10 +8,18 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4  
+
+      - name: Install node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version-file: '.node-version'
+          registry-url: https://registry.npmjs.org/
+          cache: 'pnpm'
       - run: pnpm test:panel
 
   publish-npm:
@@ -19,11 +27,20 @@ jobs:
     runs-on: ubuntu-latest
     concurrency: "run"
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Install node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version-file: '.node-version'
           registry-url: https://registry.npmjs.org/
+          cache: 'pnpm'
+
+     
       - name: Setup git config
         run: |
           git config user.name "GitHub Actions Bot"
