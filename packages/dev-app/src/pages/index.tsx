@@ -16,7 +16,7 @@ const App = dynamic(
         meta: {
           title: "Dev App Title",
           description:
-            "Dev App Description is longer and should support [markdown](https://github.com/aidansunbury/trpc-ui) \n## Heading 2\n### Heading 3 \n - list item 1\n - list item 2\n",
+            "Dev App Description is longer and should support [markdown](https://github.com/aidansunbury/trpc-ui) The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. \n## Heading 2\n### Heading 3 \n - list item 1\n - list item 2\n",
         },
       }}
       trpc={trpc}

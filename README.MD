@@ -171,7 +171,7 @@ app.use("/panel", (_, res) => {
 
 ## Limitations
 
-Currently, tRPC panel only works with zod input schemas. There is no current plan to support other input validators, as zod remains the most popular choice for tRPC developers, and however if you would like to see support for another input validator, feel free to open an issue, and look into how we could reduce the amount of validator specific code that needs to be maintained by using something like [standard-schema](https://github.com/standard-schema/standard-schema).
+Currently, tRPC panel only works with zod input schemas. There is no current plan to support other input validators, as zod remains the most popular choice for tRPC developers. However, if you would like to see support for another input validator, feel free to open an issue, and look into how we could reduce the amount of validator specific code that needs to be maintained by using something like [standard-schema](https://github.com/standard-schema/standard-schema).
 
 ### Supported zod types
 
@@ -196,6 +196,7 @@ The following are supported
 - Promise
 - String
 - Undefined
+- Any (Via json mode)
 
 We would like to add the following types:
 
@@ -206,4 +207,3 @@ We would like to add the following types:
 - Map (superjson only)
 - Set (superjson only)
 - Date (superjson only)
-- Any
