@@ -47,6 +47,17 @@ pnpm dev:test-app # Run at base of monorepo
 cd packages/test-app && pnpm dev # To run in the test-app directory
 ```
 
+## Preview deployments
+Most of the time, the Dev App will be sufficient for testing changes to the trpc-ui package. However, the Dev App does not actually use the bundled `trpc-ui` dependency the same way you would install it into your project. Additionally, the dev app is configured using the NextJS pages router and superjson, so it is not particularly for debugging issues specific to other [trpc adapters](https://trpc.io/docs/server/adapters) or issues that only arise when not using superjson.
+
+As a result, this project is configured to use [preview releases](https://pkg.pr.new/), for each pull request. These preview releases can then be installed anywhere to test the changes made to the `trpc-ui`.
+
+```
+pnpm add https://pkg.pr.new/aidansunbury/trpc-ui@40
+```
+
+Comments like this will be automatically generated on each pull request.
+
 
 ## Front end contributions
 

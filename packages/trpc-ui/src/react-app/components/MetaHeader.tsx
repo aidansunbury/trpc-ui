@@ -9,7 +9,6 @@ export function MetaHeader({ meta }: { meta?: Info }) {
   const { title, description } = meta;
   return (
     <header>
-      <h2>this is a preview deployment (remove me later)</h2>
       {title && <h1 className="pb-2 font-bold text-5xl">{title}</h1>}
       {description && (
         <article className="prose">
