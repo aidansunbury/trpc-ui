@@ -129,7 +129,13 @@ export function ProcedureForm({
     },
   });
   function onSubmit(data: { [ROOT_VALS_PROPERTY_NAME]: any }) {
-    const newData = { json: data[ROOT_VALS_PROPERTY_NAME] };
+    let newData: any;
+    if (options.transformer === "superjson") {
+      newData = { json: data[ROOT_VALS_PROPERTY_NAME] };
+    }
+    else {
+      newData = { ...data[ROOT_VALS_PROPERTY_NAME] }
+    }
     if (procedure.procedureType === "query") {
       setQueryInput(newData);
       setQueryEnabled(true);
