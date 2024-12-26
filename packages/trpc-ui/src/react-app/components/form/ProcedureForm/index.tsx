@@ -231,12 +231,8 @@ export function ProcedureForm({
                     <button
                       type="button"
                       onClick={() => {
-                        setValue(
-                          "vals",
-                          sample(procedure.inputSchema)
-                        )
-                      }
-                      }
+                        setValue("vals", sample(procedure.inputSchema));
+                      }}
                     >
                       <AutoFillIcon className="h-6 w-6" />
                     </button>
@@ -334,7 +330,7 @@ function ToggleRawInput({ onClick }: { onClick: () => void }) {
 }
 
 function wrapJsonSchema(jsonSchema: any) {
-  const { $schema, ...rest} = jsonSchema;
+  const { $schema, ...rest } = jsonSchema;
 
   return {
     type: "object",
