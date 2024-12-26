@@ -21,17 +21,9 @@ export function Response({
       ? `Response (${prettyMs(time)})`
       : "Response";
 
-  if (typeof children === "object") {
     return (
       <FormSection title={title}>
         <JsonViewer rootName={false} value={children} quotesOnKeys={false} />
       </FormSection>
     );
-  }
-
-  return (
-    <FormSection title={title}>
-      <p className="whitespace-pre-wrap break-words font-mono">{children}</p>
-    </FormSection>
-  );
 }
