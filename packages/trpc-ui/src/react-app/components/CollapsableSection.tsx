@@ -72,6 +72,7 @@ export function CollapsableSection({
     >
       {collapsable ? (
         <button
+          type="button"
           onClick={() => {
             collapsables.toggle(fullPath);
             setPath(fullPath.join("."));

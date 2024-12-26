@@ -47,6 +47,7 @@ function SideNavItem({
     <>
       {path.length > 0 && (
         <button
+          type="button"
           className={`flex w-full flex-row items-center justify-between font-bold ${
             shown ? "" : "opacity-70"
           }`}

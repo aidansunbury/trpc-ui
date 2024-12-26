@@ -94,7 +94,7 @@ export function HeadersPopup() {
         </div>
         <div className="flex flex-col space-y-2 px-4 py-2">
           {headers.map(([headerKey, headerValue], i) => (
-            <div className="flex flex-col" key={`${i}`}>
+            <div className="flex flex-col" key={`${headerKey}, ${headerValue}`}>
               <div className="flex flex-row items-start">
                 <BaseTextField
                   className="flex-1"

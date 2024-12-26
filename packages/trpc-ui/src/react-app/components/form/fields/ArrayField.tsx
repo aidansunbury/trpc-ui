@@ -66,8 +66,11 @@ export function ArrayField({
       iconElement={<DataArray className="mr-1" />}
       title={label}
     >
-      {field.value.map((_: ParsedInputNode, i: number) => (
-        <span key={`${i}`} className="flex flex-row items-start">
+      {field.value.map((parsedNode: ParsedInputNode, i: number) => (
+        <span
+          key={`${JSON.stringify(parsedNode.path)} ${i}`}
+          className="flex flex-row items-start"
+        >
           <span className="flex flex-1 flex-col">
             <Field
               key={textFieldKeys[i]}

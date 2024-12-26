@@ -29,7 +29,8 @@ export function DiscriminatedUnionField({
     control,
   });
   function onDiscriminatorChange(value: string) {
-    const newObj = nodeTypecast.discriminatedUnionChildrenMap[value]!;
+    const newObj = nodeTypecast.discriminatedUnionChildrenMap[value];
+    if (!newObj) return;
     const newDefaultValues = {
       ...defaultFormValuesForNode(newObj),
       [nodeTypecast.discriminatorName]: value,
@@ -38,7 +39,7 @@ export function DiscriminatedUnionField({
   }
   const children = nodeTypecast.discriminatedUnionChildrenMap[
     field.value[nodeTypecast.discriminatorName]
-  ]! as ParsedInputNode & { type: "object" };
+  ] as ParsedInputNode & { type: "object" };
   return (
     <InputGroupContainer
       title={label}

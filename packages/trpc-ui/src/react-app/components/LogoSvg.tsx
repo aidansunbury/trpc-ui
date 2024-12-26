@@ -13,6 +13,7 @@ export function LogoSvg({ className }: { className?: string }) {
       enableBackground="new 0 0 512 512"
       className={className}
     >
+      <title>trpc-ui logo</title>
       <path
         fill="#282829"
         opacity="1.000000"

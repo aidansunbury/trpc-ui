@@ -19,7 +19,7 @@ import getSize from "string-byte-length";
 import SuperJson from "superjson";
 import { z } from "zod";
 import JSONEditor from "../JSONEditor";
-import { Error as ErrorComponent } from "./Error";
+import { ErrorDisplay as ErrorComponent } from "./Error";
 import { FormSection } from "./FormSection";
 import { ProcedureFormButton } from "./ProcedureFormButton";
 import { Response } from "./Response";
@@ -161,7 +161,7 @@ export function ProcedureForm({
       );
       setShouldReset(false);
     }
-  }, [shouldReset]);
+  }, [shouldReset, setShouldReset, resetForm, defaultFormValuesForNode]);
   function reset() {
     setShouldReset(true);
     setQueryEnabled(false);

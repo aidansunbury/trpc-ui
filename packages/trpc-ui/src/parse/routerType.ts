@@ -86,6 +86,7 @@ const ProcedureSchema = z.object({
 
 export type Procedure = z.infer<typeof ProcedureSchema>;
 
+// biome-ignore lint/complexity/noBannedTypes: <explanation>
 export function isProcedure(obj: unknown | Function): obj is Procedure {
   if (typeof obj !== "function" || !("_def" in obj)) return false;
   return ProcedureDefSchema.safeParse((obj as any)._def).success;

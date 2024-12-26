@@ -18,6 +18,7 @@ function flatten(
   if (node.nodeType === "router") {
     const o = Object.values(node.children)
       .map(flatten)
+      // biome-ignore lint/performance/noAccumulatingSpread: <idk what this code is even doing>
       .reduce((a, b) => [...a, ...b]);
     return [...r, ...o, [node.path.join("."), colorSchemeType]];
   }

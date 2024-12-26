@@ -12,6 +12,7 @@
     "cpy:readme": "cp README.MD packages/trpc-ui/README.md",
     "start:test-app": "node ./packages/test-app/lib/server.ts",
     "biome:check": "biome check --max-diagnostics=none",
+    "biome:check:errors": "biome check --max-diagnostics=none --diagnostic-level=error",
     "biome:check:changed": "biome check --changed --max-diagnostics=none",
     "biome:check:fix": "biome check --write --unsafe --max-diagnostics=none"
   },
