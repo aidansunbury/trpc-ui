@@ -16,13 +16,13 @@ import { fullFormats } from "ajv-formats/dist/formats";
 import React, { useEffect, useRef, useState } from "react";
 import { type Control, useForm, useFormState } from "react-hook-form";
 import getSize from "string-byte-length";
+import SuperJson from "superjson";
 import { z } from "zod";
 import JSONEditor from "../JSONEditor";
 import { Error as ErrorComponent } from "./Error";
 import { FormSection } from "./FormSection";
 import { ProcedureFormButton } from "./ProcedureFormButton";
 import { Response } from "./Response";
-import SuperJson from "superjson";
 
 const TRPCErrorSchema = z.object({
   meta: z.object({
@@ -133,9 +133,8 @@ export function ProcedureForm({
     let newData: any;
     if (options.transformer === "superjson") {
       newData = SuperJson.serialize(data[ROOT_VALS_PROPERTY_NAME]);
-    }
-    else {
-      newData = { ...data[ROOT_VALS_PROPERTY_NAME] }
+    } else {
+      newData = { ...data[ROOT_VALS_PROPERTY_NAME] };
     }
     if (procedure.procedureType === "query") {
       setQueryInput(newData);
@@ -174,7 +173,7 @@ export function ProcedureForm({
   } else {
     data = mutationResponse;
   }
-  
+
   // Get raw size before deserialization
   const size = getSize(JSON.stringify(data));
   if (options.transformer === "superjson" && data) {

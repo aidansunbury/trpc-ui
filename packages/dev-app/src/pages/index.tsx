@@ -2,12 +2,13 @@ import dynamic from "next/dynamic";
 import { parseRouterWithOptions } from "trpc-ui/parse/parseRouter";
 import { RootComponent } from "trpc-ui/react-app/Root";
 import { trpc } from "trpc-ui/react-app/trpc";
-import { appRouter } from "~/router";
 import { env } from "~/env.mjs";
+import { appRouter } from "~/router";
 
-
-console.log(`Using superjson: ${env.NEXT_PUBLIC_SUPERJSON}`)
-const parse = parseRouterWithOptions(appRouter, { transformer: env.NEXT_PUBLIC_SUPERJSON === "false" ? undefined : "superjson" });
+console.log(`Using superjson: ${env.NEXT_PUBLIC_SUPERJSON}`);
+const parse = parseRouterWithOptions(appRouter, {
+  transformer: env.NEXT_PUBLIC_SUPERJSON === "false" ? undefined : "superjson",
+});
 
 const App = dynamic(
   Promise.resolve(() => (
@@ -15,7 +16,8 @@ const App = dynamic(
       rootRouter={parse}
       options={{
         url: "http://localhost:3000/api/trpc",
-        transformer: env.NEXT_PUBLIC_SUPERJSON === "false" ? undefined : "superjson",
+        transformer:
+          env.NEXT_PUBLIC_SUPERJSON === "false" ? undefined : "superjson",
         meta: {
           title: "Dev App Title",
           description:

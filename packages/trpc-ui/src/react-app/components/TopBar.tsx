@@ -5,7 +5,7 @@ import { LogoSvg } from "@src/react-app/components/LogoSvg";
 import { useHeadersContext } from "@src/react-app/components/contexts/HeadersContext";
 import { useSearch } from "@src/react-app/components/contexts/SearchStore";
 import { useIsMac } from "@src/react-app/components/hooks/useIsMac";
-import React from "react";
+import type React from "react";
 
 export function TopBar({
   open,

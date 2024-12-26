@@ -6,7 +6,7 @@ import { z } from "zod";
  */
 const server = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]),
-  NEXT_PUBLIC_SUPERJSON: z.enum(["true", "false"])
+  NEXT_PUBLIC_SUPERJSON: z.enum(["true", "false"]),
 });
 
 /**
@@ -14,7 +14,7 @@ const server = z.object({
  * built with invalid env vars. To expose them to the client, prefix them with `NEXT_PUBLIC_`.
  */
 const client = z.object({
-  NEXT_PUBLIC_SUPERJSON: z.enum(["true", "false"])
+  NEXT_PUBLIC_SUPERJSON: z.enum(["true", "false"]),
 });
 
 /**

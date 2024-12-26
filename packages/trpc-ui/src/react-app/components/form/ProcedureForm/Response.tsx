@@ -21,9 +21,9 @@ export function Response({
       ? `Response (${prettyMs(time)})`
       : "Response";
 
-    return (
-      <FormSection title={title}>
-        <JsonViewer rootName={false} value={children} quotesOnKeys={false} />
-      </FormSection>
-    );
+  return (
+    <FormSection title={title}>
+      <JsonViewer rootName={false} value={children} quotesOnKeys={false} />
+    </FormSection>
+  );
 }
