@@ -5,6 +5,7 @@ import type { zodToJsonSchema } from "zod-to-json-schema";
 import { logParseError } from "./parseErrorLogs";
 import { type ParsedProcedure, parseProcedure } from "./parseProcedure";
 
+// TODO this should be more specific, as it hurts the type safety lower down
 export type JSON7SchemaType = ReturnType<typeof zodToJsonSchema>;
 
 export type ProcedureType = "query" | "mutation" | "subscription";

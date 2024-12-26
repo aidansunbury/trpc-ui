@@ -11,6 +11,7 @@ import { CloseIcon } from "@src/react-app/components/icons/CloseIcon";
 import { ToggleJsonIcon } from "@src/react-app/components/icons/ToggleJsonIcon";
 import { trpc } from "@src/react-app/trpc";
 import type { RenderOptions } from "@src/render";
+import { sample } from "@stoplight/json-schema-sampler";
 import type { UseMutationResult, UseQueryResult } from "@tanstack/react-query";
 import { fullFormats } from "ajv-formats/dist/formats";
 import React, { useEffect, useRef, useState } from "react";
@@ -18,6 +19,7 @@ import { type Control, useForm, useFormState } from "react-hook-form";
 import getSize from "string-byte-length";
 import SuperJson from "superjson";
 import { z } from "zod";
+import { AutoFillIcon } from "../../icons/AutoFillIcon";
 import JSONEditor from "../JSONEditor";
 import { ErrorDisplay as ErrorComponent } from "./Error";
 import { FormSection } from "./FormSection";
@@ -223,8 +225,22 @@ export function ProcedureForm({
             <FormSection
               title="Input"
               topRightElement={
-                <div className="flex">
+                <div className="flex space-x-1">
                   <XButton control={control} reset={reset} />
+                  <div className="h-6 w-6">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setValue(
+                          "vals",
+                          sample(procedure.inputSchema)
+                        )
+                      }
+                      }
+                    >
+                      <AutoFillIcon className="h-6 w-6" />
+                    </button>
+                  </div>
                   <ToggleRawInput onClick={toggleRawInput} />
                 </div>
               }
@@ -254,7 +270,6 @@ export function ProcedureForm({
                 ) : (
                   <Field inputNode={procedure.node} control={control} />
                 ))}
-
               <ProcedureFormButton
                 text={`Execute ${name}`}
                 colorScheme={"neutral"}
@@ -319,12 +334,12 @@ function ToggleRawInput({ onClick }: { onClick: () => void }) {
 }
 
 function wrapJsonSchema(jsonSchema: any) {
-  jsonSchema.$schema = undefined;
+  const { $schema, ...rest} = jsonSchema;
 
   return {
     type: "object",
     properties: {
-      [ROOT_VALS_PROPERTY_NAME]: jsonSchema,
+      [ROOT_VALS_PROPERTY_NAME]: rest,
     },
     required: [],
     additionalProperties: false,
