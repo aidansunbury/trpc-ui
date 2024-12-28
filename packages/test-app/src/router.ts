@@ -111,8 +111,6 @@ const postsRouter = t.router({
     }),
 });
 
-
-
 const multiRouter = {
   userRouter,
   postsRouter,
@@ -311,7 +309,8 @@ export const testRouter = t.router({
     }),
   nonObjectInput: t.procedure
     .meta({
-      description: "This input is just a string, not a property on an object.\n~~~ts\nt.procedure\n\t.meta({\n\t\tdescription: \"...\",\n\t})\n\t.input(z.string())\n\t.query(({ input }) => {\n\t\treturn `Your input was ${input}`;\n\t}),",
+      description:
+        'This input is just a string, not a property on an object.\n~~~ts\nt.procedure\n\t.meta({\n\t\tdescription: "...",\n\t})\n\t.input(z.string())\n\t.query(({ input }) => {\n\t\treturn `Your input was ${input}`;\n\t}),',
     })
     .input(z.string())
     .query(({ input }) => {
