@@ -28,7 +28,8 @@
         "noDuplicateFontNames": "off"
       },
       "style": {
-        "noNonNullAssertion": "warn"
+        "noNonNullAssertion": "warn",
+        "useImportType": "off"
       },
       "recommended": true
     }
