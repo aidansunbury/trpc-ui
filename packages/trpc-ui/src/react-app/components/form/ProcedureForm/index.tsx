@@ -271,6 +271,7 @@ export function ProcedureForm({
                 colorScheme={"neutral"}
                 loading={query.fetchStatus === "fetching" || mutation.isPending}
               />
+              <button type="button" onClick={}>fetch me</button>
             </FormSection>
           </div>
         </form>
