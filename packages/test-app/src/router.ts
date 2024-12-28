@@ -111,23 +111,11 @@ const postsRouter = t.router({
     }),
 });
 
-const utilityRouter = t.router({
-  getUsState: t.procedure.query(() => {
-    return [
-      {
-        stateCode: "NY",
-        stateName: "New York",
-        stateId: 0,
-      },
-    ];
-  }),
-});
-utilityRouter._def.procedures.getUsState._def.meta;
+
 
 const multiRouter = {
   userRouter,
   postsRouter,
-  utilityRouter,
 };
 
 // TODO unimplemented
@@ -165,15 +153,7 @@ enum Fruits {
 export const testRouter = t.router({
   userRouter: userRouter,
   postsRouter: postsRouter,
-  utilityRouter: utilityRouter,
   nestedRouters: t.router(multiRouter),
-  deeplyNestedRouter: t.router({
-    levelOne: t.router({
-      levelTwo: t.router({
-        levelThree: t.router(multiRouter),
-      }),
-    }),
-  }),
   inputShowcaseRouter: t.router({
     textInput: t.procedure
       .input(z.object({ aTextInput: z.string() }))
@@ -313,7 +293,7 @@ export const testRouter = t.router({
   procedureWithDescription: t.procedure
     .meta({
       description:
-        "# This is a description\n\nIt's a **good** one.\nIt may be overkill in certain situations, but procedures descriptions can render markdown thanks to [react-markdown](https://github.com/remarkjs/react-markdown) and [tailwindcss-typography](https://github.com/tailwindlabs/tailwindcss-typography)\n1. Lists\n2. Are\n3. Supported\n but I *personally* think that [links](https://github.com/aidansunbury/trpc-ui) and images ![Image example](https://private-user-images.githubusercontent.com/64103161/384591987-7dc0e751-d493-4337-ac8d-a1f16924bf48.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzExNDM3OTMsIm5iZiI6MTczMTE0MzQ5MywicGF0aCI6Ii82NDEwMzE2MS8zODQ1OTE5ODctN2RjMGU3NTEtZDQ5My00MzM3LWFjOGQtYTFmMTY5MjRiZjQ4LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDExMDklMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMTA5VDA5MTEzM1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTE4YmM4OTlkZmYyNmJjOWI5YzgwZDUxOTVlYTBjODlkMTVkMzNlNmJjZDhkZDJiNTRhNzFmNDZhMzllNDc2ZGYmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.FsvDvXo6S7n4uOsi3LMUUOeEhjXq6LF88MlU60gzZ2k)\n are the most useful for documentation purposes",
+        "# This is a description\n\nIt's a **good** one.\nIt may be overkill in certain situations, but procedures descriptions can render markdown thanks to [react-markdown](https://github.com/remarkjs/react-markdown) and [tailwindcss-typography](https://github.com/tailwindlabs/tailwindcss-typography)",
     })
     .input(
       z.object({
@@ -331,7 +311,7 @@ export const testRouter = t.router({
     }),
   nonObjectInput: t.procedure
     .meta({
-      description: "This input is just a string, not a property on an object.",
+      description: "This input is just a string, not a property on an object.\n~~~ts\nt.procedure\n\t.meta({\n\t\tdescription: \"...\",\n\t})\n\t.input(z.string())\n\t.query(({ input }) => {\n\t\treturn `Your input was ${input}`;\n\t}),",
     })
     .input(z.string())
     .query(({ input }) => {
@@ -340,7 +320,7 @@ export const testRouter = t.router({
   combinedInputs: t.procedure
     .meta({
       description:
-        "tRPC ui now supports merged input validators. This use case makes creating composable procedures with middlewares easier. The three properties come from three septate .input() calls which automatically get merged into one zod validator.",
+        "tRPC ui now supports merged input validators. This use case makes creating composable procedures with middlewares easier. The three properties come from three septate .input() calls which automatically get merged into one zod validator. \n~~~ts\nt.procedure\n\t.input(\n\t\tz.object({\n\t\t\tuserId: z.string(),\n\t\t}),\n\t)\n\t.input(\n\t\tz.object({\n\t\t\torganizationId: z.string(),\n\t\t}),\n\t)\n\t.input(\n\t\tz.object({\n\t\t\tpostId: z.string(),\n\t\t}),\n\t)\n\t.query(({ input }) => {\n\t\treturn input;\n\t}),\n~~~\nThe above code generated this procedure.",
     })
     .input(
       z.object({

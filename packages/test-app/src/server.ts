@@ -9,7 +9,6 @@ import { testRouter } from "./router.js";
 dotenv.config();
 
 const serverUrl = process.env.SERVER_URL || "http://localhost";
-const trpcPath = process.env.TRPC_PATH || "trpc";
 const port = Number(process.env.PORT) || 4000;
 
 console.log("Starting server with environment variables:");
@@ -20,7 +19,6 @@ const liveReload = process.env.LIVE_RELOAD === "true";
 const simulateDelay = process.env.SIMULATE_DELAY === "true";
 
 if (!serverUrl) throw new Error("No SERVER_URL passed.");
-if (!trpcPath) throw new Error("No TRPC_PATH passed.");
 
 async function createContext(opts: trpcExpress.CreateExpressContextOptions) {
   const authHeader = opts.req.headers.authorization;
@@ -48,7 +46,7 @@ if (simulateDelay) {
 
 expressApp.use(morgan("short", {}));
 expressApp.use(
-  `/${trpcPath}`,
+  "/trpc",
   trpcExpress.createExpressMiddleware({
     router: testRouter,
     createContext,
@@ -56,15 +54,14 @@ expressApp.use(
 );
 
 console.log("Starting at url ");
-console.log(`${serverUrl}${port ? `:${port}` : ""}/${trpcPath}`);
+console.log(`${serverUrl}${port ? `:${port}` : ""}`);
 
 expressApp.get("/", (_req, res) => {
-  console.log("Got request");
   res.send(
     renderTrpcPanel(testRouter as any, {
       url: `${serverUrl}${
         process.env.NODE_ENV === "production" ? "" : `:${port}`
-      }/${trpcPath}`,
+      }/trpc`,
       transformer: "superjson",
       meta: {
         title: "Demo tRPC Panel",
@@ -75,4 +72,4 @@ expressApp.get("/", (_req, res) => {
   );
 });
 
-expressApp.listen(port ? port : 4000);
+expressApp.listen(port);

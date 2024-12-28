@@ -102,6 +102,9 @@ importers:
       '@types/morgan':
         specifier: ^1.9.3
         version: 1.9.9
+      '@types/node':
+        specifier: ^18.15.5
+        version: 18.19.68
       '@types/react-dom':
         specifier: ^18.0.6
         version: 18.3.5(@types/react@18.3.18)
@@ -136,8 +139,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       trpc-ui:
-        specifier: 1.0.6
-        version: 1.0.6(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react@18.2.0))(@mui/material@5.16.12(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@trpc/server@11.0.0-rc.446)(@types/react@18.3.18)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(zod@3.24.1)
+        specifier: 1.0.10
+        version: 1.0.10(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react@18.2.0))(@mui/material@5.16.12(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@trpc/server@11.0.0-rc.446)(@types/react@18.3.18)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(zod@3.24.1)
       tsconfig-paths:
         specifier: ^4.1.0
         version: 4.2.0
@@ -5406,8 +5409,8 @@ packages:
   trough@2.2.0:
     resolution: {integrity: sha512-tmMpK00BjZiUyVyvrBK7knerNgmgvcV/KLVyuma/SC+TQN167GrMRciANTz09+k3zW8L8t60jWO1GpfkZdjTaw==}
 
-  trpc-ui@1.0.6:
-    resolution: {integrity: sha512-26QlxBrXNmnp1X/CAuy/UYQDmXY7Pt40N3s5aLKuhnrMLmGA+RwQbQDoSSlY0KfQ0RyMdoXlqh7OPwyCydFpjA==}
+  trpc-ui@1.0.10:
+    resolution: {integrity: sha512-kLjsnUCxwppx6Jl/+ble/9Z2LmScz+xI2nXBPEVWKaAqI859qEiej0PlYTgjTlHEZTNKCX01BuS4TST5iKEmvw==}
     peerDependencies:
       '@trpc/server': ^11.0.0-next-beta.264
       zod: ^3.19.1
@@ -11712,8 +11715,9 @@ snapshots:
 
   trough@2.2.0: {}
 
-  trpc-ui@1.0.6(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react@18.2.0))(@mui/material@5.16.12(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@trpc/server@11.0.0-rc.446)(@types/react@18.3.18)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(zod@3.24.1):
+  trpc-ui@1.0.10(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react@18.2.0))(@mui/material@5.16.12(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@trpc/server@11.0.0-rc.446)(@types/react@18.3.18)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(zod@3.24.1):
     dependencies:
+      '@stoplight/json-schema-sampler': 0.3.0
       '@textea/json-viewer': 3.5.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react@18.2.0))(@mui/material@5.16.12(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@types/react@18.3.18)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@trpc/server': 11.0.0-rc.446
       clsx: 2.1.1
