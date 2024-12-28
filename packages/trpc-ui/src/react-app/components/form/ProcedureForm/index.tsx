@@ -90,7 +90,8 @@ export function ProcedureForm({
     return cur;
   }
 
-  function getUtils(utils: typeof trpc | (typeof trpc)[string]) {
+  const utils = trpc.useUtils();
+  function getUtils() {
     let cur = utils;
     for (const p of procedure.pathFromRootRouter) {
       // TODO - Maybe figure out these typings?
@@ -99,10 +100,9 @@ export function ProcedureForm({
     }
     return cur;
   }
-  const a = trpc.useUtils()
+  // const a = trpc.useUtils()
 
-  const utils = getUtils(trpc);
-  const { mutationData, mutateAsync } = getProcedure().useMutation();
+  const { mutateAsync } = getProcedure().useMutation();
 
 
   // const query = (() => {
@@ -165,8 +165,9 @@ export function ProcedureForm({
       try {
 
         console.log("hi");
+        const utes = getUtils();
         
-      const result = await measureAsyncDuration(async () => await utils.fetch(newData));
+      const result = await measureAsyncDuration(async () => await utes.fetch(newData));
       console.log(result);
         setResponse(result);
       }
@@ -305,7 +306,11 @@ export function ProcedureForm({
                 colorScheme={"neutral"}
                 loading={loading}
               />
-              <button type="button" onClick={async ()=> console.log(await a.fetch())}>fetch me</button>
+              <button type="button" onClick={async ()=> {
+                const utes = getUtils();
+                const val = await utes.fetch();
+                console.log(val);
+              }}>fetch me</button>
             </FormSection>
           </div>
         </form>
@@ -325,6 +330,7 @@ export function ProcedureForm({
               <Response>{response}</Response>
             ))}
             {JSON.stringify(response)}
+            {JSON.stringify(duration)}
         </div>
       </CollapsableSection>
     </ProcedureFormContextProvider>
