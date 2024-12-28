@@ -25,6 +25,7 @@ import { ErrorDisplay as ErrorComponent } from "./Error";
 import { FormSection } from "./FormSection";
 import { ProcedureFormButton } from "./ProcedureFormButton";
 import { Response } from "./Response";
+import { useAsyncDuration } from "../../hooks/useAsyncDuration";
 
 const TRPCErrorSchema = z.object({
   meta: z.object({
@@ -68,13 +69,16 @@ export function ProcedureForm({
 }) {
   // null => request was never sent
   // undefined => request successful but nothing returned from procedure
-  const [mutationResponse, setMutationResponse] = useState<any>(null);
-  const [queryEnabled, setQueryEnabled] = useState<boolean>(false);
-  const [queryInput, setQueryInput] = useState<any>(null);
+  const [response, setResponse] = useState<any>(null);
+  const { duration, loading, measureAsyncDuration } = useAsyncDuration();
+  // const [queryEnabled, setQueryEnabled] = useState<boolean>(false);
+  // const [queryInput, setQueryInput] = useState<any>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
   const context = trpc.useContext();
   const [startTime, setStartTime] = useState<number | undefined>();
   const [opDuration, setOpDuration] = useState<number | undefined>();
+
+
 
   function getProcedure() {
     let cur: typeof trpc | (typeof trpc)[string] = trpc;
@@ -86,36 +90,51 @@ export function ProcedureForm({
     return cur;
   }
 
-  const query = (() => {
-    const router = getProcedure();
-    //@ts-ignore
-    return router.useQuery(queryInput, {
-      enabled: queryEnabled,
-      initialData: null,
-      retry: false,
-      refetchOnWindowFocus: false,
-    });
-  })() as UseQueryResult<any>;
-
-  function invalidateQuery(input: any) {
-    let cur: any = context;
+  function getUtils(utils: typeof trpc | (typeof trpc)[string]) {
+    let cur = utils;
     for (const p of procedure.pathFromRootRouter) {
+      // TODO - Maybe figure out these typings?
+      //@ts-ignore
       cur = cur[p];
     }
-    cur.invalidate(input);
+    return cur;
   }
+  const a = trpc.useUtils()
 
-  const mutation = (() => {
-    const router = getProcedure();
-    //@ts-ignore
-    return router.useMutation({
-      retry: false,
-      onSuccess: (data: unknown) => {
-        if (startTime) setOpDuration(Date.now() - startTime);
-        setStartTime(undefined);
-      },
-    });
-  })() as UseMutationResult<any>;
+  const utils = getUtils(trpc);
+  const { mutationData, mutateAsync } = getProcedure().useMutation();
+
+
+  // const query = (() => {
+  //   const router = getProcedure();
+  //   //@ts-ignore
+  //   return router.useQuery(queryInput, {
+  //     enabled: queryEnabled,
+  //     initialData: null,
+  //     retry: false,
+  //     refetchOnWindowFocus: false,
+  //   });
+  // })() as UseQueryResult<any>;
+
+  // function invalidateQuery(input: any) {
+  //   let cur: any = context;
+  //   for (const p of procedure.pathFromRootRouter) {
+  //     cur = cur[p];
+  //   }
+  //   cur.invalidate(input);
+  // }
+
+  // const mutation = (() => {
+  //   const router = getProcedure();
+  //   //@ts-ignore
+  //   return router.useMutation({
+  //     retry: false,
+  //     onSuccess: (data: unknown) => {
+  //       if (startTime) setOpDuration(Date.now() - startTime);
+  //       setStartTime(undefined);
+  //     },
+  //   });
+  // })() as UseMutationResult<any>;
 
   const {
     control,
@@ -131,7 +150,8 @@ export function ProcedureForm({
       [ROOT_VALS_PROPERTY_NAME]: defaultFormValuesForNode(procedure.node),
     },
   });
-  function onSubmit(data: { [ROOT_VALS_PROPERTY_NAME]: any }) {
+  async function onSubmit(data: { [ROOT_VALS_PROPERTY_NAME]: any }) {
+    console.log(data);
     let newData: any;
     if (options.transformer === "superjson") {
       newData = SuperJson.serialize(data[ROOT_VALS_PROPERTY_NAME]);
@@ -139,60 +159,74 @@ export function ProcedureForm({
       newData = { ...data[ROOT_VALS_PROPERTY_NAME] };
     }
     if (procedure.procedureType === "query") {
-      setQueryInput(newData);
-      setQueryEnabled(true);
-      invalidateQuery(newData);
+      // setQueryInput(newData);
+      // setQueryEnabled(true);
+      // invalidateQuery(newData);
+      try {
+
+        console.log("hi");
+        
+      const result = await measureAsyncDuration(async () => await utils.fetch(newData));
+      console.log(result);
+        setResponse(result);
+      }
+      catch (e) {
+        console.log("error");
+        console.log(e);
+        setResponse(e);
+      };
     } else {
-      setStartTime(Date.now());
-      mutation.mutateAsync(newData).then(setMutationResponse).catch();
+      const result = await measureAsyncDuration(() => mutateAsync(newData));
+      setResponse(result);
     }
   }
+
 
   // I've seen stuff online saying form reset should happen in useEffect hook only
   // not really sure though, gonna just leave it for now
-  const [shouldReset, setShouldReset] = useState(false);
-  useEffect(() => {
-    if (shouldReset) {
-      resetForm(
-        { [ROOT_VALS_PROPERTY_NAME]: defaultFormValuesForNode(procedure.node) },
-        {
-          keepValues: false,
-          keepDirtyValues: false,
-          keepDefaultValues: false,
-        },
-      );
-      setShouldReset(false);
-    }
-  }, [shouldReset, setShouldReset, resetForm, defaultFormValuesForNode]);
-  function reset() {
-    setShouldReset(true);
-    setQueryEnabled(false);
-  }
+  // const [shouldReset, setShouldReset] = useState(false);
+  // useEffect(() => {
+  //   if (shouldReset) {
+  //     resetForm(
+  //       { [ROOT_VALS_PROPERTY_NAME]: defaultFormValuesForNode(procedure.node) },
+  //       {
+  //         keepValues: false,
+  //         keepDirtyValues: false,
+  //         keepDefaultValues: false,
+  //       },
+  //     );
+  //     setShouldReset(false);
+  //   }
+  // }, [shouldReset, setShouldReset, resetForm, defaultFormValuesForNode]);
+  // function reset() {
+  //   setShouldReset(true);
+  //   setQueryEnabled(false);
+  // }
 
-  let data: any;
-  if (procedure.procedureType === "query") {
-    data = query.data ?? null;
-  } else {
-    data = mutationResponse;
-  }
+  // let data: any;
+  // if (procedure.procedureType === "query") {
+  //   data = query.data ?? null;
+  // } else {
+  //   data = mutationResponse;
+  // }
 
   // Get raw size before deserialization
-  const size = getSize(JSON.stringify(data));
-  if (options.transformer === "superjson" && data) {
-    data = SuperJson.deserialize(data);
-  }
-  const error =
-    procedure.procedureType === "query" ? query.error : mutation.error;
+  // const size = getSize(JSON.stringify(data));
+  // if (options.transformer === "superjson" && data) {
+  //   data = SuperJson.deserialize(data);
+  // }
+  // const error =
+  //   procedure.procedureType === "query" ? query.error : mutation.error;
 
   // Fixes the timing for queries, not ideal but works
-  useEffect(() => {
-    if (query.fetchStatus === "fetching") {
-      setStartTime(Date.now());
-    }
-    if (query.fetchStatus === "idle") {
-      setOpDuration(Date.now() - startTime);
-    }
-  }, [query.fetchStatus]);
+  // useEffect(() => {
+  //   if (query.fetchStatus === "fetching") {
+  //     setStartTime(Date.now());
+  //   }
+  //   if (query.fetchStatus === "idle") {
+  //     setOpDuration(Date.now() - startTime);
+  //   }
+  // }, [query.fetchStatus]);
 
   const fieldName = procedure.node.path.join(".");
 
@@ -226,7 +260,7 @@ export function ProcedureForm({
               title="Input"
               topRightElement={
                 <div className="flex space-x-1">
-                  <XButton control={control} reset={reset} />
+                  {/* <XButton control={control} reset={reset} /> */}
                   <div className="h-6 w-6">
                     <button
                       type="button"
@@ -269,27 +303,28 @@ export function ProcedureForm({
               <ProcedureFormButton
                 text={`Execute ${name}`}
                 colorScheme={"neutral"}
-                loading={query.fetchStatus === "fetching" || mutation.isPending}
+                loading={loading}
               />
-              <button type="button" onClick={}>fetch me</button>
+              <button type="button" onClick={async ()=> console.log(await a.fetch())}>fetch me</button>
             </FormSection>
           </div>
         </form>
         <div className="flex flex-col space-y-4">
-          {data && (
+          {/* {data && (
             <Response size={size} time={opDuration}>
               {data}
             </Response>
           )}
           {!data && data !== null && (
             <Response>Successful request but no data was returned</Response>
-          )}
-          {error &&
-            (isTrpcError(error) ? (
-              <ErrorComponent error={error} />
+          )} */}
+          {response &&
+            (isTrpcError(response) ? (
+              <ErrorComponent error={response} />
             ) : (
-              <Response>{error}</Response>
+              <Response>{response}</Response>
             ))}
+            {JSON.stringify(response)}
         </div>
       </CollapsableSection>
     </ProcedureFormContextProvider>
