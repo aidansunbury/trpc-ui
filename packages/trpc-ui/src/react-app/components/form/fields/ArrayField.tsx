@@ -68,7 +68,7 @@ export function ArrayField({
     >
       {field.value.map((parsedNode: ParsedInputNode, i: number) => (
         <span
-          key={`${JSON.stringify(parsedNode.path)} ${i}`}
+          key={`${JSON.stringify(parsedNode)} ${i}`}
           className="flex flex-row items-start"
         >
           <span className="flex flex-1 flex-col">
