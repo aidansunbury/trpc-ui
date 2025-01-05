@@ -69,7 +69,7 @@ To document your entire backend, you can pass in a metadata object with a title 
 
 Make sure you specify whether or not you are using [superjson](https://trpc.io/docs/server/data-transformers#using-superjson) as a data transformer.
 
-### NextJs App Router / create-t3-app
+### NextJs App Router / create-t3-app example
 
 Create a [route handler](https://nextjs.org/docs/app/building-your-application/routing/route-handlers) somewhere like `src/app/api/panel/route.ts`
 
@@ -94,7 +94,7 @@ export async function GET() {
 
 Then we can visit the url `http://localhost:3000/api/panel` to use the panel.
 
-### NextJS Pages Router
+### NextJS Pages Router example
 
 Create an api route somewhere like `src/pages/api/panel.ts` and send a text response:
 
