@@ -35,28 +35,24 @@ export function RouterContainer({
       >
         {Object.entries(router.children).map(
           ([childName, routerOrProcedure]) => {
-            if (routerOrProcedure.nodeType === "router") {
-              return (
-                <div key={childName}>
+            return (
+              <div key={childName}>
+                {routerOrProcedure.nodeType === "router" ? (
                   <RouterContainer
                     name={childName}
                     options={options}
                     router={routerOrProcedure}
                   />
-                </div>
-              );
-            }
-
-            return (
-              <div key={childName}>
-                <ProcedureForm
-                  name={childName}
-                  procedure={routerOrProcedure}
-                  options={options}
-                />
+                ) : (
+                  <ProcedureForm
+                    name={childName}
+                    procedure={routerOrProcedure}
+                    options={options}
+                  />
+                )}
               </div>
             );
-          },
+          }
         )}
       </div>
     </CollapsableSection>

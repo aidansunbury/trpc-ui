@@ -43,7 +43,7 @@ const TRPCErrorSchema = z.object({
               message: z.string().optional(),
             }),
           }),
-        }),
+        })
       )
       .min(1),
   }),
@@ -107,31 +107,18 @@ export function ProcedureForm({
     } else {
       newData = { ...data[ROOT_VALS_PROPERTY_NAME] };
     }
-    if (procedure.procedureType === "query") {
-      try {
-        const result = await measureAsyncDuration(
-          async () => await fetchFunction(newData),
-        );
-        console.log(result);
-        setResponse(result);
-      } catch (e) {
-        console.log("error");
-        console.log(e);
-        setResponse(e);
-      }
-    } else {
-      const result = await measureAsyncDuration(
-        async () => await mutateAsync(newData),
-      );
-      setResponse(result);
-    }
+    const apiCaller =
+      procedure.procedureType === "query" ? fetchFunction : mutateAsync;
+    const result = await measureAsyncDuration(
+      async () => await apiCaller(newData)
+    );
+    setResponse(result);
   }
 
   const fieldName = procedure.node.path.join(".");
 
   const [useRawInput, setUseRawInput] = useState(false);
   function toggleRawInput() {
-    console.log(getValues());
     setUseRawInput(!useRawInput);
   }
 
@@ -159,7 +146,7 @@ export function ProcedureForm({
               title="Input"
               topRightElement={
                 <div className="flex space-x-1">
-                  {/* <XButton control={control} reset={reset} /> */}
+                  <XButton control={control} reset={resetForm} />
                   <div className="h-6 w-6">
                     <button
                       type="button"
@@ -218,6 +205,30 @@ export function ProcedureForm({
         </div>
       </CollapsableSection>
     </ProcedureFormContextProvider>
+  );
+}
+
+function XButton({
+  control,
+  reset,
+}: {
+  control: Control<any>;
+  reset: () => void;
+}) {
+  const { isDirty } = useFormState({ control: control });
+
+  function onClickClear() {
+    reset();
+  }
+
+  return (
+    <div className="h-6 w-6">
+      {isDirty && (
+        <button type="button" onClick={onClickClear}>
+          <CloseIcon className="h-6 w-6" />
+        </button>
+      )}
+    </div>
   );
 }
 

@@ -24,7 +24,6 @@ import { MetaHeader } from "./components/MetaHeader";
 import { RouterContainer } from "./components/RouterContainer";
 import { SideNav } from "./components/SideNav";
 import { TopBar } from "./components/TopBar";
-import { trpc } from "./trpc";
 
 export function RootComponent({
   rootRouter,
@@ -78,7 +77,7 @@ function ClientProviders({
         if (options.transformer === "superjson") return superjson;
         return undefined;
       })(),
-    }),
+    })
   );
   const [queryClient] = useState(() => new QueryClient());
 
@@ -101,7 +100,7 @@ function AppInnards({
 }) {
   const [sidebarOpen, setSidebarOpen] = useLocalStorage(
     "trpc-panel.show-minimap",
-    true,
+    true
   );
   const { openAndNavigateTo } = useSiteNavigationContext();
 
@@ -110,8 +109,6 @@ function AppInnards({
   useEffect(() => {
     openAndNavigateTo(path ?? [], true);
   }, []);
-
-  const utils = trpc.useUtils();
 
   return (
     <div className="relative flex flex-1 flex-col">
