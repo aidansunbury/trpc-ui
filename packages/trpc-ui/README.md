@@ -6,7 +6,7 @@ Probably the easiest and cheapest way to build a testing UI and documentation fo
 
 trpc panel moves as fast as your trpc backend with minimal effort.
 
-Check out our [test app](https://trpc.aidansunbury.dev/)
+Check out our [demo app](https://trpc.aidansunbury.dev/)
 
 ## Fork Notice
 
@@ -26,7 +26,7 @@ This is a fork of the original [tRPC panel](https://github.com/iway1/trpc-panel)
 
 ## Quick Start
 
-Install as a dev dependency with your preferred package manager:
+Install as a dependency with your preferred package manager:
 
 ```sh
 npm install trpc-ui
@@ -44,17 +44,21 @@ pnpm install trpc-ui
 bun add trpc-ui
 ```
 
-render your panel and return it from your backend (express example):
+render your panel and return it from your backend as a text response (express example):
 
 ```js
 import { renderTrpcPanel } from "trpc-ui";
 // ...
 app.use("/panel", (_, res) => {
   return res.send(
-    renderTrpcPanel(myTrpcRouter, { url: "http://localhost:4000/trpc", meta: {
-      title: "My Backend Title",
-      description: "This is a description of my API, which supports [markdown](https://en.wikipedia.org/wiki/Markdown).",
-    }})
+    renderTrpcPanel(myTrpcRouter, {
+      url: "http://localhost:4000/trpc", // Base url of your trpc server
+      meta: {
+        title: "My Backend Title",
+        description:
+          "This is a description of my API, which supports [markdown](https://en.wikipedia.org/wiki/Markdown).",
+      },
+    })
   );
 });
 ```
@@ -63,9 +67,36 @@ app.use("/panel", (_, res) => {
 
 To document your entire backend, you can pass in a metadata object with a title and description. To document individual procedures, see the [documenting procedures](#documenting-procedures).
 
-## NextJS / create-t3-app example
+Make sure you specify whether or not you are using [superjson](https://trpc.io/docs/server/data-transformers#using-superjson) as a data transformer.
 
-In Nextjs you'd want to create an api route somewhere like `src/pages/api/panel.ts` and send a text response:
+### NextJs App Router / create-t3-app
+
+Create a [route handler](https://nextjs.org/docs/app/building-your-application/routing/route-handlers) somewhere like `src/app/api/panel/route.ts`
+
+```ts
+import { NextResponse } from "next/server";
+import { renderTrpcPanel } from "trpc-ui";
+import { appRouter } from "~/server/api/root";
+
+export async function GET() {
+  return new NextResponse(
+    renderTrpcPanel(appRouter, {
+      url: "/api/trpc", // Default trpc route in nextjs
+      transformer: "superjson", // Enabled by default with create-t3-app
+    }),
+    {
+      status: 200,
+      headers: [["Content-Type", "text/html"] as [string, string]],
+    }
+  );
+}
+```
+
+Then we can visit the url `http://localhost:3000/api/panel` to use the panel.
+
+### NextJS Pages Router
+
+Create an api route somewhere like `src/pages/api/panel.ts` and send a text response:
 
 ```ts
 import type { NextApiRequest, NextApiResponse } from "next";
@@ -75,14 +106,12 @@ import { appRouter } from "../../server/api/root";
 export default async function handler(_: NextApiRequest, res: NextApiResponse) {
   res.status(200).send(
     renderTrpcPanel(appRouter, {
-      url: "http://localhost:3000/api/trpc",
+      url: "/api/trpc",
       transformer: "superjson",
     })
   );
 }
 ```
-
-Then we can visit the url `http://localhost:3000/api/panel` to use the panel. Here we do `transformer: "superjson"` assuming we have `superjson` set as the transformer in tRPC (which create-t3-app does by default).
 
 ## Documenting Procedures
 
@@ -117,6 +146,7 @@ export const appRouter = t.router({
 ```
 
 ### Markdown Support
+
 Most descriptions don't need more than basic text, but descriptions for procedures and procedure descriptions can render markdown. This is most often useful for adding links within descriptions, but all markdown is supported thanks to [react-markdown](https://github.com/remarkjs/react-markdown).
 
 ```ts
@@ -143,7 +173,7 @@ Whatever you pass to `describe()` will appear in the docs section. Any input fie
 
 ## Data Transformers
 
-Trpc panel supports `superjson`, just pass it into the transformer option:
+Trpc panel supports [superjson](https://github.com/flightcontrolhq/superjson), just pass it into the transformer option:
 
 ```js
 app.use("/panel", (_, res) => {
@@ -156,6 +186,8 @@ app.use("/panel", (_, res) => {
 });
 ```
 
+Submitting superjson only data types like `Date` or `Map` are not yet supported (they will be soon), but superjson data types returned from the server will be rendered correctly.
+
 ## Contributing
 
 `trpc-ui` welcomes and encourages open source contributions. Please see our [contributing](./CONTRIBUTING.md) guide for information on how to develop locally.
@@ -163,6 +195,7 @@ app.use("/panel", (_, res) => {
 ## Comparisons
 
 ### trpc-openapi
+
 [trpc-openapi](https://github.com/trpc/trpc-openapi) is designed for producing a REST API for external consumption from your trpc routers, not quickly testing your backed. If you do not care about exposing your API outside of your application, the additional overhead required to use `trpc-openapi` is not worth the effort. `trpc-ui` can be used with `trpc-openapi`, but the two libraries serve different purposes.
 
 ### trpc-playground
