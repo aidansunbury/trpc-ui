@@ -24,6 +24,7 @@ import { MetaHeader } from "./components/MetaHeader";
 import { RouterContainer } from "./components/RouterContainer";
 import { SideNav } from "./components/SideNav";
 import { TopBar } from "./components/TopBar";
+import { trpc } from "./trpc";
 
 export function RootComponent({
   rootRouter,
@@ -94,7 +95,10 @@ function ClientProviders({
 function AppInnards({
   rootRouter,
   options,
-}: { rootRouter: ParsedRouter; options: RenderOptions }) {
+}: {
+  rootRouter: ParsedRouter;
+  options: RenderOptions;
+}) {
   const [sidebarOpen, setSidebarOpen] = useLocalStorage(
     "trpc-panel.show-minimap",
     true,
@@ -106,6 +110,8 @@ function AppInnards({
   useEffect(() => {
     openAndNavigateTo(path ?? [], true);
   }, []);
+
+  const utils = trpc.useUtils();
 
   return (
     <div className="relative flex flex-1 flex-col">

@@ -68,6 +68,7 @@ const cache: {
   val: null,
 };
 
+// TODO: changing this from AnyTRPCRouter to a generic type would probably improve type safety
 export function renderTrpcPanel(router: AnyTRPCRouter, options: RenderOptions) {
   if (options.cache === true && cache.val) return cache.val;
 

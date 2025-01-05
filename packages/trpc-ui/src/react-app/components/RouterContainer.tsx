@@ -35,21 +35,25 @@ export function RouterContainer({
       >
         {Object.entries(router.children).map(
           ([childName, routerOrProcedure]) => {
-            return (
-              <div key={childName}>
-                {routerOrProcedure.nodeType === "router" ? (
+            if (routerOrProcedure.nodeType === "router") {
+              return (
+                <div key={childName}>
                   <RouterContainer
                     name={childName}
                     options={options}
                     router={routerOrProcedure}
                   />
-                ) : (
-                  <ProcedureForm
-                    name={childName}
-                    procedure={routerOrProcedure}
-                    options={options}
-                  />
-                )}
+                </div>
+              );
+            }
+
+            return (
+              <div key={childName}>
+                <ProcedureForm
+                  name={childName}
+                  procedure={routerOrProcedure}
+                  options={options}
+                />
               </div>
             );
           },

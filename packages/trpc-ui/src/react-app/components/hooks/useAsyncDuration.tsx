@@ -5,7 +5,7 @@ export function useAsyncDuration() {
   const [loading, setLoading] = useState(false);
 
   const measureAsyncDuration = async <T,>(
-    asyncFunction: () => Promise<T>
+    asyncFunction: () => Promise<T>,
   ): Promise<T> => {
     setLoading(true);
     const startTime = performance.now();
@@ -22,6 +22,3 @@ export function useAsyncDuration() {
 
   return { duration, loading, measureAsyncDuration };
 }
-
-
-
