@@ -43,7 +43,7 @@ const TRPCErrorSchema = z.object({
               message: z.string().optional(),
             }),
           }),
-        }),
+        })
       )
       .min(1),
   }),
@@ -110,7 +110,7 @@ export function ProcedureForm({
     const apiCaller =
       procedure.procedureType === "query" ? fetchFunction : mutateAsync;
     const result = await measureAsyncDuration(
-      async () => await apiCaller(newData),
+      async () => await apiCaller(newData)
     );
     setResponse(result);
   }
@@ -195,7 +195,6 @@ export function ProcedureForm({
           </div>
         </form>
         <div className="flex flex-col space-y-4">
-          {/* //TODO add size back */}
           {response &&
             (isTrpcError(response) ? (
               <ErrorComponent error={response} />
