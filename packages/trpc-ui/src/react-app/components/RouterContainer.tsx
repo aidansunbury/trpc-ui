@@ -52,7 +52,7 @@ export function RouterContainer({
                 )}
               </div>
             );
-          }
+          },
         )}
       </div>
     </CollapsableSection>

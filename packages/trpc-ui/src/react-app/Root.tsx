@@ -77,7 +77,7 @@ function ClientProviders({
         if (options.transformer === "superjson") return superjson;
         return undefined;
       })(),
-    })
+    }),
   );
   const [queryClient] = useState(() => new QueryClient());
 
@@ -100,7 +100,7 @@ function AppInnards({
 }) {
   const [sidebarOpen, setSidebarOpen] = useLocalStorage(
     "trpc-panel.show-minimap",
-    true
+    true,
   );
   const { openAndNavigateTo } = useSiteNavigationContext();
 
