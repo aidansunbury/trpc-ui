@@ -181,7 +181,9 @@ export const appRouter = createTRPCRouter({
     .query(() => {
       return "Was that described well enough?";
     }),
-
+  nonObjectInput: procedure.input(z.string()).query(({ input }) => {
+    return `Hello ${input}`;
+  }),
   slowProcedure: procedure
     .input(
       z.object({

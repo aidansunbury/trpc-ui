@@ -18,7 +18,6 @@ import React, { useRef, useState } from "react";
 import { type Control, useForm, useFormState } from "react-hook-form";
 import getSize from "string-byte-length";
 import SuperJson from "superjson";
-import { z } from "zod";
 import { useAsyncDuration } from "../../hooks/useAsyncDuration";
 import { AutoFillIcon } from "../../icons/AutoFillIcon";
 import JSONEditor from "../JSONEditor";
@@ -26,35 +25,6 @@ import { ErrorDisplay as ErrorComponent } from "./Error";
 import { FormSection } from "./FormSection";
 import { ProcedureFormButton } from "./ProcedureFormButton";
 import { Response } from "./Response";
-
-const TRPCErrorSchema = z.object({
-  meta: z.object({
-    responseJSON: z
-      .array(
-        z.object({
-          error: z.object({
-            json: z.object({
-              code: z.number(),
-              data: z.object({
-                code: z.string(),
-                httpStatus: z.number(),
-                stack: z.string().optional(),
-              }),
-              message: z.string().optional(),
-            }),
-          }),
-        }),
-      )
-      .min(1),
-  }),
-});
-
-export type TRPCErrorType = z.infer<typeof TRPCErrorSchema>;
-
-function isTrpcError(error: unknown): error is TRPCErrorType {
-  const parse = TRPCErrorSchema.safeParse(error);
-  return parse.success;
-}
 
 export const ROOT_VALS_PROPERTY_NAME = "vals";
 
@@ -79,8 +49,13 @@ export function ProcedureForm({
 }) {
   // null => request was never sent
   // undefined => request successful but nothing returned from procedure
-  const [response, setResponse] = useState<any>(null);
-  const { duration, loading, measureAsyncDuration } = useAsyncDuration();
+  const [response, setResponse] = useState<{
+    isError: boolean;
+    response: any;
+  } | null>(null);
+  const { duration, loading, measureAsyncDuration } = useAsyncDuration({
+    options,
+  });
   const formRef = useRef<HTMLFormElement | null>(null);
   const utils = trpc.useUtils();
   const { mutateAsync } = getUtilsOrProcedure(trpc, procedure).useMutation();
@@ -105,10 +80,11 @@ export function ProcedureForm({
     if (options.transformer === "superjson") {
       newData = SuperJson.serialize(data[ROOT_VALS_PROPERTY_NAME]);
     } else {
-      newData = { ...data[ROOT_VALS_PROPERTY_NAME] };
+      newData = data[ROOT_VALS_PROPERTY_NAME];
     }
     const apiCaller =
       procedure.procedureType === "query" ? fetchFunction : mutateAsync;
+
     const result = await measureAsyncDuration(
       async () => await apiCaller(newData),
     );
@@ -196,14 +172,16 @@ export function ProcedureForm({
         </form>
         <div className="flex flex-col space-y-4">
           {response &&
-            (isTrpcError(response) ? (
-              <ErrorComponent error={response} />
+            (response.isError ? (
+              <>
+                <ErrorComponent error={response.response} />
+              </>
             ) : (
               <Response
                 time={duration ?? undefined}
-                size={getSize(JSON.stringify(response))}
+                size={getSize(JSON.stringify(response.response))}
               >
-                {response}
+                {response.response}
               </Response>
             ))}
         </div>
