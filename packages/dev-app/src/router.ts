@@ -58,6 +58,7 @@ const postsRouter = createTRPCRouter({
       };
     }),
 });
+const discriminatedFieldEnum = z.enum(["One", "Two"]);
 
 export const appRouter = createTRPCRouter({
   postsRouter,
@@ -155,6 +156,26 @@ export const appRouter = createTRPCRouter({
         title,
         content,
       };
+    }),
+  discriminatedUnionInput: procedure
+    .input(
+      z.object({
+        aDiscriminatedUnion: z.discriminatedUnion("discriminatedField", [
+          z.object({
+            discriminatedField: discriminatedFieldEnum.extract(["One"]), // <-- this doesn't work
+            aFieldThatOnlyShowsWhenValueIsOne: z.string(),
+          }),
+          z.object({
+            discriminatedField: z.literal("Two"),
+            aFieldThatOnlyShowsWhenValueIsTwo: z.object({
+              someTextFieldInAnObject: z.string(),
+            }),
+          }),
+        ]),
+      }),
+    )
+    .query(({ input }) => {
+      return input;
     }),
   procedureWithDescription: procedure
     .meta({
