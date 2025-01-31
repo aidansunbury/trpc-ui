@@ -75,7 +75,11 @@ export function CollapsableSection({
           type="button"
           onClick={() => {
             collapsables.toggle(fullPath);
-            setPath(fullPath.join("."));
+            if (shown) {
+              setPath(null);
+            } else {
+              setPath(fullPath.join("."));
+            }
           }}
           className="flex flex-row items-center justify-between p-1 "
         >
