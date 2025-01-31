@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { parseError } from "../form/utils";
 import type { RenderOptions } from "@src/render";
+import { useState } from "react";
 import SuperJSON from "superjson";
+import { parseError } from "../form/utils";
 
 export function useAsyncDuration({ options }: { options: RenderOptions }) {
   const [duration, setDuration] = useState<number | null>(null);

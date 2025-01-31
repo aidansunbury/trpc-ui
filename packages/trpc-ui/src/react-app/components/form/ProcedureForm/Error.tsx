@@ -1,8 +1,8 @@
 import React from "react";
+import type { TRPCErrorType } from "../utils";
 import { ErrorRow } from "./ErrorRow";
 import { FormSection } from "./FormSection";
 import { StackTrace } from "./StackTrace";
-import type { TRPCErrorType } from "../utils";
 
 export function ErrorDisplay({ error }: { error: TRPCErrorType }) {
   const json = error.meta.responseJSON[0]?.error ?? ({} as any);
