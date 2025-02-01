@@ -26,30 +26,35 @@ This is a fork of the original [tRPC panel](https://github.com/iway1/trpc-panel)
 
 ## Quick Start
 
-Install as a dependency with your preferred package manager:
+Install as a dev dependency with your preferred package manager:
 
 ```sh
-npm install trpc-ui
+npm install -D trpc-ui
 ```
 
 ```sh
-yarn add trpc-ui
+yarn add -D trpc-ui
 ```
 
 ```sh
-pnpm install trpc-ui
+pnpm install -D trpc-ui
 ```
 
 ```sh
-bun add trpc-ui
+bun add -d trpc-ui
 ```
 
-render your panel and return it from your backend as a text response (express example):
+render your panel and return it from your backend as a text response (express example). You can also ensure that the panel is only available in development using dynamic imports and checking the `NODE_ENV`:
 
 ```js
-import { renderTrpcPanel } from "trpc-ui";
-// ...
 app.use("/panel", (_, res) => {
+  if (process.env.NODE_ENV !== "development") {
+    return res.status(404).send("Not Found");
+  }
+
+  // Dynamically import renderTrpcPanel only in development
+  const { renderTrpcPanel } = await import("trpc-ui");
+  
   return res.send(
     renderTrpcPanel(myTrpcRouter, {
       url: "http://localhost:4000/trpc", // Base url of your trpc server
@@ -75,10 +80,15 @@ Create a [route handler](https://nextjs.org/docs/app/building-your-application/r
 
 ```ts
 import { NextResponse } from "next/server";
-import { renderTrpcPanel } from "trpc-ui";
 import { appRouter } from "~/server/api/root";
 
 export async function GET() {
+  if (process.env.NODE_ENV !== "development") {
+    return new NextResponse("Not Found", { status: 404 });
+  }
+
+  const { renderTrpcPanel } = await import("trpc-ui");
+
   return new NextResponse(
     renderTrpcPanel(appRouter, {
       url: "/api/trpc", // Default trpc route in nextjs
@@ -100,10 +110,14 @@ Create an api route somewhere like `src/pages/api/panel.ts` and send a text resp
 
 ```ts
 import type { NextApiRequest, NextApiResponse } from "next";
-import { renderTrpcPanel } from "trpc-ui";
 import { appRouter } from "../../server/api/root";
 
 export default async function handler(_: NextApiRequest, res: NextApiResponse) {
+  if (process.env.NODE_ENV !== "development") {
+    return res.status(404).send("Not Found");
+  }
+
+  const { renderTrpcPanel } = await import("trpc-ui");
   res.status(200).send(
     renderTrpcPanel(appRouter, {
       url: "/api/trpc",
