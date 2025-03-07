@@ -12,7 +12,7 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "build": "npx rollup --bundleConfigAsCjs --config rollup.config.js",
+    "build": "pnpx rollup --bundleConfigAsCjs --config rollup.config.js",
     "dev": "rollup --config rollup.config.js --watch --bundleConfigAsCjs"
   },
   "author": "",
