@@ -30,7 +30,8 @@
     "@types/node": "^18.15.5",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "react-scan": "^0.2.12"
   },
   "ct3aMetadata": {
     "initVersion": "7.10.2"

@@ -25,6 +25,7 @@ import { ErrorDisplay as ErrorComponent } from "./Error";
 import { FormSection } from "./FormSection";
 import { ProcedureFormButton } from "./ProcedureFormButton";
 import { Response } from "./Response";
+import Editor from '@monaco-editor/react';
 
 export const ROOT_VALS_PROPERTY_NAME = "vals";
 
@@ -138,12 +139,14 @@ export function ProcedureForm({
               }
             >
               {useRawInput && (
-                <JSONEditor
-                  value={getValues().vals}
-                  onChange={(values) => {
-                    setValue("vals", values);
-                  }}
-                />
+                // <JSONEditor
+                //   value={getValues().vals}
+                //   onChange={(values) => {
+                //     setValue("vals", values);
+                //   }}
+                // />
+              <Editor defaultLanguage="json" height={"20vh"} value={"{}"} onChange={(value) => console.log(value)} />
+
               )}
               {!useRawInput &&
                 (procedure.node.type === "object" ? (
