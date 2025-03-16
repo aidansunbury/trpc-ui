@@ -26,7 +26,7 @@ import { ErrorDisplay as ErrorComponent } from "./Error";
 import { FormSection } from "./FormSection";
 import { ProcedureFormButton } from "./ProcedureFormButton";
 import { Response } from "./Response";
-import Editor, { useMonaco } from "@monaco-editor/react";
+import Editor from "@monaco-editor/react";
 import Ajv from "ajv";
 import ajvErrors from "ajv-errors"; // You need to install this package
 
@@ -92,13 +92,7 @@ export function ProcedureForm({
   const utils = trpc.useUtils();
   const { mutateAsync } = getUtilsOrProcedure(trpc, procedure).useMutation();
   const fetchFunction = getUtilsOrProcedure(utils, procedure).fetch;
-
-  const validate = ajv.compile(
-    wrapJsonSchema(procedure.inputSchema as any, {
-      rootPropertyName: ROOT_VALS_PROPERTY_NAME,
-      useSuperJson: usingSuperJson,
-    })
-  );
+  const [shouldValidate, setShouldValidate] = useState(false);
 
   const {
     control,
@@ -106,13 +100,16 @@ export function ProcedureForm({
     handleSubmit,
     getValues,
     watch,
+
     setValue,
   } = useForm({
     resolver: ajvResolver(
-      wrapJsonSchema(procedure.inputSchema as any, {
-        rootPropertyName: ROOT_VALS_PROPERTY_NAME,
-        useSuperJson: usingSuperJson,
-      }),
+      shouldValidate
+        ? wrapJsonSchema(procedure.inputSchema as any, {
+            rootPropertyName: ROOT_VALS_PROPERTY_NAME,
+            useSuperJson: usingSuperJson,
+          })
+        : {},
       {
         formats: fullFormats,
       }
@@ -134,6 +131,11 @@ export function ProcedureForm({
       async () => await apiCaller(newData)
     );
     setResponse(result);
+  }
+
+  function onError(error) {
+    console.log("error");
+    console.log(error);
   }
 
   const fieldName = procedure.node.path.join(".");
@@ -182,6 +184,15 @@ export function ProcedureForm({
                     </button>
                   </div>
                   <ToggleRawInput onClick={toggleRawInput} />
+                  <label className="flex flex-row items-center">
+                    <input
+                      checked={shouldValidate}
+                      onChange={() => setShouldValidate((prev) => !prev)}
+                      className="mr-2 size-5"
+                      type="checkbox"
+                    />
+                    Client Side Validate
+                  </label>
                 </div>
               }
             >
@@ -225,15 +236,7 @@ export function ProcedureForm({
                 ) : (
                   <Field inputNode={procedure.node} control={control} />
                 ))}
-              <button
-                onClick={() => {
-                  console.log(getValues());
-                  console.log(validate(getValues()));
-                  console.log(validate.errors);
-                }}
-              >
-                hi
-              </button>
+
               <ProcedureFormButton
                 text={`Execute ${name}`}
                 colorScheme={"neutral"}
@@ -241,16 +244,6 @@ export function ProcedureForm({
               />
             </FormSection>
           </div>
-          <pre>
-            {JSON.stringify(
-              wrapJsonSchema(procedure.inputSchema as any, {
-                rootPropertyName: ROOT_VALS_PROPERTY_NAME,
-                useSuperJson: usingSuperJson,
-              }),
-              null,
-              2
-            )}
-          </pre>
         </form>
         <div className="flex flex-col space-y-4">
           {response &&
@@ -319,32 +312,43 @@ function wrapJsonSchema(
   const { $schema, ...schemaWithoutDollarSchema } = jsonSchema;
   const finalSchema = $schema || "http://json-schema.org/draft-07/schema#";
 
-  // Step 1: Wrap the schema under the root property
-  let wrappedSchema: JSONSchemaType = {
-    type: "object",
-    properties: {
-      [rootPropertyName]: schemaWithoutDollarSchema,
-    },
-    required: [rootPropertyName],
-    additionalProperties: true,
-  };
+  let wrappedSchema: JSONSchemaType;
 
-  // Step 2: Apply SuperJSON wrapping if enabled
   if (useSuperJson) {
+    // For SuperJSON structure, we're expecting:
+    // vals -> { json -> actual_schema, meta -> {...} }
+
     wrappedSchema = {
       type: "object",
       properties: {
-        json: wrappedSchema,
-        meta: {
+        [rootPropertyName]: {
           type: "object",
           properties: {
-            values: {
+            json: schemaWithoutDollarSchema,
+            meta: {
               type: "object",
+              properties: {
+                values: {
+                  type: "object",
+                },
+              },
             },
           },
+          required: ["json"],
+          additionalProperties: true,
         },
       },
-      required: ["json"],
+      required: [rootPropertyName],
+      additionalProperties: true,
+    };
+  } else {
+    // If not using SuperJSON, just wrap under the root property
+    wrappedSchema = {
+      type: "object",
+      properties: {
+        [rootPropertyName]: schemaWithoutDollarSchema,
+      },
+      required: [rootPropertyName],
       additionalProperties: true,
     };
   }

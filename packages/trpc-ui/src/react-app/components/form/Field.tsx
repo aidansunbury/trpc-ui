@@ -19,8 +19,14 @@ export function Field({
   inputNode: ParsedInputNode;
   control: Control<any>;
 }) {
-  const label = inputNode.path.join(".");
-  const path = `${ROOT_VALS_PROPERTY_NAME}.${label}`;
+  const logicallLabel = inputNode.path.join(".");
+  const path = `${ROOT_VALS_PROPERTY_NAME}.${logicallLabel}`;
+  const pathArray = inputNode.path.slice();
+  if (pathArray.length > 0 && pathArray[0] === "json") {
+    pathArray.shift();
+  }
+
+  const label = pathArray.join(".");
   switch (inputNode.type) {
     case "string":
       return (
