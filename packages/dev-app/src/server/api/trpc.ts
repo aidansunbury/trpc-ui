@@ -61,16 +61,16 @@ const t = initTRPC
   .meta<TRPCPanelMeta>()
   .create({
     transformer: env.NEXT_PUBLIC_SUPERJSON === "false" ? undefined : superjson,
-    errorFormatter({ shape, error }) {
-      return {
-        ...shape,
-        data: {
-          ...shape.data,
-          zodError:
-            error.cause instanceof ZodError ? error.cause.flatten() : null,
-        },
-      };
-    },
+    // errorFormatter({ shape, error }) {
+    //   return {
+    //     ...shape,
+    //     data: {
+    //       ...shape.data,
+    //       zodError:
+    //         error.cause instanceof ZodError ? error.cause.flatten() : null,
+    //     },
+    //   };
+    // },
     allowOutsideOfServer: true,
   });
 

@@ -21,13 +21,42 @@ import SuperJson from "superjson";
 import { useAsyncDuration } from "../../hooks/useAsyncDuration";
 import { AutoFillIcon } from "../../icons/AutoFillIcon";
 import JSONEditor from "../JSONEditor";
+
 import { ErrorDisplay as ErrorComponent } from "./Error";
 import { FormSection } from "./FormSection";
 import { ProcedureFormButton } from "./ProcedureFormButton";
 import { Response } from "./Response";
-import Editor from '@monaco-editor/react';
+import Editor, { useMonaco } from "@monaco-editor/react";
+import Ajv from "ajv";
+import ajvErrors from "ajv-errors"; // You need to install this package
+
+const ajv = new Ajv({
+  allErrors: true,
+});
+ajvErrors(ajv);
 
 export const ROOT_VALS_PROPERTY_NAME = "vals";
+
+const wrapSuperJson = (json: JSON, usingSuperJson: boolean) => {
+  if (!usingSuperJson) {
+    return json;
+  }
+
+  return {
+    json: json,
+    meta: {
+      values: {},
+    },
+  };
+};
+
+interface JSONSchemaType {
+  type: string;
+  properties?: Record<string, JSONSchemaType>;
+  required?: string[];
+  format?: string;
+  [key: string]: any;
+}
 
 // Recurse down the path to get the function to call
 function getUtilsOrProcedure(base: any, procedure: ParsedProcedure) {
@@ -48,6 +77,8 @@ export function ProcedureForm({
   options: RenderOptions;
   name: string;
 }) {
+  const usingSuperJson = options.transformer === "superjson";
+
   // null => request was never sent
   // undefined => request successful but nothing returned from procedure
   const [response, setResponse] = useState<{
@@ -62,32 +93,45 @@ export function ProcedureForm({
   const { mutateAsync } = getUtilsOrProcedure(trpc, procedure).useMutation();
   const fetchFunction = getUtilsOrProcedure(utils, procedure).fetch;
 
+  const validate = ajv.compile(
+    wrapJsonSchema(procedure.inputSchema as any, {
+      rootPropertyName: ROOT_VALS_PROPERTY_NAME,
+      useSuperJson: usingSuperJson,
+    })
+  );
+
   const {
     control,
     reset: resetForm,
     handleSubmit,
     getValues,
+    watch,
     setValue,
   } = useForm({
-    resolver: ajvResolver(wrapJsonSchema(procedure.inputSchema as any), {
-      formats: fullFormats,
-    }),
+    resolver: ajvResolver(
+      wrapJsonSchema(procedure.inputSchema as any, {
+        rootPropertyName: ROOT_VALS_PROPERTY_NAME,
+        useSuperJson: usingSuperJson,
+      }),
+      {
+        formats: fullFormats,
+      }
+    ),
     defaultValues: {
-      [ROOT_VALS_PROPERTY_NAME]: defaultFormValuesForNode(procedure.node),
+      [ROOT_VALS_PROPERTY_NAME]: wrapSuperJson(
+        defaultFormValuesForNode(procedure.node),
+        usingSuperJson
+      ),
     },
   });
   async function onSubmit(data: { [ROOT_VALS_PROPERTY_NAME]: any }) {
-    let newData: any;
-    if (options.transformer === "superjson") {
-      newData = SuperJson.serialize(data[ROOT_VALS_PROPERTY_NAME]);
-    } else {
-      newData = data[ROOT_VALS_PROPERTY_NAME];
-    }
+    let newData = data[ROOT_VALS_PROPERTY_NAME];
+
     const apiCaller =
       procedure.procedureType === "query" ? fetchFunction : mutateAsync;
 
     const result = await measureAsyncDuration(
-      async () => await apiCaller(newData),
+      async () => await apiCaller(newData)
     );
     setResponse(result);
   }
@@ -128,7 +172,10 @@ export function ProcedureForm({
                     <button
                       type="button"
                       onClick={() => {
-                        setValue("vals", sample(procedure.inputSchema));
+                        setValue(
+                          ROOT_VALS_PROPERTY_NAME,
+                          sample(procedure.inputSchema)
+                        );
                       }}
                     >
                       <AutoFillIcon className="h-6 w-6" />
@@ -138,33 +185,55 @@ export function ProcedureForm({
                 </div>
               }
             >
+              {JSON.stringify(watch())}
               {useRawInput && (
-                // <JSONEditor
-                //   value={getValues().vals}
-                //   onChange={(values) => {
-                //     setValue("vals", values);
-                //   }}
-                // />
-              <Editor defaultLanguage="json" height={"20vh"} value={"{}"} onChange={(value) => console.log(value)} />
-
+                <Editor
+                  defaultLanguage="json"
+                  options={{
+                    minimap: {
+                      enabled: false,
+                    },
+                    formatOnType: true,
+                  }}
+                  height={"20vh"}
+                  value={JSON.stringify(
+                    getValues(ROOT_VALS_PROPERTY_NAME),
+                    null,
+                    2
+                  )}
+                  onChange={(value) =>
+                    setValue(ROOT_VALS_PROPERTY_NAME, JSON.parse(value ?? "{}"))
+                  }
+                />
               )}
               {!useRawInput &&
                 (procedure.node.type === "object" ? (
                   Object.keys(procedure.node.children).length > 0 && (
-                    <ObjectField
-                      node={
-                        procedure.node as ParsedInputNode & {
-                          type: "object";
+                    <>
+                      <ObjectField
+                        node={
+                          procedure.node as ParsedInputNode & {
+                            type: "object";
+                          }
                         }
-                      }
-                      label={fieldName}
-                      control={control}
-                      topLevel
-                    />
+                        label={fieldName}
+                        control={control}
+                        topLevel
+                      />
+                    </>
                   )
                 ) : (
                   <Field inputNode={procedure.node} control={control} />
                 ))}
+              <button
+                onClick={() => {
+                  console.log(getValues());
+                  console.log(validate(getValues()));
+                  console.log(validate.errors);
+                }}
+              >
+                hi
+              </button>
               <ProcedureFormButton
                 text={`Execute ${name}`}
                 colorScheme={"neutral"}
@@ -172,6 +241,16 @@ export function ProcedureForm({
               />
             </FormSection>
           </div>
+          <pre>
+            {JSON.stringify(
+              wrapJsonSchema(procedure.inputSchema as any, {
+                rootPropertyName: ROOT_VALS_PROPERTY_NAME,
+                useSuperJson: usingSuperJson,
+              }),
+              null,
+              2
+            )}
+          </pre>
         </form>
         <div className="flex flex-col space-y-4">
           {response &&
@@ -227,16 +306,51 @@ function ToggleRawInput({ onClick }: { onClick: () => void }) {
   );
 }
 
-function wrapJsonSchema(jsonSchema: any) {
-  const { $schema, ...rest } = jsonSchema;
+function wrapJsonSchema(
+  jsonSchema: JSONSchemaType,
+  options: {
+    rootPropertyName: string;
+    useSuperJson?: boolean;
+  }
+): JSONSchemaType {
+  const { rootPropertyName, useSuperJson = false } = options;
 
-  return {
+  // Extract and remove $schema to only place it at the top level
+  const { $schema, ...schemaWithoutDollarSchema } = jsonSchema;
+  const finalSchema = $schema || "http://json-schema.org/draft-07/schema#";
+
+  // Step 1: Wrap the schema under the root property
+  let wrappedSchema: JSONSchemaType = {
     type: "object",
     properties: {
-      [ROOT_VALS_PROPERTY_NAME]: rest,
+      [rootPropertyName]: schemaWithoutDollarSchema,
     },
-    required: [],
-    additionalProperties: false,
-    $schema: "http://json-schema.org/draft-07/schema#",
+    required: [rootPropertyName],
+    additionalProperties: true,
   };
+
+  // Step 2: Apply SuperJSON wrapping if enabled
+  if (useSuperJson) {
+    wrappedSchema = {
+      type: "object",
+      properties: {
+        json: wrappedSchema,
+        meta: {
+          type: "object",
+          properties: {
+            values: {
+              type: "object",
+            },
+          },
+        },
+      },
+      required: ["json"],
+      additionalProperties: true,
+    };
+  }
+
+  // Add $schema only at the top level
+  wrappedSchema.$schema = finalSchema;
+
+  return wrappedSchema;
 }

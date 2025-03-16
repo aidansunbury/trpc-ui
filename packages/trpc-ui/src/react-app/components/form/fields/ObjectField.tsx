@@ -5,6 +5,10 @@ import React, { type ReactNode } from "react";
 import type { Control } from "react-hook-form";
 import { InputGroupContainer } from "../../InputGroupContainer";
 
+function addToFront<T>(array: T[], item: T): T[] {
+  return [item, ...array];
+}
+
 export function ObjectField({
   label,
   control,
@@ -22,14 +26,23 @@ export function ObjectField({
     return (
       <div className={"flex flex-col space-y-2 p-1 "}>
         {Object.entries(node.children).map(([name, e]) => (
-          <Field
-            inputNode={{
-              ...e,
-              path: node.path.concat([name]),
-            }}
-            control={control}
-            key={name}
-          />
+          <>
+            <Field
+              inputNode={{
+                ...e,
+                path: addToFront(node.path.concat([name]), "json"),
+              }}
+              control={control}
+              key={name}
+            />
+            {/* <pre>
+              {JSON.stringify(node.path.concat(["json", name]), null, 2)}
+            </pre>
+
+            <pre>{JSON.stringify(name, null, 2)}</pre>
+
+            <pre>{JSON.stringify(node.children[name], null, 2)}</pre> */}
+          </>
         ))}
       </div>
     );
@@ -37,14 +50,17 @@ export function ObjectField({
   const renderField = () => {
     try {
       return Object.entries(node.children).map(([childFieldName, e]) => (
-        <Field
-          inputNode={{
-            ...e,
-            path: node.path.concat([childFieldName]),
-          }}
-          control={control}
-          key={childFieldName}
-        />
+        <>
+          <Field
+            inputNode={{
+              ...e,
+              path: node.path.concat([childFieldName]),
+            }}
+            control={control}
+            key={childFieldName}
+          />
+          <pre>{JSON.stringify(node.path, null, 2)}</pre>
+        </>
       ));
     } catch (e) {
       return (
