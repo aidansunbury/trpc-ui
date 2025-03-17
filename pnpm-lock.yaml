@@ -181,9 +181,6 @@ importers:
       '@textea/json-viewer':
         specifier: ^3.0.0
         version: 3.5.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react@18.2.0))(@mui/material@5.16.12(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@types/react@18.3.18)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      ajv-errors:
-        specifier: ^3.0.0
-        version: 3.0.0(ajv@8.17.1)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -1771,11 +1768,6 @@ packages:
     resolution: {integrity: sha512-cl669nCJTZBsL97OF4kUQm5g5hC2uihk0NxY3WENAC0TYdILVkAyHymAntgxGkl7K+t0cXIrH5siy5S4XkFycA==}
     engines: {node: '>=0.4.0'}
     hasBin: true
-
-  ajv-errors@3.0.0:
-    resolution: {integrity: sha512-V3wD15YHfHz6y0KdhYFjyy9vWtEVALT9UrxfN3zqlI6dMioHnJrqOYfyPKol3oqrnCM9uwkcdCwkJ0WUcbLMTQ==}
-    peerDependencies:
-      ajv: ^8.0.1
 
   ajv-formats@2.1.1:
     resolution: {integrity: sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA==}
@@ -7509,10 +7501,6 @@ snapshots:
       negotiator: 0.6.3
 
   acorn@8.14.0: {}
-
-  ajv-errors@3.0.0(ajv@8.17.1):
-    dependencies:
-      ajv: 8.17.1
 
   ajv-formats@2.1.1(ajv@8.17.1):
     optionalDependencies:
