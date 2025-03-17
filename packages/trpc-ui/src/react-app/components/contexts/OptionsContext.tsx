@@ -1,5 +1,5 @@
-import React, { createContext, useContext, ReactNode } from "react";
 import type { RenderOptions } from "@src/render";
+import React, { createContext, useContext, ReactNode } from "react";
 
 // @ts-expect-error
 const RenderOptionsContext = createContext<RenderOptions>(null);
@@ -26,7 +26,7 @@ export const useRenderOptions = (): RenderOptions => {
 
   if (context === null) {
     throw new Error(
-      "useRenderOptions must be used within a RenderOptionsProvider"
+      "useRenderOptions must be used within a RenderOptionsProvider",
     );
   }
 

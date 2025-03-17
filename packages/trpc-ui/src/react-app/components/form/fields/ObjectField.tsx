@@ -42,17 +42,14 @@ export function ObjectField({
   const renderField = () => {
     try {
       return Object.entries(node.children).map(([childFieldName, e]) => (
-        <>
-          <Field
-            inputNode={{
-              ...e,
-              path: node.path.concat([childFieldName]),
-            }}
-            control={control}
-            key={childFieldName}
-          />
-          <pre>{JSON.stringify(node.path, null, 2)}</pre>
-        </>
+        <Field
+          inputNode={{
+            ...e,
+            path: node.path.concat([childFieldName]),
+          }}
+          control={control}
+          key={childFieldName}
+        />
       ));
     } catch (e) {
       return (

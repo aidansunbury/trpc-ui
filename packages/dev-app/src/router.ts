@@ -35,7 +35,7 @@ const postsRouter = createTRPCRouter({
         nested: z.object({
           nestedText: z.string(),
         }),
-      })
+      }),
     )
     .mutation(({ input }) => {
       return {
@@ -49,7 +49,7 @@ const postsRouter = createTRPCRouter({
         nested: z.object({
           text: z.string(),
         }),
-      })
+      }),
     )
     .mutation(({ input }) => {
       console.log(input);
@@ -62,12 +62,12 @@ const postsRouter = createTRPCRouter({
     .input(
       z.object({
         text: z.string(),
-      })
+      }),
     )
     .input(
       z.object({
         title: z.string(),
-      })
+      }),
     )
     .mutation(({ input }) => {
       return {
@@ -112,7 +112,7 @@ export const appRouter = createTRPCRouter({
           anObject: z.object({
             numberArray: z.number().array(),
           }),
-        })
+        }),
       )
       .query(() => {
         return "It's an input";
@@ -135,7 +135,7 @@ export const appRouter = createTRPCRouter({
               discriminatedField: z.literal("Three"),
             }),
           ]),
-        })
+        }),
       )
       .query(() => {
         return "It's an input";
@@ -144,7 +144,7 @@ export const appRouter = createTRPCRouter({
       .input(
         z.object({
           aUnion: z.union([z.literal("one"), z.literal(2)]),
-        })
+        }),
       )
       .query(({ input }) => {
         return input;
@@ -153,7 +153,7 @@ export const appRouter = createTRPCRouter({
       .input(
         z.object({
           email: z.string().email("That's an invalid email (custom message)"),
-        })
+        }),
       )
       .query(() => {
         return "It's good";
@@ -167,7 +167,7 @@ export const appRouter = createTRPCRouter({
       z.object({
         title: z.string(),
         content: z.string(),
-      })
+      }),
     )
     .mutation(({ input: { title, content } }) => {
       return {
@@ -190,7 +190,7 @@ export const appRouter = createTRPCRouter({
             }),
           }),
         ]),
-      })
+      }),
     )
     .query(({ input }) => {
       return input;
@@ -207,15 +207,15 @@ export const appRouter = createTRPCRouter({
           .string()
           .optional()
           .describe(
-            "Even term descriptions *can* render basic markdown, but don't get too fancy"
+            "Even term descriptions *can* render basic markdown, but don't get too fancy",
           ),
         searchTerm2: z
           .string()
           .optional()
           .describe(
-            "The name of the thing to search for. Really really long long long boi long boi long Really really long long long boi long boi long Really really long long long boi long boi long Really really long long long boi long boi long"
+            "The name of the thing to search for. Really really long long long boi long boi long Really really long long long boi long boi long Really really long long long boi long boi long Really really long long long boi long boi long",
           ),
-      })
+      }),
     )
     .query(() => {
       return "Was that described well enough?";
@@ -227,7 +227,7 @@ export const appRouter = createTRPCRouter({
     .input(
       z.object({
         name: z.string(),
-      })
+      }),
     )
     .query(async ({ input }) => {
       // two second delay
@@ -238,7 +238,7 @@ export const appRouter = createTRPCRouter({
     .input(
       z.object({
         ok: z.string(),
-      })
+      }),
     )
     .query(() => {
       throw new TRPCError({
@@ -270,7 +270,7 @@ export const appRouter = createTRPCRouter({
           }),
         ]),
         union: z.union([z.literal("one"), z.literal(2)]),
-      })
+      }),
     )
     .query(() => ({ goodJob: "yougotthedata" })),
 });
