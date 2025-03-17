@@ -154,6 +154,15 @@ export function ProcedureForm({
               title="Input"
               topRightElement={
                 <div className="flex space-x-1">
+                  {useRawInput && usingSuperJson && (
+                    <a
+                      href="https://github.com/aidansunbury/trpc-ui#superjson-example-and-usage"
+                      className="hover:underline"
+                      target="blank"
+                    >
+                      Why do I see "json" and "meta" keys? ↗
+                    </a>
+                  )}
                   <XButton control={control} reset={resetForm} />
                   <div className="h-6 w-6">
                     <button

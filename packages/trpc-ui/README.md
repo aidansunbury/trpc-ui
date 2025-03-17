@@ -213,7 +213,7 @@ When you are using superjson, the json editor will show a basic wrapping of supe
 }
 ```
 
-Let's say on your backend, you want to have a zod validator like this.
+Let's say on your backend, you want to have a zod validator like this, which supports data types not supported by json directly.
 
 ```ts
 import { z } from "zod";
@@ -242,7 +242,7 @@ const user: User = {
 };
 ```
 
-The data you input into the json input represents the raw json that will be sent to your tRPC api. As a result, you can specify meta values telling superjson how to deserialize the input data before sending it to your validator.
+Enter the json supported equivalent under the _json_ key, and and specify how they should be parsed under the _meta.values_ key. Before validating this data on the backend, superjson will deserialize it back into JavaScript bigints, dates, sets, and maps, meaning it will pass your zod validation!
 
 ```json
 {
@@ -265,6 +265,8 @@ The data you input into the json input represents the raw json that will be sent
 ```
 
 **You will likely need to uncheck "validate input on client" in order to be able to send your validation to the backend when using custom superjson inputs**
+
+Also be warned that currently, input fields will not be rendered for superjson only inputs. You will have to input all data manually through the json editor.
 
 ## Contributing
 
