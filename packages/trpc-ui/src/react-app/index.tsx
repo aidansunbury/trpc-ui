@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import type { ParsedRouter } from "../parse/parseRouter";
 import { RootComponent } from "./Root";
 import "./index.css";
-import "jsoneditor/dist/jsoneditor.css";
 import { trpc } from "@src/react-app/trpc";
 import type { RenderOptions } from "@src/render";
 
@@ -20,5 +19,5 @@ trpc;
 RootComponent;
 React;
 root.render(
-  <RootComponent rootRouter={routerDefinition} options={options} trpc={trpc} />,
+  <RootComponent rootRouter={routerDefinition} options={options} trpc={trpc} />
 );

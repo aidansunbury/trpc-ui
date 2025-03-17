@@ -24,6 +24,7 @@ import { MetaHeader } from "./components/MetaHeader";
 import { RouterContainer } from "./components/RouterContainer";
 import { SideNav } from "./components/SideNav";
 import { TopBar } from "./components/TopBar";
+import { RenderOptionsProvider } from "./components/contexts/OptionsContext";
 
 export function RootComponent({
   rootRouter,
@@ -41,11 +42,13 @@ export function RootComponent({
           <SiteNavigationContextProvider>
             <ClientProviders trpc={trpc} options={options}>
               <HotKeysContextProvider>
-                <SearchOverlay>
-                  <div className="relative flex h-full w-full flex-1 flex-col">
-                    <AppInnards rootRouter={rootRouter} options={options} />
-                  </div>
-                </SearchOverlay>
+                <RenderOptionsProvider options={options}>
+                  <SearchOverlay>
+                    <div className="relative flex h-full w-full flex-1 flex-col">
+                      <AppInnards rootRouter={rootRouter} options={options} />
+                    </div>
+                  </SearchOverlay>
+                </RenderOptionsProvider>
               </HotKeysContextProvider>
             </ClientProviders>
           </SiteNavigationContextProvider>
@@ -77,7 +80,7 @@ function ClientProviders({
         if (options.transformer === "superjson") return superjson;
         return undefined;
       })(),
-    }),
+    })
   );
   const [queryClient] = useState(() => new QueryClient());
 
@@ -100,7 +103,7 @@ function AppInnards({
 }) {
   const [sidebarOpen, setSidebarOpen] = useLocalStorage(
     "trpc-panel.show-minimap",
-    true,
+    true
   );
   const { openAndNavigateTo } = useSiteNavigationContext();
 

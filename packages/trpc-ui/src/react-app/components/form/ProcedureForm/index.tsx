@@ -20,20 +20,12 @@ import getSize from "string-byte-length";
 import SuperJson from "superjson";
 import { useAsyncDuration } from "../../hooks/useAsyncDuration";
 import { AutoFillIcon } from "../../icons/AutoFillIcon";
-import JSONEditor from "../JSONEditor";
 
 import { ErrorDisplay as ErrorComponent } from "./Error";
 import { FormSection } from "./FormSection";
 import { ProcedureFormButton } from "./ProcedureFormButton";
 import { Response } from "./Response";
 import Editor from "@monaco-editor/react";
-import Ajv from "ajv";
-import ajvErrors from "ajv-errors"; // You need to install this package
-
-const ajv = new Ajv({
-  allErrors: true,
-});
-ajvErrors(ajv);
 
 export const ROOT_VALS_PROPERTY_NAME = "vals";
 
@@ -92,7 +84,7 @@ export function ProcedureForm({
   const utils = trpc.useUtils();
   const { mutateAsync } = getUtilsOrProcedure(trpc, procedure).useMutation();
   const fetchFunction = getUtilsOrProcedure(utils, procedure).fetch;
-  const [shouldValidate, setShouldValidate] = useState(false);
+  const [shouldValidate, setShouldValidate] = useState(true);
 
   const {
     control,
@@ -131,11 +123,6 @@ export function ProcedureForm({
       async () => await apiCaller(newData)
     );
     setResponse(result);
-  }
-
-  function onError(error) {
-    console.log("error");
-    console.log(error);
   }
 
   const fieldName = procedure.node.path.join(".");
@@ -191,7 +178,7 @@ export function ProcedureForm({
                       className="mr-2 size-5"
                       type="checkbox"
                     />
-                    Client Side Validate
+                    Validate Input on Client
                   </label>
                 </div>
               }
@@ -220,18 +207,16 @@ export function ProcedureForm({
               {!useRawInput &&
                 (procedure.node.type === "object" ? (
                   Object.keys(procedure.node.children).length > 0 && (
-                    <>
-                      <ObjectField
-                        node={
-                          procedure.node as ParsedInputNode & {
-                            type: "object";
-                          }
+                    <ObjectField
+                      node={
+                        procedure.node as ParsedInputNode & {
+                          type: "object";
                         }
-                        label={fieldName}
-                        control={control}
-                        topLevel
-                      />
-                    </>
+                      }
+                      label={fieldName}
+                      control={control}
+                      topLevel
+                    />
                   )
                 ) : (
                   <Field inputNode={procedure.node} control={control} />
