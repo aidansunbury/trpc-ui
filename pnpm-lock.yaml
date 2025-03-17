@@ -139,8 +139,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       trpc-ui:
-        specifier: 1.0.10
-        version: 1.0.10(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react@18.2.0))(@mui/material@5.16.12(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@trpc/server@11.0.0-rc.446)(@types/react@18.3.18)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(zod@3.24.1)
+        specifier: latest
+        version: 1.0.13(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react@18.2.0))(@mui/material@5.16.12(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@trpc/server@11.0.0-rc.446)(@types/react@18.3.18)(monaco-editor@0.52.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(zod@3.24.1)
       tsconfig-paths:
         specifier: ^4.1.0
         version: 4.2.0
@@ -5624,8 +5624,8 @@ packages:
   trough@2.2.0:
     resolution: {integrity: sha512-tmMpK00BjZiUyVyvrBK7knerNgmgvcV/KLVyuma/SC+TQN167GrMRciANTz09+k3zW8L8t60jWO1GpfkZdjTaw==}
 
-  trpc-ui@1.0.10:
-    resolution: {integrity: sha512-kLjsnUCxwppx6Jl/+ble/9Z2LmScz+xI2nXBPEVWKaAqI859qEiej0PlYTgjTlHEZTNKCX01BuS4TST5iKEmvw==}
+  trpc-ui@1.0.13:
+    resolution: {integrity: sha512-wLYgul79IUkZuUqTrIK3RRZVlYRBYmgGxiNAtG+pBhZgOZPqUtrVe49in/uiFrV5fMqwT1JLaKgw8HIdE2uMmA==}
     peerDependencies:
       '@trpc/server': ^11.0.0-next-beta.264
       zod: ^3.19.1
@@ -12111,8 +12111,9 @@ snapshots:
 
   trough@2.2.0: {}
 
-  trpc-ui@1.0.10(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react@18.2.0))(@mui/material@5.16.12(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@trpc/server@11.0.0-rc.446)(@types/react@18.3.18)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(zod@3.24.1):
+  trpc-ui@1.0.13(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react@18.2.0))(@mui/material@5.16.12(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@trpc/server@11.0.0-rc.446)(@types/react@18.3.18)(monaco-editor@0.52.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(zod@3.24.1):
     dependencies:
+      '@monaco-editor/react': 4.7.0(monaco-editor@0.52.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@stoplight/json-schema-sampler': 0.3.0
       '@textea/json-viewer': 3.5.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react@18.2.0))(@mui/material@5.16.12(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@types/react@18.3.18)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@trpc/server': 11.0.0-rc.446
@@ -12135,6 +12136,7 @@ snapshots:
       - '@remix-run/react'
       - '@types/react'
       - immer
+      - monaco-editor
       - next
       - react
       - react-dom
