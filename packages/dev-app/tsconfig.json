@@ -30,8 +30,7 @@
     "**/*.tsx",
     "**/*.cjs",
     "**/*.mjs",
-    "../trpc-ui/src/**/*.ts",
-    "../../local/test.ts"
+    "../trpc-ui/src/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }

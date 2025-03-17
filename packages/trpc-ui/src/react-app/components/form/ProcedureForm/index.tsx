@@ -90,9 +90,7 @@ export function ProcedureForm({
     control,
     reset: resetForm,
     handleSubmit,
-    getValues,
     watch,
-
     setValue,
   } = useForm({
     resolver: ajvResolver(
@@ -104,12 +102,12 @@ export function ProcedureForm({
         : {},
       {
         formats: fullFormats,
-      },
+      }
     ),
     defaultValues: {
       [ROOT_VALS_PROPERTY_NAME]: wrapSuperJson(
         defaultFormValuesForNode(procedure.node),
-        usingSuperJson,
+        usingSuperJson
       ),
     },
   });
@@ -120,7 +118,7 @@ export function ProcedureForm({
       procedure.procedureType === "query" ? fetchFunction : mutateAsync;
 
     const result = await measureAsyncDuration(
-      async () => await apiCaller(newData),
+      async () => await apiCaller(newData)
     );
     setResponse(result);
   }
@@ -163,7 +161,7 @@ export function ProcedureForm({
                       onClick={() => {
                         setValue(
                           ROOT_VALS_PROPERTY_NAME,
-                          sample(procedure.inputSchema),
+                          sample(procedure.inputSchema)
                         );
                       }}
                     >
@@ -183,7 +181,6 @@ export function ProcedureForm({
                 </div>
               }
             >
-              {JSON.stringify(watch())}
               {useRawInput && (
                 <Editor
                   defaultLanguage="json"
@@ -193,11 +190,11 @@ export function ProcedureForm({
                     },
                     formatOnType: true,
                   }}
-                  height={"20vh"}
+                  height={"30vh"}
                   value={JSON.stringify(
-                    getValues(ROOT_VALS_PROPERTY_NAME),
+                    watch(ROOT_VALS_PROPERTY_NAME),
                     null,
-                    2,
+                    2
                   )}
                   onChange={(value) =>
                     setValue(ROOT_VALS_PROPERTY_NAME, JSON.parse(value ?? "{}"))
@@ -239,7 +236,11 @@ export function ProcedureForm({
             ) : (
               <Response
                 time={duration ?? undefined}
-                size={getSize(JSON.stringify(response.response))}
+                size={
+                  usingSuperJson
+                    ? getSize(SuperJson.stringify(response.response))
+                    : getSize(JSON.stringify(response.response))
+                }
               >
                 {response.response}
               </Response>
@@ -289,7 +290,7 @@ function wrapJsonSchema(
   options: {
     rootPropertyName: string;
     useSuperJson?: boolean;
-  },
+  }
 ): JSONSchemaType {
   const { rootPropertyName, useSuperJson = false } = options;
 
