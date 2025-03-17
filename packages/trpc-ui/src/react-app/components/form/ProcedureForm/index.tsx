@@ -102,12 +102,12 @@ export function ProcedureForm({
         : {},
       {
         formats: fullFormats,
-      }
+      },
     ),
     defaultValues: {
       [ROOT_VALS_PROPERTY_NAME]: wrapSuperJson(
         defaultFormValuesForNode(procedure.node),
-        usingSuperJson
+        usingSuperJson,
       ),
     },
   });
@@ -118,7 +118,7 @@ export function ProcedureForm({
       procedure.procedureType === "query" ? fetchFunction : mutateAsync;
 
     const result = await measureAsyncDuration(
-      async () => await apiCaller(newData)
+      async () => await apiCaller(newData),
     );
     setResponse(result);
   }
@@ -161,7 +161,7 @@ export function ProcedureForm({
                       onClick={() => {
                         setValue(
                           ROOT_VALS_PROPERTY_NAME,
-                          sample(procedure.inputSchema)
+                          sample(procedure.inputSchema),
                         );
                       }}
                     >
@@ -194,7 +194,7 @@ export function ProcedureForm({
                   value={JSON.stringify(
                     watch(ROOT_VALS_PROPERTY_NAME),
                     null,
-                    2
+                    2,
                   )}
                   onChange={(value) =>
                     setValue(ROOT_VALS_PROPERTY_NAME, JSON.parse(value ?? "{}"))
@@ -290,7 +290,7 @@ function wrapJsonSchema(
   options: {
     rootPropertyName: string;
     useSuperJson?: boolean;
-  }
+  },
 ): JSONSchemaType {
   const { rootPropertyName, useSuperJson = false } = options;
 
