@@ -36,6 +36,8 @@ export function ArrayField({
   // the form state changes.
   const watch = useWatch({ control });
 
+  const arrayValue = "json" in field.value ? field.value.json : field.value;
+
   function getValueFromWatch() {
     let r = watch;
     for (const p of [ROOT_VALS_PROPERTY_NAME].concat(
@@ -48,13 +50,15 @@ export function ArrayField({
 
   function onAddClick() {
     setTextFieldKeys((old) => old.concat([`${currentKeyCount++}`]));
-    field.onChange(
-      getValueFromWatch().concat([defaultFormValuesForNode(node.childType)]),
-    );
+    const watchValue = getValueFromWatch();
+    const arrayValue = "json" in watchValue ? watchValue.json : watchValue;
+    field.onChange(arrayValue.concat([defaultFormValuesForNode(node.childType)]));
   }
 
   function onDeleteClick(index: number) {
-    const newArr = [...getValueFromWatch()];
+    const watchValue = getValueFromWatch();
+    const arrayValue = "json" in watchValue ? watchValue.json : watchValue;
+    const newArr = [...arrayValue];
     const newKeysArr = [...textFieldKeys];
     newArr.splice(index, 1);
     newKeysArr.splice(index, 1);
@@ -66,7 +70,7 @@ export function ArrayField({
       iconElement={<DataArray className="mr-1" />}
       title={label}
     >
-      {field.value.map((parsedNode: ParsedInputNode, i: number) => (
+      {arrayValue.map((parsedNode: ParsedInputNode, i: number) => (
         <span
           key={`${JSON.stringify(parsedNode)} ${i}`}
           className="flex flex-row items-start"
