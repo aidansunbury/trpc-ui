@@ -52,7 +52,9 @@ export function ArrayField({
     setTextFieldKeys((old) => old.concat([`${currentKeyCount++}`]));
     const watchValue = getValueFromWatch();
     const arrayValue = "json" in watchValue ? watchValue.json : watchValue;
-    field.onChange(arrayValue.concat([defaultFormValuesForNode(node.childType)]));
+    field.onChange(
+      arrayValue.concat([defaultFormValuesForNode(node.childType)]),
+    );
   }
 
   function onDeleteClick(index: number) {
