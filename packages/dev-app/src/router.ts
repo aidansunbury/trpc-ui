@@ -1,4 +1,5 @@
 import { TRPCError } from "@trpc/server";
+import { octetInputParser } from "@trpc/server/http";
 import { z } from "zod";
 import { createTRPCRouter, procedure } from "~/server/api/trpc";
 
@@ -289,6 +290,18 @@ export const appRouter = createTRPCRouter({
       }),
     )
     .query(() => ({ goodJob: "yougotthedata" })),
+  uploadFile: procedure.input(octetInputParser)
+    .mutation(async ({ input }) => {
+      const reader = input.getReader();
+      let text = '';
+      while (true) {
+        const { value, done } = await reader.read();
+        if (value) text += new TextDecoder().decode(value);
+        if (done) {
+          return text;
+        }
+      }
+    })
 });
 
 // export type definition of API

@@ -54,6 +54,8 @@ export type NumberNode = { type: "number" } & SharedInputNodeProperties;
 
 export type BooleanNode = { type: "boolean" } & SharedInputNodeProperties;
 
+export type FileNode = { type: "file" } & SharedInputNodeProperties;
+
 export type UnsupportedNode = {
   type: "unsupported";
 } & SharedInputNodeProperties;
@@ -68,7 +70,8 @@ export type ParsedInputNode =
   | StringNode
   | NumberNode
   | BooleanNode
-  | UnsupportedNode;
+  | UnsupportedNode
+  | FileNode;
 
 export type AddDataFunctions = {
   addDescriptionIfExists: (

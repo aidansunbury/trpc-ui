@@ -12,7 +12,7 @@ import { useLocalStorage } from "@src/react-app/components/hooks/useLocalStorage
 import type { RenderOptions } from "@src/render";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 // import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { type createTRPCReact, httpBatchLink } from "@trpc/react-query";
+import { type createTRPCReact, httpBatchLink, httpLink, isNonJsonSerializable, splitLink } from "@trpc/react-query";
 import { useQueryState } from "nuqs";
 import { parseAsArrayOf, parseAsString } from "nuqs";
 import { NuqsAdapter } from "nuqs/adapters/react";
@@ -71,9 +71,16 @@ function ClientProviders({
   const [trpcClient] = useState(() =>
     trpc.createClient({
       links: [
-        httpBatchLink({
-          url: options.url,
-          headers: headers.getHeaders,
+        splitLink({
+          condition: (op) => isNonJsonSerializable(op.input),
+          true: httpLink({
+            url: options.url,
+            headers: headers.getHeaders,
+          }),
+          false: httpBatchLink({
+            url: options.url,
+            headers: headers.getHeaders,
+          }),
         }),
       ],
       transformer: (() => {

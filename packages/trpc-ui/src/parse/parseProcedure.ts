@@ -18,6 +18,7 @@ import type {
 import { type AnyZodObject, z } from "zod";
 import { zodToJsonSchema } from "zod-to-json-schema";
 import { zodSelectorFunction } from "./input-mappers/zod/selector";
+import { octetInputParser } from "@trpc/server/http";
 
 export type ProcedureExtraData = {
   parameterDescriptions: { [path: string]: string };
@@ -75,6 +76,18 @@ function nodeAndInputSchemaFromInputs(
         addDataFunctions,
       }),
     };
+  }
+
+  if (inputs.length == 1 && inputs[0] == octetInputParser) {
+    const schema = z.instanceof(File);
+    return {
+      parseInputResult: "success",
+      schema: zodToJsonSchema(schema),
+      node: {
+        type: "file",
+        path: [],
+      }
+    }
   }
 
   let input = inputs[0];

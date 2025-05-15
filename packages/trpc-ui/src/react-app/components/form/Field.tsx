@@ -11,6 +11,7 @@ import { NumberField } from "./fields/NumberField";
 import { ObjectField } from "./fields/ObjectField";
 import { TextField } from "./fields/TextField";
 import { UnionField } from "./fields/UnionField";
+import { FileField } from "./fields/FileField";
 
 export function Field({
   inputNode,
@@ -95,6 +96,13 @@ export function Field({
       );
     case "literal":
       return <LiteralField />;
+    case "file":
+      return <FileField
+          name={path}
+          label={label}
+          control={control}
+          node={inputNode}
+        />;
     case "unsupported":
       return null;
   }
