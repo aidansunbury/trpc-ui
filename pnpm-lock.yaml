@@ -172,45 +172,6 @@ importers:
 
   packages/trpc-ui:
     dependencies:
-      '@monaco-editor/react':
-        specifier: ^4.7.0
-        version: 4.7.0(monaco-editor@0.52.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@stoplight/json-schema-sampler':
-        specifier: ^0.3.0
-        version: 0.3.0
-      '@textea/json-viewer':
-        specifier: ^3.0.0
-        version: 3.5.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react@18.2.0))(@mui/material@5.16.12(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@types/react@18.3.18)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      clsx:
-        specifier: ^2.1.1
-        version: 2.1.1
-      fuzzysort:
-        specifier: ^2.0.4
-        version: 2.0.4
-      nuqs:
-        specifier: ^2.2.1
-        version: 2.2.3(react@18.2.0)
-      path:
-        specifier: ^0.12.7
-        version: 0.12.7
-      pretty-bytes:
-        specifier: ^6.1.0
-        version: 6.1.1
-      pretty-ms:
-        specifier: ^8.0.0
-        version: 8.0.0
-      react-markdown:
-        specifier: ^9.0.1
-        version: 9.0.1(@types/react@18.3.18)(react@18.2.0)
-      string-byte-length:
-        specifier: ^1.6.0
-        version: 1.6.0
-      tailwind-merge:
-        specifier: ^2.5.5
-        version: 2.6.0
-      url:
-        specifier: ^0.11.0
-        version: 0.11.4
       zod:
         specifier: ^3.19.1
         version: 3.24.2
@@ -233,6 +194,9 @@ importers:
       '@hookform/resolvers':
         specifier: ^2.9.10
         version: 2.9.11(react-hook-form@7.54.2(react@18.2.0))
+      '@monaco-editor/react':
+        specifier: ^4.7.0
+        version: 4.7.0(monaco-editor@0.52.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@mui/icons-material':
         specifier: ^5.10.16
         version: 5.16.12(@mui/material@5.16.12(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@types/react@18.3.18)(react@18.2.0)
@@ -260,6 +224,9 @@ importers:
       '@rollup/plugin-typescript':
         specifier: ^10.0.1
         version: 10.0.1(rollup@3.29.5)(tslib@2.8.1)(typescript@5.7.2)
+      '@stoplight/json-schema-sampler':
+        specifier: ^0.3.0
+        version: 0.3.0
       '@tailwindcss/typography':
         specifier: ^0.5.15
         version: 0.5.15(tailwindcss@3.4.17)
@@ -275,6 +242,9 @@ importers:
       '@testing-library/user-event':
         specifier: ^14.4.3
         version: 14.5.2(@testing-library/dom@8.20.1)
+      '@textea/json-viewer':
+        specifier: ^3.0.0
+        version: 3.5.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react@18.2.0))(@mui/material@5.16.12(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react@18.2.0))(@types/react@18.3.18)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@types/react@18.3.18)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@trpc/client':
         specifier: ^11.0.0-next-beta.264
         version: 11.0.0-rc.446(@trpc/server@11.0.0-rc.446)
@@ -305,9 +275,15 @@ importers:
       autoprefixer:
         specifier: ^10.4.13
         version: 10.4.20(postcss@8.4.49)
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
       devalue:
         specifier: ^4.2.0
         version: 4.3.3
+      fuzzysort:
+        specifier: ^2.0.4
+        version: 2.0.4
       gulp:
         specifier: ^4.0.2
         version: 4.0.2
@@ -323,12 +299,21 @@ importers:
       json-bigint:
         specifier: ^1.0.0
         version: 1.0.0
+      nuqs:
+        specifier: ^2.2.1
+        version: 2.2.3(react@18.2.0)
       pkg-pr-new:
         specifier: ^0.0.35
         version: 0.0.35
       postcss:
         specifier: ^8.4.19
         version: 8.4.49
+      pretty-bytes:
+        specifier: ^6.1.0
+        version: 6.1.1
+      pretty-ms:
+        specifier: ^8.0.0
+        version: 8.0.0
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -344,6 +329,9 @@ importers:
       react-hotkeys-hook:
         specifier: ^4.0.6
         version: 4.6.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      react-markdown:
+        specifier: ^9.0.1
+        version: 9.0.1(@types/react@18.3.18)(react@18.2.0)
       rollup:
         specifier: ^3.7.4
         version: 3.29.5
@@ -362,9 +350,15 @@ importers:
       rollup-plugin-visualizer:
         specifier: ^5.8.3
         version: 5.12.0(rollup@3.29.5)
+      string-byte-length:
+        specifier: ^1.6.0
+        version: 1.6.0
       superjson:
         specifier: ^1.12.0
         version: 1.12.2
+      tailwind-merge:
+        specifier: ^2.5.5
+        version: 2.6.0
       tailwindcss:
         specifier: ^3.2.4
         version: 3.4.17
@@ -377,6 +371,9 @@ importers:
       typescript:
         specifier: ^5.4.5
         version: 5.7.2
+      url:
+        specifier: ^0.11.0
+        version: 0.11.4
       zustand:
         specifier: ^4.1.5
         version: 4.5.5(@types/react@18.3.18)(react@18.2.0)
@@ -4842,7 +4839,6 @@ packages:
     engines: {node: '>=0.6.0', teleport: '>=0.2.0'}
     deprecated: |-
       You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
-
       (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
 
   qs@6.13.0:
