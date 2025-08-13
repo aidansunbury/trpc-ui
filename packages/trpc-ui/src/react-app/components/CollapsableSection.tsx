@@ -2,8 +2,8 @@ import { Chevron } from "@src/react-app/components/Chevron";
 import {
   collapsables,
   useCollapsableIsShowing,
-  useSiteNavigationContext,
 } from "@src/react-app/components/contexts/SiteNavigationContext";
+import { useSiteNavigationContext } from "@src/react-app/components/contexts/SiteNavigationContext";
 import {
   backgroundColor,
   solidColorBg,
@@ -40,7 +40,7 @@ export function CollapsableSection({
 }) {
   const { scrollToPathIfMatches } = useSiteNavigationContext();
   const shown = useCollapsableIsShowing(fullPath);
-  const [_path, setPath] = useQueryState("path");
+  const [path, setPath] = useQueryState("path");
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {

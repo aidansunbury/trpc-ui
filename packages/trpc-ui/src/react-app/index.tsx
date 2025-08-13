@@ -19,5 +19,10 @@ trpc;
 RootComponent;
 React;
 root.render(
-  <RootComponent rootRouter={routerDefinition} options={options} trpc={trpc} />,
+  <RootComponent
+    rootRouter={routerDefinition}
+    options={options}
+    trpc={trpc}
+    parsedRouter={{}}
+  />,
 );

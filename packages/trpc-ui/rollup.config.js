@@ -16,12 +16,10 @@ export default [
     plugins: [
       typescript({ tsconfig: "tsconfig.buildPanel.json" }),
       json(),
-      // resolve(),
-      // babel({
-      //     exclude: "node_modules/**",
-      //     presets: ["@babel/env", "@babel/preset-react"],
-      // }),
-      // commonjs(),
+      nodeResolve({
+        extensions: [".js", ".ts", ".tsx", "ts"],
+      }),
+      commonjs(),
     ],
     output: [
       { file: "lib/index.js", format: "cjs", inlineDynamicImports: true },
@@ -41,6 +39,7 @@ export default [
       postcss({
         extract: path.resolve("lib/react-app/index.css"),
       }),
+      json(),
       nodeResolve({
         extensions: [".js", ".ts", ".tsx", "ts"],
       }),

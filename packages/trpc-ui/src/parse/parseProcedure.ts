@@ -115,7 +115,7 @@ function nodeAndInputSchemaFromInputs(
   };
 }
 
-export function parseProcedure(
+function parseProcedure(
   procedure: Procedure,
   path: string[],
   options: TrpcPanelExtraOptions,

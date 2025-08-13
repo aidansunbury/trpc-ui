@@ -2,11 +2,9 @@ import fs from "node:fs";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { AnyTRPCRouter } from "@trpc/server";
-import {
-  type TrpcPanelExtraOptions,
-  parseRouterWithOptions,
-} from "./parse/parseRouter";
+import { type TrpcPanelExtraOptions } from "./parse/parseRouter";
 
+import { parseTRPCRouter } from "./parseV2/parse";
 export type Info = {
   title?: string;
   description?: string;
@@ -75,12 +73,7 @@ export function renderTrpcPanel(router: AnyTRPCRouter, options: RenderOptions) {
   const bundleInjectionParams: InjectionParam[] = [
     {
       searchFor: routerReplaceSymbol,
-      injectString: JSON.stringify(
-        parseRouterWithOptions(router, {
-          ...defaultParseRouterOptions,
-          ...options,
-        }),
-      ),
+      injectString: JSON.stringify(parseTRPCRouter(router)),
     },
     {
       searchFor: optionsReplaceSymbol,

@@ -3,7 +3,7 @@ import { type Router, isProcedure, isRouter } from "./routerType";
 import type { AnyTRPCRouter } from "@trpc/server";
 import type { zodToJsonSchema } from "zod-to-json-schema";
 import { logParseError } from "./parseErrorLogs";
-import { type ParsedProcedure, parseProcedure } from "./parseProcedure";
+import { type ParsedProcedure } from "./parseProcedure";
 
 // TODO this should be more specific, as it hurts the type safety lower down
 export type JSON7SchemaType = ReturnType<typeof zodToJsonSchema>;
@@ -42,9 +42,9 @@ function parseRouter(
       if (isRouter(child)) {
         return parseRouter(child, newPath, options);
       }
-      if (isProcedure(child)) {
-        return parseProcedure(child, newPath, options);
-      }
+      // if (isProcedure(child)) {
+      //   return parseProcedure(child, newPath, options);
+      // }
       return null;
     })();
     if (!parsedNode) {
@@ -67,7 +67,7 @@ export type TrpcPanelExtraOptions = {
   transformer?: "superjson";
 };
 
-export function parseRouterWithOptions(
+function parseRouterWithOptions(
   router: AnyTRPCRouter,
   parseRouterOptions: TrpcPanelExtraOptions,
 ) {

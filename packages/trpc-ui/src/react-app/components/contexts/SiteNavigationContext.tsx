@@ -6,7 +6,10 @@ import React, {
   useMemo,
   useRef,
 } from "react";
-import { create } from "zustand";
+import { type StoreApi, type UseBoundStore, create } from "zustand";
+
+type CollapsibleState = Record<string, boolean>;
+type CollapsibleStore = UseBoundStore<StoreApi<CollapsibleState>>;
 
 const Context = createContext<{
   scrollToPathIfMatches: (path: string[], element: Element) => boolean;
@@ -23,48 +26,38 @@ function forAllPaths(path: string[], callback: (current: string) => void) {
   }
 }
 
-const collapsablesStore = {
-  current: null as null | ReturnType<typeof create>,
-};
+let collapsablesStore: CollapsibleStore;
 
-function initialCollapsableStoreValues(allPaths: string[]) {
-  const vals: Record<string, boolean> = {};
-
+function createCollapsablesStore(allPaths: string[]): CollapsibleStore {
+  const initialState: CollapsibleState = {};
   for (const path of allPaths) {
-    vals[path] = false;
+    initialState[path] = false;
   }
-  return vals;
+  return create<CollapsibleState>(() => initialState);
 }
 
 function initCollapsablesStore(allPaths: string[]) {
-  collapsablesStore.current = create<any>(() => ({
-    ...initialCollapsableStoreValues(allPaths),
-  }));
-}
-
-function useInitCollapsablesStore(allPaths: string[]) {
-  const hasInitted = useRef(false);
-
-  if (!hasInitted.current) {
-    initCollapsablesStore(allPaths);
-    hasInitted.current = true;
+  if (!collapsablesStore) {
+    collapsablesStore = createCollapsablesStore(allPaths);
   }
 }
 
 export const collapsables = (() => {
   const hide = (path: string[]) => {
+    if (!collapsablesStore) return;
     const pathJoined = path.join(".");
     forAllPaths(path, (current) => {
       if (pathJoined.length <= current.length) {
-        collapsablesStore.current?.setState({
+        collapsablesStore.setState({
           [current]: false,
         });
       }
     });
   };
   const show = (path: string[]) => {
+    if (!collapsablesStore) return;
     forAllPaths(path, (current) => {
-      collapsablesStore.current?.setState({
+      collapsablesStore.setState({
         [current]: true,
       });
     });
@@ -73,7 +66,8 @@ export const collapsables = (() => {
     hide,
     show,
     toggle(path: string[]) {
-      const state = collapsablesStore.current?.getState() as any;
+      if (!collapsablesStore) return;
+      const state = collapsablesStore.getState();
       if (state[path.join(".")]) {
         hide(path);
       } else {
@@ -81,21 +75,23 @@ export const collapsables = (() => {
       }
     },
     hideAll() {
-      const state = collapsablesStore.current! as any;
-      const newValue: Record<string, boolean> = {};
-      for (const path in state) {
-        newValue[path] = false;
+      if (!collapsablesStore) return;
+      const state = collapsablesStore.getState();
+      const newValue: CollapsibleState = {};
+      for (const pathKey in state) {
+        newValue[pathKey] = false;
       }
-      collapsablesStore.current?.setState(newValue);
+      collapsablesStore.setState(newValue);
     },
   };
 })();
 
-export function useCollapsableIsShowing(path: string[]) {
-  const p = useMemo(() => {
-    return path.join(".");
-  }, []);
-  return collapsablesStore.current?.((s) => (s as any)[p]);
+export function useCollapsableIsShowing(path: string[]): boolean {
+  const pathKey = useMemo(() => path.join("."), [path]);
+  if (!collapsablesStore) {
+    return false;
+  }
+  return collapsablesStore((state) => state[pathKey] ?? false);
 }
 
 export function SiteNavigationContextProvider({
@@ -104,7 +100,7 @@ export function SiteNavigationContextProvider({
   children: ReactNode;
 }) {
   const allPaths = useAllPaths();
-  useInitCollapsablesStore(allPaths.pathsArray);
+  initCollapsablesStore(allPaths.pathsArray);
 
   const scrollToPathRef = useRef<string[] | null>(null);
 

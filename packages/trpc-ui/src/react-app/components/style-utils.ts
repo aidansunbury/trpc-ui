@@ -1,7 +1,7 @@
 import type { ParsedProcedure } from "@src/parse/parseProcedure";
 import type { ParsedRouter } from "@src/parse/parseRouter";
+import type { RouterOrProcedure } from "@src/parseV2/types";
 import type { ColorSchemeType } from "@src/react-app/components/CollapsableSection";
-
 export function solidColorBg(type: ColorSchemeType) {
   switch (type) {
     case "mutation":
@@ -77,9 +77,6 @@ export function textColor(type: ColorSchemeType) {
   }
 }
 
-export function colorSchemeForNode(
-  node: ParsedRouter | ParsedProcedure,
-): ColorSchemeType {
-  if (node.nodeType === "router") return "router";
-  return node.procedureType;
+export function colorSchemeForNode(node: RouterOrProcedure): ColorSchemeType {
+  return node.type;
 }

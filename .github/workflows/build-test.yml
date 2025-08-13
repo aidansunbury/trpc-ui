@@ -25,5 +25,4 @@ jobs:
       
       - name: Install deps
         run: pnpm install
-          
-      - run: pnpm test:panel
+

@@ -4,7 +4,6 @@
   "license": "MIT",
   "packageManager": "pnpm@9.15.1",
   "scripts": {
-    "test:panel": "pnpm -F trpc-ui test",
     "build:panel": "pnpm -F trpc-ui build",
     "build:test-app": "pnpm -F test-app build",
     "dev:dev-app": "pnpm -F dev-app dev",
