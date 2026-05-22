@@ -1,7 +1,7 @@
 packages:
   - "packages/*"
 allowBuilds:
-  '@biomejs/biome': false
+  "@biomejs/biome": false
   es5-ext: false
   esbuild: false
   fsevents: false
