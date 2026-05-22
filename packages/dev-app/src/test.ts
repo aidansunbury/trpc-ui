@@ -10,7 +10,7 @@ const index = 0;
 
 appRouter.postsRouter.createPost;
 
-function parseNode(node: any) {
+function parseNode(node: unknown) {
   return node._def;
 }
 
@@ -98,7 +98,7 @@ expected["~standard"].vendor;
 // });
 
 function detectValidatorType(
-  validator: any,
+  validator: unknown,
 ): "zod" | "valibot" | "arktype" | "unknown" {
   // Handle null or undefined
   if (validator == null) {

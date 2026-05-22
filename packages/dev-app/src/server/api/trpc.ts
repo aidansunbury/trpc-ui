@@ -45,7 +45,7 @@ import { initTRPC } from "@trpc/server";
 import superjson from "superjson";
 import type { TRPCPanelMeta } from "trpc-ui";
 import { ZodError } from "zod";
-import { env } from "~/env.mjs";
+// import { env } from "~/env.mjs";
 
 const t = initTRPC
   .context<typeof createTRPCContext>()

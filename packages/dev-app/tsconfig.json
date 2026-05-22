@@ -17,11 +17,11 @@
     "incremental": true,
     "noUncheckedIndexedAccess": true,
     "sourceMap": true,
+
     "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"],
-      "trpc-ui/*": ["../trpc-ui/src/*"],
-      "@src/*": ["../trpc-ui/src/*"]
+      "trpc-ui": ["../trpc-ui/src/*"]
     }
   },
   "include": [

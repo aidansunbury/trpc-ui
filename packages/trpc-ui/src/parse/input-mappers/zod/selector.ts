@@ -1,13 +1,3 @@
-import { parseZodBigIntDef } from "@src/parse/input-mappers/zod/parsers/parseZodBigIntDef";
-import { parseZodBrandedDef } from "@src/parse/input-mappers/zod/parsers/parseZodBrandedDef";
-import { parseZodDefaultDef } from "@src/parse/input-mappers/zod/parsers/parseZodDefaultDef";
-import { parseZodEffectsDef } from "@src/parse/input-mappers/zod/parsers/parseZodEffectsDef";
-import { parseZodNullDef } from "@src/parse/input-mappers/zod/parsers/parseZodNullDef";
-import { parseZodNullableDef } from "@src/parse/input-mappers/zod/parsers/parseZodNullableDef";
-import { parseZodOptionalDef } from "@src/parse/input-mappers/zod/parsers/parseZodOptionalDef";
-import { parseZodPromiseDef } from "@src/parse/input-mappers/zod/parsers/parseZodPromiseDef";
-import { parseZodUndefinedDef } from "@src/parse/input-mappers/zod/parsers/parseZodUndefinedDef";
-import { parseZodUnionDef } from "@src/parse/input-mappers/zod/parsers/parseZodUnionDef";
 import {
   type ZodArrayDef,
   type ZodBigIntDef,
@@ -30,6 +20,16 @@ import {
   type ZodUnionDef,
   type ZodVoidDef,
 } from "zod";
+import { parseZodBigIntDef } from "../../input-mappers/zod/parsers/parseZodBigIntDef";
+import { parseZodBrandedDef } from "../../input-mappers/zod/parsers/parseZodBrandedDef";
+import { parseZodDefaultDef } from "../../input-mappers/zod/parsers/parseZodDefaultDef";
+import { parseZodEffectsDef } from "../../input-mappers/zod/parsers/parseZodEffectsDef";
+import { parseZodNullDef } from "../../input-mappers/zod/parsers/parseZodNullDef";
+import { parseZodNullableDef } from "../../input-mappers/zod/parsers/parseZodNullableDef";
+import { parseZodOptionalDef } from "../../input-mappers/zod/parsers/parseZodOptionalDef";
+import { parseZodPromiseDef } from "../../input-mappers/zod/parsers/parseZodPromiseDef";
+import { parseZodUndefinedDef } from "../../input-mappers/zod/parsers/parseZodUndefinedDef";
+import { parseZodUnionDef } from "../../input-mappers/zod/parsers/parseZodUnionDef";
 import type { ParserSelectorFunction } from "../../parseNodeTypes";
 import { parseZodArrayDef } from "./parsers/parseZodArrayDef";
 import { parseZodBooleanFieldDef } from "./parsers/parseZodBooleanFieldDef";

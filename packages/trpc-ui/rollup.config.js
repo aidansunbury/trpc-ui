@@ -17,6 +17,7 @@ export default [
       typescript({ tsconfig: "tsconfig.buildPanel.json" }),
       json(),
       nodeResolve({
+        preferBuiltins: true,
         extensions: [".js", ".ts", ".tsx", "ts"],
       }),
       commonjs(),
@@ -25,6 +26,7 @@ export default [
       { file: "lib/index.js", format: "cjs", inlineDynamicImports: true },
       { file: "lib/index.mjs", format: "es", inlineDynamicImports: true },
     ],
+    external: ["node:fs", "node:path", "node:url"],
   },
   {
     input: "src/react-app/index.tsx",

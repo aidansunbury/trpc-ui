@@ -4,7 +4,6 @@ import superjson from "superjson";
 import type { TRPCPanelMeta } from "trpc-ui";
 import { ZodError } from "zod";
 
-import { env } from "~/env.mjs";
 import { appRouterSuperjson } from "~/router-superjson";
 import { createTRPCContext } from "~/server/api/trpc";
 
@@ -48,7 +47,7 @@ export default createNextApiHandler({
   router: appRouterSuperjson,
   createContext: createTRPCContext,
   onError:
-    env.NODE_ENV === "development"
+    process.env.NODE_ENV === "development"
       ? ({ path, error }) => {
           console.error(
             `L tRPC (superjson) failed on ${path ?? "<no-path>"}: ${error.message}`,

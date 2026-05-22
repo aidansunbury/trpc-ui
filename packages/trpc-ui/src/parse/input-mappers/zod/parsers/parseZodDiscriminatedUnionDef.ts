@@ -1,9 +1,9 @@
-import { nodePropertiesFromRef } from "@src/parse/utils";
 import { type AnyZodObject, ZodFirstPartyTypeKind } from "zod";
 import type {
   DiscriminatedUnionNode,
   ParseFunction,
 } from "../../../parseNodeTypes";
+import { nodePropertiesFromRef } from "../../../utils";
 import { zodSelectorFunction } from "../selector";
 
 type OptionsMap = Map<string, AnyZodObject>;

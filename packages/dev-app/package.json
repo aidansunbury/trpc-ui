@@ -19,10 +19,10 @@
     "@rjsf/utils": "^5.24.8",
     "@rjsf/validator-ajv8": "^5.24.8",
     "@tanstack/react-query": "^5.12.2",
-    "@trpc/client": "^11.4.3",
-    "@trpc/next": "^11.4.3",
-    "@trpc/react-query": "^11.4.3",
-    "@trpc/server": "^11.4.3",
+    "@trpc/client": "^11.17.0",
+    "@trpc/next": "^11.17.0",
+    "@trpc/react-query": "^11.17.0",
+    "@trpc/server": "^11.17.0",
     "@types/json-schema": "^7.0.15",
     "@valibot/to-json-schema": "1.0.0-rc.0",
     "arktype": "^2.1.9",
@@ -44,7 +44,7 @@
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "react-scan": "^0.2.12",
-    "typescript": "^5.4.5"
+    "typescript": "^5.9.3"
   },
   "ct3aMetadata": {
     "initVersion": "7.10.2"

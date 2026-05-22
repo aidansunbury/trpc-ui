@@ -1,6 +1,6 @@
-import { nodePropertiesFromRef } from "@src/parse/utils";
 import type { ZodArrayDef } from "zod";
 import type { ArrayNode, ParseFunction } from "../../../parseNodeTypes";
+import { nodePropertiesFromRef } from "../../../utils";
 import { zodSelectorFunction } from "../selector";
 
 export const parseZodArrayDef: ParseFunction<ZodArrayDef, ArrayNode> = (

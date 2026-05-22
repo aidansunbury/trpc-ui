@@ -10,14 +10,14 @@ import {
   isSubscriptionDef,
 } from "./routerType";
 
+import { type AnyZodObject, z } from "zod";
+import { zodToJsonSchema } from "zod-to-json-schema";
+import { zodSelectorFunction } from "./input-mappers/zod/selector";
 import type {
   AddDataFunctions,
   ParseReferences,
   ParsedInputNode,
-} from "@src/parse/parseNodeTypes";
-import { type AnyZodObject, z } from "zod";
-import { zodToJsonSchema } from "zod-to-json-schema";
-import { zodSelectorFunction } from "./input-mappers/zod/selector";
+} from "./parseNodeTypes";
 
 export type ProcedureExtraData = {
   parameterDescriptions: { [path: string]: string };
@@ -65,6 +65,7 @@ function nodeAndInputSchemaFromInputs(
   if (!inputs.length) {
     return {
       parseInputResult: "success",
+      // @ts-ignore – the type is too deep for TS6, but runtime works fine
       schema: zodToJsonSchema(emptyZodObject, {
         errorMessages: true,
         $refStrategy: "none",

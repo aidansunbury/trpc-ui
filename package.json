@@ -2,14 +2,15 @@
   "name": "trpc-ui-monorepo",
   "version": "0.0.0",
   "license": "MIT",
-  "packageManager": "pnpm@9.15.1",
+  "packageManager": "pnpm@11.2.2",
   "scripts": {
-    "build:panel": "pnpm -F trpc-ui build",
+    "build:ui": "pnpm -F trpc-ui build",
+    "build:dev-app": "pnpm -F dev-app build",
     "build:test-app": "pnpm -F test-app build",
     "dev:dev-app": "pnpm -F dev-app dev",
-    "dev:test-app": "pnpm -F test-trpc-panel dev",
+    "dev:test-app": "pnpm -F test-app dev",
+    "start:test-app": "pnpm -F test-app start",
     "cpy:readme": "cp README.MD packages/trpc-ui/README.md",
-    "start:test-app": "node ./packages/test-app/lib/server.ts",
     "biome:check": "biome check --max-diagnostics=none",
     "biome:check:errors": "biome check --max-diagnostics=none --diagnostic-level=error",
     "biome:check:changed": "biome check --changed --max-diagnostics=none",
@@ -19,6 +20,6 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@tsconfig/docusaurus": "^1.0.6",
-    "typescript": "^4.9.3"
+    "typescript": "^6.0.3"
   }
 }

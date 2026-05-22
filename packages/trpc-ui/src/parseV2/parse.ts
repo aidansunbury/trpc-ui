@@ -3,7 +3,6 @@ import type { Type as ArkTypeValidator } from "arktype";
 import type { JSONSchema7Object } from "json-schema";
 import * as v from "valibot";
 import { zodToJsonSchema } from "zod-to-json-schema";
-import * as z3 from "zod/v3";
 import * as z4 from "zod/v4";
 import { detectValidatorType } from "./detectValidator";
 import type { ParsedTRPCRouter, Router } from "./types";
@@ -150,14 +149,14 @@ function arkToJson(inputs: ArkTypeValidator[]): JSONSchema7Object {
   }
   if (inputs.length > 1) {
     const [first, ...rest] = inputs;
+    if (!first) {
+      return {} as any;
+    }
     return arkRecursive(first, rest);
   }
   return {};
 }
-function arkRecursive(
-  base: ArkTypeValidator,
-  rest: ArkTypeValidator[],
-): JSONSchema7Object {
+function arkRecursive(base: ArkTypeValidator, rest: ArkTypeValidator[]): any {
   if (rest.length === 0) {
     return base.toJsonSchema();
   }

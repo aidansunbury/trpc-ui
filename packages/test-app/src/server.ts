@@ -58,7 +58,7 @@ console.log(`${serverUrl}${port ? `:${port}` : ""}`);
 
 expressApp.get("/", (_req, res) => {
   res.send(
-    renderTrpcPanel(testRouter as any, {
+    renderTrpcPanel(testRouter, {
       url: `${serverUrl}${
         process.env.NODE_ENV === "production" ? "" : `:${port}`
       }/trpc`,
