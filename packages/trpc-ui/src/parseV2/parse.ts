@@ -145,7 +145,7 @@ export function parseTRPCRouter(
 
 function arkToJson(inputs: ArkTypeValidator[]): JSONSchema7Object {
   if (inputs.length === 1) {
-    return inputs[0]?.toJsonSchema();
+    return inputs[0]?.toJsonSchema() || {};
   }
   if (inputs.length > 1) {
     const [first, ...rest] = inputs;

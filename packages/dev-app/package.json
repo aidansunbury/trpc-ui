@@ -15,7 +15,7 @@
     "@rjsf/chakra-ui": "^5.24.8",
     "@rjsf/core": "^5.24.8",
     "@rjsf/material-ui": "^5.24.8",
-    "@rjsf/mui": "^5.24.8",
+    "@rjsf/mui": "^5.24.13",
     "@rjsf/utils": "^5.24.8",
     "@rjsf/validator-ajv8": "^5.24.8",
     "@tanstack/react-query": "^5.12.2",
@@ -34,6 +34,7 @@
     "react-dom": "18.2.0",
     "superjson": "1.12.2",
     "tailwindcss": "^3.3.1",
+    "trpc-ui": "workspace:*",
     "ts-loader": "^9.4.2",
     "valibot": "1.1.0",
     "zod": "^3.25.0",
@@ -44,7 +45,7 @@
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "react-scan": "^0.2.12",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.3"
   },
   "ct3aMetadata": {
     "initVersion": "7.10.2"

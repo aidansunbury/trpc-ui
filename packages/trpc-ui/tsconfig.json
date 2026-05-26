@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES6",
     "module": "ES2022",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "outDir": "lib",
     "rootDir": "./",
     "strict": true,
@@ -15,11 +15,11 @@
     "resolveJsonModule": true,
     "jsx": "react",
     "paths": {
-      "@src/*": ["./src/*"]
+      "@src/*": ["./src/*"],
     },
     "sourceMap": true,
-    "sourceRoot": "/"
+    "sourceRoot": "/",
   },
   "include": ["./src/**/*"],
-  "exclude": ["node_modules/**/*", "lib/**/*"]
+  "exclude": ["node_modules/**/*", "lib/**/*"],
 }

@@ -5,6 +5,7 @@
   "main": "src/server.ts",
   "license": "MIT",
   "dependencies": {
+    "trpc-ui": "workspace:*",
     "@trpc/client": "11.17.0",
     "@trpc/server": "11.17.0",
     "@types/connect-livereload": "^0.6.3",
@@ -23,7 +24,6 @@
     "open": "^8.4.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "trpc-ui": "latest",
     "tsconfig-paths": "^4.2.0",
     "tsx": "^4.22.3",
     "ws": "^8.20.1",

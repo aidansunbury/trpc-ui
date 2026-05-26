@@ -6,3 +6,5 @@ allowBuilds:
   esbuild: false
   fsevents: false
   sharp: false
+minimumReleaseAgeExclude:
+  - '@hookform/resolvers@5.4.0'

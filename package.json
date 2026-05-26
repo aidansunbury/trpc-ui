@@ -2,7 +2,7 @@
   "name": "trpc-ui-monorepo",
   "version": "0.0.0",
   "license": "MIT",
-  "packageManager": "pnpm@11.2.2",
+  "packageManager": "pnpm@11.4.0",
   "scripts": {
     "build:ui": "pnpm -F trpc-ui build",
     "build:dev-app": "pnpm -F dev-app build",

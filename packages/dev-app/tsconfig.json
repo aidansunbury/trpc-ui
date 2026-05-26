@@ -17,12 +17,11 @@
     "incremental": true,
     "noUncheckedIndexedAccess": true,
     "sourceMap": true,
-
-    "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"],
-      "trpc-ui": ["../trpc-ui/src/*"]
-    }
+      "trpc-ui/*": ["../trpc-ui/src/*"],
+      "@src/*": ["../trpc-ui/src/*"],
+    },
   },
   "include": [
     "next-env.d.ts",
@@ -30,7 +29,7 @@
     "**/*.tsx",
     "**/*.cjs",
     "**/*.mjs",
-    "../trpc-ui/src/**/*.ts"
+    "../trpc-ui/src/**/*.ts",
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
 }
