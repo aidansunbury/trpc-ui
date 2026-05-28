@@ -29,9 +29,9 @@ export function DocumentationSection({
                   ([key, value]) => (
                     <tr
                       key={key}
-                      className="flex-row space-x-2 border-separatorLine border-b"
+                      className="flex-row space-x-2 border-separator-line border-b"
                     >
-                      <td className="py-2 align-top font-bold text-neutralText text-sm">
+                      <td className="py-2 align-top font-bold text-neutral-text text-sm">
                         {`${key}: `}
                       </td>
                       <td className="py-2 pl-4 text-gray-500 text-sm">

@@ -9,7 +9,7 @@ export function AddItemButton({
 }) {
   return (
     <button
-      className={`flex h-10 flex-row items-center justify-center rounded-[4px] border border-neutralSolidTransparent bg-whiteTransparent hover:bg-whiteLessTransparent ${className ? className : ""}`}
+      className={`flex h-10 flex-row items-center justify-center rounded-sm border border-neutral-solid-transparent bg-white-transparent hover:bg-white-less-transparent ${className ? className : ""}`}
       type="button"
       onClick={onClick}
     >

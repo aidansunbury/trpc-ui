@@ -12,7 +12,7 @@ export function InputGroupContainer({
   return (
     <div
       className={
-        "flex flex-col overflow-hidden rounded-md border border-neutralSolid bg-[#fcfbf977] shadow-sm"
+        "flex flex-col overflow-hidden rounded-md border border-neutral-solid bg-[#fcfbf977] shadow-sm"
       }
     >
       <span className="mb-1 flex flex-row bg-white p-1">

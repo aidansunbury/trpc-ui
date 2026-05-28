@@ -16,7 +16,7 @@ export function TopBar({
 }) {
   const { setHeadersPopupShown } = useHeadersContext();
   return (
-    <div className="position-fixed top-0 right-0 left-0 flex h-16 w-full flex-row items-center justify-between border-b border-b-panelBorder bg-actuallyWhite bg-gray-50 px-4 pr-8 drop-shadow-sm">
+    <div className="position-fixed top-0 right-0 left-0 flex h-16 w-full flex-row items-center justify-between border-b border-b-panel-border  bg-gray-50 px-4 pr-8 drop-shadow-sm">
       <div className="flex flex-row items-center gap-4">
         <button
           type="button"
@@ -43,7 +43,7 @@ export function TopBar({
       <RouterSearchTooltip />
       <button
         onClick={() => setHeadersPopupShown(true)}
-        className="rounded-sm border border-neutralSolidTransparent px-4 py-2 font-bold text-neutralText shadow-sm"
+        className="rounded-sm border border-neutral-solid-transparent px-4 py-2 font-bold text-neutral-text shadow-sm"
         type="button"
       >
         Headers
@@ -65,9 +65,12 @@ export function RouterSearchTooltip() {
     <button
       onClick={() => setSearchOpen(true)}
       type="button"
-      className="flex flex-row items-center text-neutralSolidTransparent"
+      className="flex flex-row items-center text-neutral-solid-transparent"
     >
-      <Search fontSize="small" className="color-neutralSolidTransparent mr-2" />
+      <Search
+        fontSize="small"
+        className="color-neutral-solid-transparent mr-2"
+      />
       {helperText}
     </button>
   );

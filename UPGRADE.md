@@ -48,6 +48,61 @@ This document tracks the plan to **modernize** the `trpc-ui` repository and **up
 2. **✅ Updated `pnpm` globally to the latest release (`11.2.2`).**
 3. Commit the initial `UPGRADE.md` file (this step).
 
----  
+---
 
-*Next action*: Run the command to upgrade `pnpm` globally.
+## Completed Upgrades
+
+### 2026-05-28: tailwind-merge v2.6.1 → v3.6.0
+- **Package**: `tailwind-merge`
+- **Old version**: `^2.6.1`
+- **New version**: `^3.6.0`
+- **Reason**: Required for Tailwind CSS v4 compatibility (v3.x supports Tailwind v4.0-v4.3)
+- **Breaking changes**: None for this project - using simple `twMerge` API without custom configuration
+- **Verification**: Build completed successfully (`pnpm -F trpc-ui build`)
+
+### 2026-05-28: Tailwind CSS v3.4.19 → v4.3.0
+- **Package**: `tailwindcss`
+- **Old version**: `^3.4.19`
+- **New version**: `^4.3.0`
+- **Additional packages**: Added `@tailwindcss/postcss@^4.1.0`
+- **Changes made**:
+  - Updated `postcss.config.cjs` to use `@tailwindcss/postcss` instead of `tailwindcss` + `autoprefixer`
+  - Updated `src/react-app/index.css` to use `@import "tailwindcss"` and `@plugin "@tailwindcss/typography"`
+  - Migrated custom theme colors to `@theme inline` directive in CSS (kebab-case naming)
+  - Updated `style-utils.ts` to use kebab-case color names (e.g., `bg-query-solid` instead of `bg-querySolid`)
+  - Updated all component files to use kebab-case color names
+- **Breaking changes addressed**:
+  - Removed `autoprefixer` (v4 handles vendor prefixing automatically)
+  - Changed CSS import syntax from `@tailwind base/components/utilities` to `@import "tailwindcss"`
+  - Custom colors now use kebab-case naming convention
+- **Verification**: Build completed successfully
+
+### 2026-05-28: dev-app Tailwind CSS v3.3.1 → v4.3.0
+- **Package**: `tailwindcss` (dev-app)
+- **Old version**: `^3.3.1`
+- **New version**: `^4.3.0`
+- **Additional packages**: Added `@tailwindcss/postcss@^4.1.0`
+- **Changes made**:
+  - Updated `postcss.config.js` to use `@tailwindcss/postcss`
+  - Updated `src/styles/globals.css` with new v4 syntax
+  - Migrated custom theme colors to `@theme inline` directive
+- **Verification**: Package installed successfully
+
+---
+
+*Next action*: Check dev-app for similar Tailwind CSS updates if needed.
+
+### 2026-05-28: dev-app Tailwind CSS v3.3.1 → v4.3.0
+- **Package**: `tailwindcss` (dev-app)
+- **Old version**: `^3.3.1`
+- **New version**: `^4.3.0`
+- **Additional packages**: Added `@tailwindcss/postcss@^4.1.0`
+- **Changes made**:
+  - Updated `postcss.config.js` to use `@tailwindcss/postcss`
+  - Updated `src/styles/globals.css` with new v4 syntax
+  - Migrated custom theme colors to `@theme inline` directive
+- **Verification**: Package installed successfully
+
+---
+
+*Next action*: Consider removing `autoprefixer` from devDependencies if no longer needed elsewhere in the project.

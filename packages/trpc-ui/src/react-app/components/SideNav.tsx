@@ -19,7 +19,7 @@ export function SideNav({
   return open ? (
     <div
       style={{ maxHeight: "calc(100vh - 4rem)" }}
-      className="flex min-w-[16rem] flex-col items-start space-y-2 overflow-scroll border-r-2 border-r-panelBorder bg-actuallyWhite p-2 pr-4 shadow-sm"
+      className="flex min-w-[16rem] flex-col items-start space-y-2 overflow-scroll border-r-2 border-r-panel-border bg-actually-white p-2 pr-4 shadow-sm"
     >
       {Object.entries(parsedRouter).map(([key, routerOrProcedure]) => {
         return <SideNavItem node={routerOrProcedure} key={key} />;

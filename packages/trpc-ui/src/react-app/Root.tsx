@@ -81,7 +81,7 @@ function AppInnards({
   return (
     <div className="relative flex flex-1 flex-col">
       <TopBar open={sidebarOpen} setOpen={setSidebarOpen} />
-      <div className="flex flex-1 flex-row bg-mainBackground">
+      <div className="flex flex-1 flex-row bg-main-background">
         <SideNav
           open={sidebarOpen}
           setOpen={setSidebarOpen}
