@@ -4,7 +4,7 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import type { ProcedureMeta } from "@src/parseV2/types";
-import { JSONSchema7, JSONSchema7Object } from "json-schema";
+import type { JSONSchema7Object } from "json-schema";
 import React from "react";
 import Markdown from "react-markdown";
 
@@ -16,7 +16,7 @@ interface DocumentationSectionProps {
 type PropertyInfo = {
   path: string;
   required: boolean;
-  type: string | undefined;
+  type: string;
   description: string | undefined;
 };
 
@@ -70,7 +70,7 @@ export function DocumentationSection({
                     },
                   }}
                 >
-                  <Markdown className="markdown">{value}</Markdown>
+                  <Markdown>{value}</Markdown>
                 </Box>
               </Box>
             ))}
@@ -183,7 +183,7 @@ export function DocumentationSection({
                         flexShrink: 0,
                       }}
                     >
-                      {prop.type.toString()}
+                      {String(prop.type)}
                     </Typography>
                   )}
                 </Box>
@@ -214,16 +214,18 @@ function extractPropertyDescriptions(
     // 1. It's in the required array of its parent schema AND
     // 2. All of its parent objects are also required
     const propIsRequired =
-      parentIsRequired && (schema.required || []).includes(propName);
+      parentIsRequired &&
+      !!(schema.required as string[] | undefined)?.includes(propName);
 
     // Add this property if it has a description
     if (propDetails.description) {
       properties.push({
         path,
         required: propIsRequired,
-        type: propDetails.type?.toString(),
+        // biome-ignore lint/suspicious/noExplicitAny: JSONSchema type field is complex
+        type: (propDetails as any).type ?? "unknown",
         description: propDetails.description,
-      });
+      } as PropertyInfo);
     }
 
     // Recursively add nested properties - the nested property inherits the required status

@@ -36,7 +36,7 @@ export function DocumentationSection({
                       </td>
                       <td className="py-2 pl-4 text-gray-500 text-sm">
                         <article className="prose">
-                          <Markdown className={"prose"}>{value}</Markdown>
+                          <Markdown>{value}</Markdown>
                         </article>
                       </td>
                     </tr>

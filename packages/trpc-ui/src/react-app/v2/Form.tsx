@@ -1,19 +1,11 @@
-import { JsonForms } from "@jsonforms/react";
 import type { Procedure } from "@src/parseV2/types";
 import React from "react";
-
-import {
-  materialCells,
-  materialRenderers,
-} from "@jsonforms/material-renderers";
 import Editor from "@monaco-editor/react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import CircularProgress from "@mui/material/CircularProgress";
-import Divider from "@mui/material/Divider";
 import Paper from "@mui/material/Paper";
-import Stack from "@mui/material/Stack";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import Typography from "@mui/material/Typography";
@@ -32,8 +24,7 @@ import { useState } from "react";
 import { useRenderOptions } from "../components/contexts/OptionsContext";
 import { DocumentationSection } from "./DocumentationSection";
 
-import JsonForm from "@rjsf/material-ui";
-import { RJSFSchema } from "@rjsf/utils";
+import JsonForm from "@rjsf/mui";
 import validator from "@rjsf/validator-ajv8";
 import SuperJSON from "superjson";
 
@@ -90,7 +81,7 @@ export function Form({ procedure }: { procedure: Procedure }) {
   const { options } = useRenderOptions();
   const usingSuperJson = options.transformer === "superjson";
 
-  const [data, setData] = useState<object>(wrapSuperJson({}, usingSuperJson));
+  const [data, setData] = useState<any>(wrapSuperJson({}, usingSuperJson));
   const [tabValue, setTabValue] = React.useState(0);
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState<{
@@ -106,6 +97,7 @@ export function Form({ procedure }: { procedure: Procedure }) {
   });
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    void event; // unused but required by MUI Tabs API
     setTabValue(newValue);
   };
 
@@ -187,7 +179,7 @@ export function Form({ procedure }: { procedure: Procedure }) {
                 schema={procedure.schema}
                 formData={getRootData(data, usingSuperJson)}
                 onChange={({ formData }) =>
-                  setData((state) => {
+                  setData((state: any) => {
                     if (!usingSuperJson) {
                       return formData || {};
                     }

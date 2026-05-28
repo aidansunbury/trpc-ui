@@ -17,7 +17,7 @@ export default defineConfig({
         entryFileNames: "bundle.js",
         chunkFileNames: "[name]-[hash].js",
         assetFileNames: (assetInfo) => {
-          if (assetInfo.name?.endsWith(".css")) {
+          if (assetInfo.names[0].endsWith(".css")) {
             return "index.css";
           }
           return "[name].[extname]";

@@ -1,9 +1,4 @@
-import type { ParsedProcedure } from "@src/parse/parseProcedure";
-import type {
-  ParsedTRPCRouter,
-  Router,
-  RouterOrProcedure,
-} from "@src/parseV2/types";
+import type { ParsedTRPCRouter, RouterOrProcedure } from "@src/parseV2/types";
 import { Chevron } from "@src/react-app/components/Chevron";
 import { ItemTypeIcon } from "@src/react-app/components/ItemTypeIcon";
 import {
@@ -13,15 +8,12 @@ import {
 import { useCollapsableIsShowing } from "@src/react-app/components/contexts/SiteNavigationContext";
 import { colorSchemeForNode } from "@src/react-app/components/style-utils";
 import React, { useCallback } from "react";
-import type { ParsedRouter } from "../../parse/parseRouter";
 export function SideNav({
-  // rootRouter,
   open,
-  parsedRoouter,
+  parsedRouter,
 }: {
   open: boolean;
-  // rootRouter: ParsedRouter;
-  parsedRoouter: ParsedTRPCRouter;
+  parsedRouter: ParsedTRPCRouter;
   setOpen: (value: boolean) => void;
 }) {
   return open ? (
@@ -29,7 +21,7 @@ export function SideNav({
       style={{ maxHeight: "calc(100vh - 4rem)" }}
       className="flex min-w-[16rem] flex-col items-start space-y-2 overflow-scroll border-r-2 border-r-panelBorder bg-actuallyWhite p-2 pr-4 shadow-sm"
     >
-      {Object.entries(parsedRoouter).map(([key, routerOrProcedure]) => {
+      {Object.entries(parsedRouter).map(([key, routerOrProcedure]) => {
         return <SideNavItem node={routerOrProcedure} key={key} />;
       })}
     </div>

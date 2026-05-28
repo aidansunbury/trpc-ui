@@ -16,7 +16,6 @@ import { sample } from "@stoplight/json-schema-sampler";
 import { fullFormats } from "ajv-formats/dist/formats";
 import React, { useRef, useState } from "react";
 import { type Control, useForm, useFormState } from "react-hook-form";
-import getSize from "string-byte-length";
 import SuperJson from "superjson";
 import { useAsyncDuration } from "../../hooks/useAsyncDuration";
 import { AutoFillIcon } from "../../icons/AutoFillIcon";
@@ -250,8 +249,8 @@ export function ProcedureForm({
                 time={duration ?? undefined}
                 size={
                   usingSuperJson
-                    ? getSize(SuperJson.stringify(response.response))
-                    : getSize(JSON.stringify(response.response))
+                    ? Buffer.byteLength(SuperJson.stringify(response.response))
+                    : Buffer.byteLength(JSON.stringify(response.response))
                 }
               >
                 {response.response}

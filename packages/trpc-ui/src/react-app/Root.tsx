@@ -5,30 +5,21 @@ import {
   AllPathsContextProvider,
   useAllPaths,
 } from "@src/react-app/components/contexts/AllPathsContext";
-import {
-  HeadersContextProvider,
-  useHeaders,
-} from "@src/react-app/components/contexts/HeadersContext";
-import { HotKeysContextProvider } from "@src/react-app/components/contexts/HotKeysContext";
+import { HeadersContextProvider } from "@src/react-app/components/contexts/HeadersContext";
+
 import {
   SiteNavigationContextProvider,
   useSiteNavigationContext,
 } from "@src/react-app/components/contexts/SiteNavigationContext";
-
+import { HotKeysContextProvider } from "@src/react-app/components/contexts/HotKeysContext";
 import { useLocalStorage } from "@src/react-app/components/hooks/useLocalStorage";
 import type { RenderOptions } from "@src/render";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { type createTRPCReact, httpBatchLink } from "@trpc/react-query";
 import { useQueryState } from "nuqs";
 import { parseAsArrayOf, parseAsString } from "nuqs";
 import { NuqsAdapter } from "nuqs/adapters/react";
-import React, { type ReactNode, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
-import superjson from "superjson";
-import type { ParsedRouter } from "../parse/parseRouter";
 import { MetaHeader } from "./components/MetaHeader";
-import { RouterContainer } from "./components/RouterContainer";
 import { SideNav } from "./components/SideNav";
 import { TopBar } from "./components/TopBar";
 import {
@@ -94,7 +85,7 @@ function AppInnards({
         <SideNav
           open={sidebarOpen}
           setOpen={setSidebarOpen}
-          parsedRoouter={parsedRouter}
+          parsedRouter={parsedRouter}
         />
         <div
           className="flex flex-1 flex-col items-center overflow-scroll"

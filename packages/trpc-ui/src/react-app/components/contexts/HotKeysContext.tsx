@@ -28,10 +28,11 @@ export function HotKeysContextProvider({ children }: { children: ReactNode }) {
     preventDefault: true,
   });
 
-  const keydownHandler = useCallback(
-    (e: KeyboardEvent) => {
-      const ctrlOrMeta = e.ctrlKey || e.metaKey;
-      if (e.key.toUpperCase() === "P" && ctrlOrMeta) {
+  const keydownHandler: EventListener = useCallback(
+    (e: Event) => {
+      const keyboardEvent = e as KeyboardEvent;
+      const ctrlOrMeta = keyboardEvent.ctrlKey || keyboardEvent.metaKey;
+      if (keyboardEvent.key.toUpperCase() === "P" && ctrlOrMeta) {
         toggleSearch();
       }
     },
