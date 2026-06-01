@@ -57,19 +57,17 @@ console.log("Starting at url ");
 console.log(`${serverUrl}${port ? `:${port}` : ""}`);
 
 expressApp.get("/", (_req, res) => {
-  res.send(
-    renderTrpcPanel(testRouter, {
-      url: `${serverUrl}${
-        process.env.NODE_ENV === "production" ? "" : `:${port}`
-      }/trpc`,
-      transformer: "superjson",
-      meta: {
-        title: "Demo tRPC Panel",
-        description:
-          "A panel like this will be automatically generated when you add trpc-ui to your project. This main description, and procedure descriptions support markdown.\n\nIf you prefer to input raw JSON instead of using the auto generated forms, click the {} bracket icon to toggle json mode.\n\n[Repo](https://github.com/aidansunbury/trpc-ui) [NPM](https://www.npmjs.com/package/trpc-ui)",
-      },
-    }),
-  );
+  renderTrpcPanel(testRouter, {
+    url: `${serverUrl}${
+      process.env.NODE_ENV === "production" ? "" : `:${port}`
+    }/trpc`,
+    transformer: "superjson",
+    meta: {
+      title: "Demo tRPC Panel",
+      description:
+        "A panel like this will be automatically generated when you add trpc-ui to your project. This main description, and procedure descriptions support markdown.\n\nIf you prefer to input raw JSON instead of using the auto generated forms, click the {} bracket icon to toggle json mode.\n\n[Repo](https://github.com/aidansunbury/trpc-ui) [NPM](https://www.npmjs.com/package/trpc-ui)",
+    },
+  }).then((data) => res.send(data));
 });
 
 expressApp.listen(port);
