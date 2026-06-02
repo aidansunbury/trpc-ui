@@ -68,7 +68,7 @@ export function CollapsableSection({
         collapsable
           ? `${solidColorBorder(sectionType)} ${backgroundColor(sectionType)}`
           : ""
-      }${!isRoot ? " rounded-[0.25rem] border" : ""}`}
+      }${!isRoot ? " rounded-sm border" : ""}`}
     >
       {collapsable ? (
         <button
