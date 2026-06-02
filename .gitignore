@@ -1,3 +1,4 @@
+.next
 node_modules
 .vscode
 .env
@@ -52,3 +53,4 @@ stats.html
 
 # yarn
 .yarn
+.claude

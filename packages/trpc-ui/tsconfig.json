@@ -1,34 +1,26 @@
 {
   "compilerOptions": {
-    "lib": ["ESNext", "dom", "ES2022"],
-    "outDir": "lib",
-    "removeComments": true,
-    "target": "ES6",
-    "declaration": true,
+    "jsx": "react",
     "module": "ES2022",
-    "baseUrl": "./",
-    "rootDir": "./",
-    "esModuleInterop": true,
-    "moduleResolution": "node",
-
-    "sourceMap": true,
-    "sourceRoot": "/",
-
-    "alwaysStrict": true,
-    "allowUnreachableCode": false,
+    "moduleResolution": "bundler",
     "noImplicitAny": true,
-    "strictNullChecks": true,
-
     "noImplicitReturns": true,
     "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "resolveJsonModule": true,
-    "jsx": "react",
+    "outDir": "lib",
     "paths": {
       "@src/*": ["./src/*"]
-    }
+    },
+    "resolveJsonModule": true,
+    "rootDir": "./",
+    "sourceMap": true,
+    "sourceRoot": "/",
+    "strict": true,
+    "strictNullChecks": true,
+    "target": "ES2022",
+    "types": ["node"]
   },
-  "include": ["./src/**/*"],
-  "exclude": ["node_modules/**/*", "lib/**/*"]
+  "exclude": ["node_modules/**/*", "lib/**/*"],
+  "include": ["./src/**/*"]
 }

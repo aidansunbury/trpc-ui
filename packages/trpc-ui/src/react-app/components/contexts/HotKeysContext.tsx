@@ -1,5 +1,5 @@
 import { useSearch } from "@src/react-app/components/contexts/SearchStore";
-import React, {
+import {
   createContext,
   type MutableRefObject,
   type ReactNode,
@@ -22,16 +22,17 @@ export function HotKeysContextProvider({ children }: { children: ReactNode }) {
 
   const toggleSearch = useCallback(
     () => setSearchOpen(!searchOpen),
-    [searchOpen],
+    [searchOpen, setSearchOpen],
   );
   useHotkeys("ctrl+p, meta+p", toggleSearch, {
     preventDefault: true,
   });
 
-  const keydownHandler = useCallback(
-    (e: KeyboardEvent) => {
-      const ctrlOrMeta = e.ctrlKey || e.metaKey;
-      if (e.key.toUpperCase() === "P" && ctrlOrMeta) {
+  const keydownHandler: EventListener = useCallback(
+    (e: Event) => {
+      const keyboardEvent = e as KeyboardEvent;
+      const ctrlOrMeta = keyboardEvent.ctrlKey || keyboardEvent.metaKey;
+      if (keyboardEvent.key.toUpperCase() === "P" && ctrlOrMeta) {
         toggleSearch();
       }
     },

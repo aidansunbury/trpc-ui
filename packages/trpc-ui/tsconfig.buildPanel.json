@@ -1,6 +1,4 @@
 {
-  "extends": "./tsconfig.build.json",
-  "exclude": [
-    "src/react-app",
-  ], 
+  "exclude": ["src/react-app"],
+  "extends": "./tsconfig.build.json"
 }

@@ -1,12 +1,8 @@
-import fs from "node:fs";
-import { dirname } from "node:path";
-import { fileURLToPath } from "node:url";
 import type { AnyTRPCRouter } from "@trpc/server";
-import {
-  type TrpcPanelExtraOptions,
-  parseRouterWithOptions,
-} from "./parse/parseRouter";
+import { loadFrontend } from "./frontendLoader";
+import { type TrpcPanelExtraOptions } from "./parse/parseRouter";
 
+import { parseTRPCRouter } from "./parseV2/parse";
 export type Info = {
   title?: string;
   description?: string;
@@ -18,22 +14,15 @@ export type RenderOptions = {
   meta?: Info;
 } & TrpcPanelExtraOptions;
 
-const defaultParseRouterOptions: Partial<TrpcPanelExtraOptions> = {
-  logFailedProcedureParse: true,
-  transformer: "superjson",
-};
+// const defaultParseRouterOptions: Partial<TrpcPanelExtraOptions> = {
+//   logFailedProcedureParse: true,
+//   transformer: "superjson",
+// };
 
-const dirLocation = dirname(fileURLToPath(import.meta.url));
-const javascriptReplaceSymbol = "{{js}}";
-const cssReplaceSymbol = "{{css}}";
+const javascriptReplaceSymbol = "<!--{{js}}-->";
+const cssReplaceSymbol = "<!--{{css}}-->";
 const routerReplaceSymbol = '"{{parsed_router}}"';
 const optionsReplaceSymbol = '"{{options}}"';
-const bundlePath = `${dirLocation}/react-app/bundle.js`;
-const indexPath = `${dirLocation}/react-app/index.html`;
-const cssPath = `${dirLocation}/react-app/index.css`;
-const bundleJs = fs.readFileSync(bundlePath).toString();
-const indexHtml = fs.readFileSync(indexPath).toString();
-const indexCss = fs.readFileSync(cssPath).toString();
 
 type InjectionParam = {
   searchFor: string;
@@ -69,37 +58,46 @@ const cache: {
 };
 
 // TODO: changing this from AnyTRPCRouter to a generic type would probably improve type safety
-export function renderTrpcPanel(router: AnyTRPCRouter, options: RenderOptions) {
+export async function renderTrpcPanel(
+  router: AnyTRPCRouter,
+  options: RenderOptions,
+  frontend?: Awaited<ReturnType<typeof loadFrontend>>,
+) {
   if (options.cache === true && cache.val) return cache.val;
 
   const bundleInjectionParams: InjectionParam[] = [
     {
+      injectString: JSON.stringify(parseTRPCRouter(router)),
       searchFor: routerReplaceSymbol,
-      injectString: JSON.stringify(
-        parseRouterWithOptions(router, {
-          ...defaultParseRouterOptions,
-          ...options,
-        }),
-      ),
     },
     {
-      searchFor: optionsReplaceSymbol,
       injectString: JSON.stringify(options),
+      searchFor: optionsReplaceSymbol,
     },
   ];
-  const bundleInjected = injectParams(bundleJs, bundleInjectionParams);
+
+  // if we do not receive the frontend bundle, try to load it from disk
+  const loadedFrontend =
+    frontend === undefined ? await loadFrontend() : frontend;
+  if (loadedFrontend === null) {
+    throw new Error(
+      "Failed to load frontend from disk, consider passing the frontend bundle as an argument",
+    );
+  }
+
+  const bundleInjected = injectParams(loadedFrontend.js, bundleInjectionParams);
   const script = `<script>${bundleInjected}</script>`;
-  const css = `<style>${indexCss}</style>`;
+  const css = `<style>${loadedFrontend.css}</style>`;
   const htmlReplaceParams: InjectionParam[] = [
     {
-      searchFor: javascriptReplaceSymbol,
       injectString: script,
+      searchFor: javascriptReplaceSymbol,
     },
     {
-      searchFor: cssReplaceSymbol,
       injectString: css,
+      searchFor: cssReplaceSymbol,
     },
   ];
-  cache.val = injectParams(indexHtml, htmlReplaceParams);
+  cache.val = injectParams(loadedFrontend.html, htmlReplaceParams);
   return cache.val;
 }

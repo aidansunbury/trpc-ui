@@ -1,7 +1,7 @@
 import type { ProcedureExtraData } from "@src/parse/parseProcedure";
 import { FormLabel } from "@src/react-app/components/form/FormLabel";
 import { FormSection } from "@src/react-app/components/form/ProcedureForm/FormSection";
-import React, { type ReactNode } from "react";
+import { type ReactNode } from "react";
 import Markdown from "react-markdown";
 export function DocumentationSection({
   extraData,
@@ -29,14 +29,14 @@ export function DocumentationSection({
                   ([key, value]) => (
                     <tr
                       key={key}
-                      className="flex-row space-x-2 border-separatorLine border-b"
+                      className="flex-row space-x-2 border-separator-line border-b"
                     >
-                      <td className="py-2 align-top font-bold text-neutralText text-sm">
+                      <td className="py-2 align-top font-bold text-neutral-text text-sm">
                         {`${key}: `}
                       </td>
                       <td className="py-2 pl-4 text-gray-500 text-sm">
                         <article className="prose">
-                          <Markdown className={"prose"}>{value}</Markdown>
+                          <Markdown>{value}</Markdown>
                         </article>
                       </td>
                     </tr>

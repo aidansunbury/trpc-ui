@@ -1,29 +1,29 @@
 {
   "compilerOptions": {
-    "target": "es2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "checkJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
     "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmit": true,
     "noUncheckedIndexedAccess": true,
-    "sourceMap": true,
-    "baseUrl": ".",
     "paths": {
+      "@src/*": ["../trpc-ui/src/*"],
       "~/*": ["./src/*"],
-      "trpc-ui/*": ["../trpc-ui/src/*"],
-      "@src/*": ["../trpc-ui/src/*"]
-    }
+      "trpc-ui/*": ["../trpc-ui/src/*"]
+    },
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "es2017"
   },
+  "exclude": ["node_modules"],
   "include": [
     "next-env.d.ts",
     "**/*.ts",
@@ -31,6 +31,5 @@
     "**/*.cjs",
     "**/*.mjs",
     "../trpc-ui/src/**/*.ts"
-  ],
-  "exclude": ["node_modules"]
+  ]
 }

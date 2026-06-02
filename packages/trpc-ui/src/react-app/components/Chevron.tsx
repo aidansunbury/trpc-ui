@@ -1,5 +1,4 @@
 import { ChevronIcon } from "@src/react-app/components/icons/ChevronIcon";
-import React from "react";
 
 export function Chevron({
   className,
@@ -13,7 +12,7 @@ export function Chevron({
       className={`${className} ${(() => {
         switch (direction) {
           case "up":
-            return " -rotate-[270deg]";
+            return "-rotate-[270deg]";
           case "down":
             return "-rotate-90";
           case "right":

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { ChevronIcon } from "../../icons/ChevronIcon";
 
 export function StackTrace({ text }: { text: string }) {

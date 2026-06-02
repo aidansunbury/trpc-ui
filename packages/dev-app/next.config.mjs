@@ -1,8 +1,14 @@
+// packages/dev-app/next.config.mjs
+import withTM from "next-transpile-modules";
+
 /**
- * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
- * This is especially useful for Docker builds.
+ * Tell Next to transpile the workspace package `trpc-ui`.
+ * The array can contain multiple workspace packages if you need them.
  */
-!process.env.SKIP_ENV_VALIDATION && (await import("./src/env.mjs"));
+const withTMConfig = withTM([
+  // Relative to the dev‑app folder – this resolves to the workspace package
+  "trpc-ui",
+]);
 
 /** @type {import("next").NextConfig} */
 const config = {
@@ -23,4 +29,4 @@ const config = {
     esmExternals: true,
   },
 };
-export default config;
+export default withTMConfig(config);

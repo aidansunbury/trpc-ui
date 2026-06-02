@@ -1,25 +1,25 @@
 {
-  "name": "trpc-ui-monorepo",
-  "version": "0.0.0",
-  "license": "MIT",
-  "packageManager": "pnpm@9.15.1",
-  "scripts": {
-    "test:panel": "pnpm -F trpc-ui test",
-    "build:panel": "pnpm -F trpc-ui build",
-    "build:test-app": "pnpm -F test-app build",
-    "dev:dev-app": "pnpm -F dev-app dev",
-    "dev:test-app": "pnpm -F test-trpc-panel dev",
-    "cpy:readme": "cp README.MD packages/trpc-ui/README.md",
-    "start:test-app": "node ./packages/test-app/lib/server.ts",
-    "biome:check": "biome check --max-diagnostics=none",
-    "biome:check:errors": "biome check --max-diagnostics=none --diagnostic-level=error",
-    "biome:check:changed": "biome check --changed --max-diagnostics=none",
-    "biome:check:fix": "biome check --write --unsafe --max-diagnostics=none"
-  },
-  "private": true,
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
-    "@tsconfig/docusaurus": "^1.0.6",
-    "typescript": "^4.9.3"
-  }
+    "@biomejs/biome": "2.4.16",
+    "@tsconfig/docusaurus": "^1.0.7",
+    "typescript": "^6.0.3"
+  },
+  "license": "MIT",
+  "name": "trpc-ui-monorepo",
+  "packageManager": "pnpm@11.5.0",
+  "private": true,
+  "scripts": {
+    "biome:check": "biome check --max-diagnostics=none",
+    "biome:check:changed": "biome check --changed --max-diagnostics=none",
+    "biome:check:errors": "biome check --max-diagnostics=none --diagnostic-level=error",
+    "biome:check:fix": "biome check --write --unsafe --max-diagnostics=none",
+    "build:dev-app": "pnpm -F dev-app build",
+    "build:test-app": "pnpm -F test-app build",
+    "build:ui": "pnpm -F trpc-ui build",
+    "cpy:readme": "cp README.MD packages/trpc-ui/README.md",
+    "dev:dev-app": "pnpm -F dev-app dev",
+    "dev:test-app": "pnpm -F test-app dev",
+    "start:test-app": "pnpm -F test-app start"
+  },
+  "version": "0.0.0"
 }

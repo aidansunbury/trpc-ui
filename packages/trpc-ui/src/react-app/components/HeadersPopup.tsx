@@ -3,9 +3,9 @@ import SaveIcon from "@mui/icons-material/Lock";
 import { AddItemButton } from "@src/react-app/components/AddItemButton";
 import { Button } from "@src/react-app/components/Button";
 import { useHeadersContext } from "@src/react-app/components/contexts/HeadersContext";
-import { FieldError } from "@src/react-app/components/form/fields/FieldError";
 import { BaseTextField } from "@src/react-app/components/form/fields/base/BaseTextField";
-import React, { useEffect, useState } from "react";
+import { FieldError } from "@src/react-app/components/form/fields/FieldError";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export function HeadersPopup() {
@@ -75,10 +75,10 @@ export function HeadersPopup() {
     if (headersPopupShown) {
       setHeaders(Object.entries(getHeaders()));
     }
-  }, [headersPopupShown]);
+  }, [headersPopupShown, getHeaders]);
   if (!headersPopupShown) return null;
   return (
-    <div className="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center border border-panelBorder bg-overlayBackground bg-opacity-70 drop-shadow-lg">
+    <div className="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center border border-panel-border bg-overlay-background bg-opacity-70 drop-shadow-lg">
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -86,7 +86,7 @@ export function HeadersPopup() {
         }}
         className="flex w-full max-w-2xl flex-col space-y-4 rounded-md bg-white"
       >
-        <div className="flex flex-row justify-between border-panelBorder border-b p-4">
+        <div className="flex flex-row justify-between border-panel-border border-b p-4">
           <h1 className="font-bold text-lg">Headers</h1>
           <button type="button" onClick={onExitPress}>
             <XIcon className="h-6 w-6" />
@@ -125,7 +125,7 @@ export function HeadersPopup() {
           ))}
           <AddItemButton onClick={addHeader} />
         </div>
-        <div className="flex flex-row justify-between border-t border-t-panelBorder p-4">
+        <div className="flex flex-row justify-between border-t border-t-panel-border p-4">
           <span className="flex flex-row items-center">
             Save Headers
             <input

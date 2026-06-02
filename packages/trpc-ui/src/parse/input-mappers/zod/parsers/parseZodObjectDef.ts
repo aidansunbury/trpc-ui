@@ -1,11 +1,11 @@
-import { nodePropertiesFromRef } from "@src/parse/utils";
 import type { ZodObjectDef } from "zod";
 import type {
   ObjectNode,
-  ParseFunction,
   ParsedInputNode,
+  ParseFunction,
   UnsupportedNode,
 } from "../../../parseNodeTypes";
+import { nodePropertiesFromRef } from "../../../utils";
 import { zodSelectorFunction } from "../selector";
 
 export const parseZodObjectDef: ParseFunction<
@@ -23,8 +23,8 @@ export const parseZodObjectDef: ParseFunction<
   }
   refs.addDataFunctions.addDescriptionIfExists(def, refs);
   return {
-    type: "object",
     children,
+    type: "object",
     ...nodePropertiesFromRef(refs),
   };
 };

@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import { type ReactNode, createContext } from "react";
+import { createContext, type ReactNode, useContext } from "react";
 
 type ContextType = {
   path: string;

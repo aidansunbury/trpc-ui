@@ -1,5 +1,3 @@
-import React from "react";
-
 export function LogoSvg({ className }: { className?: string }) {
   return (
     <svg

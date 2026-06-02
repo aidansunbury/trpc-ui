@@ -1,5 +1,3 @@
-import React from "react";
-
 export function CloseIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -7,6 +5,7 @@ export function CloseIcon({ className }: { className?: string }) {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 122.88 122.88"
       className={className}
+      aria-label="close"
     >
       <defs>
         <style>{".cls-1{fill:#444;fill-rule:evenodd;}"}</style>

@@ -1,10 +1,10 @@
 import ObjectIcon from "@mui/icons-material/DataObjectOutlined";
 import type { ParsedInputNode } from "@src/parse/parseNodeTypes";
 import { Field } from "@src/react-app/components/form/Field";
-import React, { type ReactNode } from "react";
+import { type ReactNode } from "react";
 import type { Control } from "react-hook-form";
-import { InputGroupContainer } from "../../InputGroupContainer";
 import { useRenderOptions } from "../../contexts/OptionsContext";
+import { InputGroupContainer } from "../../InputGroupContainer";
 
 export function ObjectField({
   label,
@@ -22,7 +22,7 @@ export function ObjectField({
   const { transformer } = useRenderOptions();
   if (topLevel) {
     return (
-      <div className={"flex flex-col space-y-2 p-1 "}>
+      <div className={"flex flex-col space-y-2 p-1"}>
         {Object.entries(node.children).map(([name, e]) => (
           <Field
             inputNode={{
@@ -51,7 +51,7 @@ export function ObjectField({
           key={childFieldName}
         />
       ));
-    } catch (e) {
+    } catch (_e) {
       return (
         <div>
           <h1 className="font-semibold text-error text-xl">

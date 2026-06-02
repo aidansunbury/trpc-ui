@@ -1,7 +1,6 @@
 import { CollapsableSection } from "@src/react-app/components/CollapsableSection";
 import { ProcedureForm } from "@src/react-app/components/form/ProcedureForm";
 import type { RenderOptions } from "@src/render";
-import React from "react";
 import type { ParsedRouter } from "../../parse/parseRouter";
 import { cn } from "../utils/utils";
 

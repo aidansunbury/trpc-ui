@@ -1,16 +1,16 @@
-import { ItemTypeIcon } from "@src/react-app/components/ItemTypeIcon";
 import { useAllPaths } from "@src/react-app/components/contexts/AllPathsContext";
 import { useEnableInputGlobalHotkeys } from "@src/react-app/components/contexts/HotKeysContext";
 import { useSearch } from "@src/react-app/components/contexts/SearchStore";
 import { useSiteNavigationContext } from "@src/react-app/components/contexts/SiteNavigationContext";
+import { ItemTypeIcon } from "@src/react-app/components/ItemTypeIcon";
 import fuzzysort from "fuzzysort";
-import React, {
-  useMemo,
-  useState,
-  useRef,
-  useEffect,
+import {
   type FocusEventHandler,
   type ReactNode,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
 } from "react";
 
 export function useFuzzySort({
@@ -24,10 +24,10 @@ export function useFuzzySort({
 }) {
   return useMemo(() => {
     return fuzzysort.go(searchingFor, paths, {
-      limit,
       all: true,
+      limit,
     });
-  }, [paths, searchingFor]);
+  }, [paths, searchingFor, limit]);
 }
 
 export function SearchOverlay({ children }: { children: ReactNode }) {
@@ -93,7 +93,7 @@ function SearchInput() {
     return () => {
       document.removeEventListener("keydown", arrowKeyListener);
     };
-  }, []);
+  }, [results.length]);
 
   useEnableInputGlobalHotkeys(inputRef, []);
 
@@ -107,7 +107,7 @@ function SearchInput() {
     return () => {
       inputRef.current?.removeEventListener("keydown", inputEventListener);
     };
-  }, [selectedResultIndex, results]);
+  }, [selectedResultIndex, pathSelectedHandler]);
 
   useEffect(() => {
     const node = document.getElementById(
@@ -140,17 +140,17 @@ function SearchInput() {
   return (
     <div
       ref={divRef}
-      className="pointer-events-auto z-50 flex min-w-[40rem] flex-col overflow-visible rounded-md rounded-t-md border border-neutralBgVeryDark bg-white p-1 drop-shadow-md"
+      className="pointer-events-auto z-50 flex min-w-160 flex-col overflow-visible rounded-md rounded-t-md border border-neutral-bg-very-dark bg-white p-1 drop-shadow-md"
     >
       <input
-        className="self-stretch rounded-sm border bg-neutralBgDark p-1"
+        className="self-stretch rounded-sm border bg-neutral-bg-dark p-1"
         value={searchText}
         onChange={(e) => onTextChange(e.target.value)}
         ref={inputRef}
         onBlur={onBlur}
       />
       {results && (
-        <ul className="max-h-[24rem] overflow-scroll">
+        <ul className="max-h-96 overflow-scroll">
           {results.map((e, i) => (
             <li
               key={e.target}
@@ -162,8 +162,8 @@ function SearchInput() {
                 onFocus={() => setSelectedResultIndex(i)}
                 className={`flex h-full w-full flex-row items-center rounded-sm border-transparent px-1 text-left focus:border-transparent focus:outline-none focus:ring-0 ${
                   i === selectedResultIndex
-                    ? "bg-selectedListItem text-white"
-                    : "text-neutralSolid"
+                    ? "bg-selected-list-item text-white"
+                    : "text-neutral-solid"
                 }`}
                 type="button"
                 // seems easier than an array of refs?

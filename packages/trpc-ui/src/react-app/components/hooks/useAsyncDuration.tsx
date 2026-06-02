@@ -1,6 +1,6 @@
 import type { RenderOptions } from "@src/render";
 import { useState } from "react";
-import SuperJSON from "superjson";
+import SuperJSON, { SuperJSONResult } from "superjson";
 import { parseError } from "../form/utils";
 
 export function useAsyncDuration({ options }: { options: RenderOptions }) {
@@ -16,7 +16,7 @@ export function useAsyncDuration({ options }: { options: RenderOptions }) {
       endTime = performance.now();
       const parsed =
         options.transformer === "superjson"
-          ? SuperJSON.deserialize(result)
+          ? SuperJSON.deserialize(result as SuperJSONResult)
           : result;
 
       return { isError: false, response: parsed };

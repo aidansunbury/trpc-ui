@@ -1,13 +1,4 @@
 /**
- * YOU PROBABLY DON'T NEED TO EDIT THIS FILE, UNLESS:
- * 1. You want to modify request context (see Part 1).
- * 2. You want to create a new middleware or type of procedure (see Part 3).
- *
- * TL;DR - This is where all the tRPC server stuff is created and plugged in. The pieces you will
- * need to use are documented accordingly near the end.
- */
-
-/**
  * 1. CONTEXT
  *
  * This section defines the "contexts" that are available in the backend API.
@@ -51,16 +42,16 @@ export const createTRPCContext = (_opts: CreateNextContextOptions) => {
  * errors on the backend.
  */
 import { initTRPC } from "@trpc/server";
-import superjson from "superjson";
 import type { TRPCPanelMeta } from "trpc-ui";
 import { ZodError } from "zod";
-import { env } from "~/env.mjs";
+
+// import { env } from "~/env.mjs";
 
 const t = initTRPC
   .context<typeof createTRPCContext>()
   .meta<TRPCPanelMeta>()
   .create({
-    transformer: env.NEXT_PUBLIC_SUPERJSON === "false" ? undefined : superjson,
+    allowOutsideOfServer: true,
     errorFormatter({ shape, error }) {
       return {
         ...shape,
@@ -71,7 +62,7 @@ const t = initTRPC
         },
       };
     },
-    allowOutsideOfServer: true,
+    transformer: undefined,
   });
 
 /**
@@ -95,4 +86,17 @@ export const createTRPCRouter = t.router;
  * guarantee that a user querying is authorized, but you can still access user session data if they
  * are logged in.
  */
-export const procedure = t.procedure;
+
+// In your tRPC setup file
+const loggingMiddleware = t.middleware(
+  async ({ next, path, type, getRawInput }) => {
+    const rawInput = await getRawInput();
+    console.log(`🔍 [${type.toUpperCase()}] ${path}`);
+    console.log("Raw Input:", rawInput);
+    console.log("Input type:", typeof rawInput);
+    console.log("Input JSON:", JSON.stringify(rawInput, null, 2));
+    return next();
+  },
+);
+
+export const procedure = t.procedure.use(loggingMiddleware);

@@ -1,10 +1,10 @@
-import { nodePropertiesFromRef } from "@src/parse/utils";
 import type { ZodUnionDef } from "zod";
 import type {
   LiteralNode,
   ParseFunction,
   UnionNode,
 } from "../../../parseNodeTypes";
+import { nodePropertiesFromRef } from "../../../utils";
 import { zodSelectorFunction } from "../selector";
 
 export const parseZodUnionDef: ParseFunction<ZodUnionDef, UnionNode> = (

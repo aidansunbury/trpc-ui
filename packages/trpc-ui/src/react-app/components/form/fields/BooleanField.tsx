@@ -1,7 +1,6 @@
 import type { ParsedInputNode } from "@src/parse/parseNodeTypes";
 import { FormLabel } from "@src/react-app/components/form/FormLabel";
 import { BaseCheckboxField } from "@src/react-app/components/form/fields/base/BaseCheckboxField";
-import React from "react";
 import { type Control, useController } from "react-hook-form";
 
 export function BooleanField({
@@ -15,7 +14,7 @@ export function BooleanField({
   control: Control<any>;
   node: ParsedInputNode;
 }) {
-  const { field, fieldState } = useController({ name, control });
+  const { field, fieldState } = useController({ control, name });
   const path = node.path.join(".");
   return (
     <>

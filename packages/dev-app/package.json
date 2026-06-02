@@ -1,38 +1,54 @@
 {
-  "name": "dev-app",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "build": "next build",
-    "dev": "next dev",
-    "lint": "next lint",
-    "start": "next start"
+  "ct3aMetadata": {
+    "initVersion": "7.10.2"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.12.2",
-    "@trpc/client": "^11.0.0-next-beta.264",
-    "@trpc/next": "^11.0.0-next-beta.264",
-    "@trpc/react-query": "^11.0.0-next-beta.264",
-    "@trpc/server": "^11.0.0-next-beta.264",
-    "autoprefixer": "^10.4.14",
-    "next": "^13.2.4",
-    "next-transpile-modules": "^10.0.0",
-    "postcss": "^8.4.21",
+    "@chakra-ui/core": "1.0.0-rc.8",
+    "@jsonforms/material-renderers": "^3.7.0",
+    "@jsonforms/react": "^3.7.0",
+    "@rjsf/chakra-ui": "^5.24.13",
+    "@rjsf/core": "^5.24.13",
+    "@rjsf/material-ui": "^5.24.13",
+    "@rjsf/mui": "^5.24.13",
+    "@rjsf/utils": "^5.24.13",
+    "@rjsf/validator-ajv8": "^5.24.13",
+    "@tailwindcss/postcss": "^4.3.0",
+    "@tanstack/react-query": "^5.100.14",
+    "@trpc/client": "^11.17.0",
+    "@trpc/next": "^11.17.0",
+    "@trpc/react-query": "^11.17.0",
+    "@trpc/server": "^11.17.0",
+    "@types/json-schema": "^7.0.15",
+    "@valibot/to-json-schema": "1.0.0-rc.0",
+    "arktype": "^2.2.0",
+    "autoprefixer": "^10.5.0",
+    "next": "^15.5.18",
+    "next-transpile-modules": "^10.0.1",
+    "postcss": "^8.5.15",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "superjson": "1.12.2",
-    "tailwindcss": "^3.3.1",
-    "ts-loader": "^9.4.2",
-    "zod": "^3.24.2"
+    "tailwindcss": "^4.3.0",
+    "trpc-ui": "workspace:*",
+    "ts-loader": "^9.6.0",
+    "valibot": "1.1.0",
+    "zod": "^3.25.76",
+    "zod-to-json-schema": "^3.25.2"
   },
   "devDependencies": {
-    "@types/node": "^18.15.5",
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
-    "react-scan": "^0.2.12",
-    "typescript": "^5.4.5"
+    "@types/node": "^18.19.130",
+    "@types/react": "^18.3.29",
+    "@types/react-dom": "^18.3.7",
+    "react-scan": "^0.2.14",
+    "typescript": "^6.0.3"
   },
-  "ct3aMetadata": {
-    "initVersion": "7.10.2"
-  }
+  "name": "dev-app",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "if [ -f .env ]; then export $(grep -v '^#' .env | xargs); fi && NEXT_PUBLIC_PORT=${NEXT_PUBLIC_PORT:-3000} && echo \"Starting dev server on port $NEXT_PUBLIC_PORT\" && next dev --port=$NEXT_PUBLIC_PORT",
+    "lint": "next lint",
+    "start": "next start"
+  },
+  "version": "0.1.0"
 }

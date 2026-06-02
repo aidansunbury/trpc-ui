@@ -1,10 +1,11 @@
-import React, {
+import {
   createContext,
   type ReactNode,
   useContext,
   useRef,
   useState,
 } from "react";
+
 type Headers = { [key: string]: string };
 
 type HeadersContextType = {
@@ -25,9 +26,9 @@ const storage =
   typeof window !== "undefined"
     ? localStorage
     : {
-        getItem: (v: string) => null,
-        setItem: (s: string) => {},
-        removeItem: (v: string) => {},
+        getItem: (_v: string) => null,
+        removeItem: (_v: string) => {},
+        setItem: (_s: string) => {},
       };
 
 const storedHeaders = storage.getItem(headersLocalStorageKey);
@@ -57,11 +58,11 @@ export function HeadersContextProvider({ children }: { children: ReactNode }) {
   return (
     <HeadersContext.Provider
       value={{
-        setHeaders,
         getHeaders,
         headersPopupShown,
-        setHeadersPopupShown,
         saveHeadersToLocalStorage,
+        setHeaders,
+        setHeadersPopupShown,
         setSaveHeadersToLocalStorage: (val) => {
           if (!val) storage.removeItem(headersLocalStorageKey);
           setSaveHeadersToLocalStorage(val);

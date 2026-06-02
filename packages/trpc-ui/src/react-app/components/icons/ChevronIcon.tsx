@@ -1,4 +1,3 @@
-import React from "react";
 export function ChevronIcon({ className }: { className: string }) {
   return (
     <svg

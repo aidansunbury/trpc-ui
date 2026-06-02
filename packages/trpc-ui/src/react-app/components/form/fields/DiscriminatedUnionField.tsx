@@ -1,12 +1,11 @@
 import MoonIcon from "@mui/icons-material/Brightness2";
 import CirclesIcon from "@mui/icons-material/JoinRight";
 import type { ParsedInputNode } from "@src/parse/parseNodeTypes";
-import { InputGroupContainer } from "@src/react-app/components/InputGroupContainer";
+import { BaseSelectField } from "@src/react-app/components/form/fields/base/BaseSelectField";
 import { FieldError } from "@src/react-app/components/form/fields/FieldError";
 import { ObjectField } from "@src/react-app/components/form/fields/ObjectField";
-import { BaseSelectField } from "@src/react-app/components/form/fields/base/BaseSelectField";
 import { defaultFormValuesForNode } from "@src/react-app/components/form/utils";
-import React from "react";
+import { InputGroupContainer } from "@src/react-app/components/InputGroupContainer";
 import { type Control, useController } from "react-hook-form";
 
 export function DiscriminatedUnionField({
@@ -25,10 +24,11 @@ export function DiscriminatedUnionField({
     type: "discriminated-union";
   };
   const { field, fieldState } = useController({
-    name,
     control,
+    name,
   });
-  function onDiscriminatorChange(value: string) {
+  function onDiscriminatorChange(value: string | undefined) {
+    if (!value) return;
     const newObj = nodeTypecast.discriminatedUnionChildrenMap[value];
     if (!newObj) return;
     const newDefaultValues = {

@@ -1,7 +1,9 @@
 {
-  "extends": "./tsconfig.build.json",
   "compilerOptions": {
-    "declaration": false
+    "declaration": false,
+    "jsx": "react-jsx",
+    "outDir": "lib/react-app"
   },
+  "extends": "./tsconfig.build.json",
   "include": ["src/react-app"]
 }

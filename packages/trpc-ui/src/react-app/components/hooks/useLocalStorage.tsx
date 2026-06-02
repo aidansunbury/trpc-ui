@@ -64,12 +64,12 @@ export function useLocalStorage<T>(
         );
       }
     },
-    [storedValue],
+    [storedValue, key],
   );
 
   useEffect(() => {
     setStoredValue(readValue());
-  }, []);
+  }, [readValue]);
 
   return [storedValue, setValue];
 }

@@ -1,29 +1,139 @@
-import { TRPCError } from "@trpc/server";
-import { z } from "zod";
+import { type } from "arktype";
+import * as v from "valibot";
+import * as z3 from "zod/v3";
+import * as z4 from "zod/v4";
 import { createTRPCRouter, procedure } from "~/server/api/trpc";
 
-const postsRouter = createTRPCRouter({
-  complexSuperJson: procedure
+const zod3Middleware = procedure
+  .input(
+    z3.object({
+      needString: z3.string(),
+    }),
+  )
+  .use(({ ctx, next }) => {
+    return next({ ctx });
+  });
+
+const zod4Middleware = procedure
+  .input(
+    z4.object({
+      needString: z4.string(),
+    }),
+  )
+  .use(({ ctx, next }) => {
+    return next({ ctx });
+  });
+
+const arktypeVal = procedure
+  .input(
+    type({
+      name: "string",
+    }),
+  )
+  .use(({ ctx, next }) => {
+    return next({ ctx });
+  });
+
+const valibotMiddleware = procedure
+  .input(v.object({ middlewareProp: v.string() }))
+  .use(({ ctx, next }) => {
+    return next({ ctx });
+  });
+
+const deepRouter = createTRPCRouter({
+  coolQuery: procedure
     .input(
-      z.object({
-        id: z.bigint(),
-        name: z.string(),
-        createdAt: z.date(),
-        tags: z.set(z.string()),
-        metadata: z.map(z.string(), z.string()),
+      z3.object({
+        needString: z3.string(),
+      }),
+    )
+    .query(({ input }) => ({
+      data: "thing",
+    })),
+});
+
+const anotherRouter = createTRPCRouter({
+  coolQuery2: procedure
+    .input(
+      z3.object({
+        hi: z3.number(),
+      }),
+    )
+    .query(() => ({
+      data: "thing",
+    })),
+});
+
+const postsRouter = createTRPCRouter({
+  basicArktype: procedure
+    .input(
+      type({
+        test: "string",
+      }),
+    )
+    .query(({ input }) => {
+      return input;
+    }),
+  createPostArkType: arktypeVal
+    .input(
+      type({
+        test: "string",
+        test3: "number > 5",
       }),
     )
     .query(({ input }) => {
       return {
-        message: "You used superjson!",
-        input: input,
+        data: input,
+        message: "ArkType validation successful",
       };
     }),
-  meta: procedure
+  createPostValibot: procedure
+    .input(v.object({ name: v.string() }))
+    .mutation(({ input }) => {
+      return {
+        success: true,
+        user: input,
+      };
+    }),
+  createPostZodFour: procedure
+    .input(
+      z4.object({
+        content: z4.string().describe("Post content"),
+        title: z4.string().min(1).describe("Post title"),
+      }),
+    )
+    .mutation(({ input }) => {
+      return {
+        id: "generated-id",
+        ...input,
+        createdAt: new Date().toISOString(),
+      };
+    }),
+  createPostZodThree: zod3Middleware
     .meta({
-      description: "This is a router that contains posts",
+      description: "Zod v3 procedure with merged input validators",
     })
-    .query(() => null),
+    .input(
+      z3.object({
+        nested: z3
+          .object({
+            nestedAgain: z3.object({
+              nest: z3.boolean().describe("cool bool"),
+            }),
+            nestedText: z3.string().describe("what's happening").optional(),
+          })
+          .describe("object descriptions"),
+        optionalProp: z3.string().optional(),
+        text: z3.string().min(1).describe("hi there").optional(),
+      }),
+    )
+    .mutation(({ input }) => {
+      return {
+        ...input,
+      };
+    }),
+
+  deep: deepRouter,
   getAllPosts: procedure
     .meta({
       description: "Simple procedure that returns a list of posts",
@@ -35,260 +145,69 @@ const postsRouter = createTRPCRouter({
           text: "Post Id",
         },
         {
-          id: "asodifjaosdf",
-          text: "Post Id",
+          id: "asodifjaosdf2",
+          text: "Post Id 2",
         },
         {
-          id: "asodifjaosdf",
-          text: "Post Id",
+          id: "asodifjaosdf3",
+          text: "Post Id 3",
         },
       ];
     }),
-  createPost: procedure
-    .input(
-      z.object({
-        text: z.string().min(1),
-        nested: z.object({
-          nestedText: z.string(),
-        }),
-      }),
-    )
-    .mutation(({ input }) => {
-      return {
-        ...input,
-      };
-    }),
-  dateTest: procedure
-    .input(
-      z.object({
-        date: z.date(),
-        nested: z.object({
-          text: z.string(),
-        }),
-      }),
-    )
-    .mutation(({ input }) => {
-      console.log(input);
-      return {
-        id: "aoisdjfoasidjfasodf",
-        time: input.date.getTime(),
-      };
-    }),
-  createNestedPost: procedure
-    .input(
-      z.object({
-        text: z.string(),
-      }),
-    )
-    .input(
-      z.object({
-        title: z.string(),
-      }),
-    )
-    .mutation(({ input }) => {
-      return {
-        id: "aoisdjfoasidjfasodf",
-        text: input.text,
-      };
-    }),
-});
-const discriminatedFieldEnum = z.enum(["One", "Two"]);
 
-export const appRouter = createTRPCRouter({
-  postsRouter,
-  inputShowcaseRouter: createTRPCRouter({
-    textInput: procedure
-      .input(z.object({ aTextInput: z.string() }))
-      .query(() => {
-        return "It's an input";
-      }),
-    numberInput: procedure
-      .input(z.object({ aNumberInput: z.number() }))
-      .query(() => {
-        return "It's an input";
-      }),
-    enumInput: procedure
-      .input(z.object({ aEnumInput: z.enum(["One", "Two"]) }))
-      .query(() => {
-        return "It's an input";
-      }),
-    nativeEnumInput: procedure
-      .input(z.object({ aEnumInput: z.nativeEnum({ ONE: "one", TWO: "two" }) }))
-      .query(() => {
-        return "It's an input";
-      }),
-    stringArrayInput: procedure
-      .input(z.object({ aStringArray: z.string().array() }))
-      .query(() => {
-        return "It's an input";
-      }),
-    objectInput: procedure
-      .input(
-        z.object({
-          anObject: z.object({
-            numberArray: z.number().array(),
-          }),
-        }),
-      )
-      .query(() => {
-        return "It's an input";
-      }),
-    discriminatedUnionInput: procedure
-      .input(
-        z.object({
-          aDiscriminatedUnion: z.discriminatedUnion("discriminatedField", [
-            z.object({
-              discriminatedField: z.literal("One"),
-              aFieldThatOnlyShowsWhenValueIsOne: z.string(),
-            }),
-            z.object({
-              discriminatedField: z.literal("Two"),
-              aFieldThatOnlyShowsWhenValueIsTwo: z.object({
-                someTextFieldInAnObject: z.string(),
-              }),
-            }),
-            z.object({
-              discriminatedField: z.literal("Three"),
-            }),
-          ]),
-        }),
-      )
-      .query(() => {
-        return "It's an input";
-      }),
-    unionInput: procedure
-      .input(
-        z.object({
-          aUnion: z.union([z.literal("one"), z.literal(2)]),
-        }),
-      )
-      .query(({ input }) => {
-        return input;
-      }),
-    emailTextInput: procedure
-      .input(
-        z.object({
-          email: z.string().email("That's an invalid email (custom message)"),
-        }),
-      )
-      .query(() => {
-        return "It's good";
-      }),
-    voidInput: procedure.input(z.void()).query(() => {
-      return "yep";
-    }),
-  }),
-  postSomething: procedure
+  //! This breaks, but I think it is an issue with json schema features maybe not being supported?
+  mergedArktypeProcedure: arktypeVal
     .input(
-      z.object({
-        title: z.string(),
-        content: z.string(),
+      type({
+        category: "string",
+        priority: "'low' | 'medium' | 'high'",
       }),
     )
-    .mutation(({ input: { title, content } }) => {
+    .mutation(({ input }) => {
       return {
-        title,
-        content,
+        message: "Merged ArkType validation",
+        result: input,
       };
     }),
-  discriminatedUnionInput: procedure
+  mergedValibot: valibotMiddleware
+    .input(v.object({ name: v.string() }))
+    .mutation(({ input }) => {
+      return {
+        success: true,
+        user: input,
+      };
+    }),
+  mergedZod3Procedure: zod3Middleware
     .input(
-      z.object({
-        aDiscriminatedUnion: z.discriminatedUnion("discriminatedField", [
-          z.object({
-            discriminatedField: discriminatedFieldEnum.extract(["One"]), // <-- this doesn't work
-            aFieldThatOnlyShowsWhenValueIsOne: z.string(),
-          }),
-          z.object({
-            discriminatedField: z.literal("Two"),
-            aFieldThatOnlyShowsWhenValueIsTwo: z.object({
-              someTextFieldInAnObject: z.string(),
-            }),
-          }),
-        ]),
+      z3.object({
+        additionalField: z3
+          .string()
+          .describe("Additional field for merged validation"),
       }),
     )
     .query(({ input }) => {
-      return input;
+      return {
+        data: input,
+        message: "Merged Zod v3 validation",
+      };
     }),
-  procedureWithDescription: procedure
-    .meta({
-      description:
-        "# This is a description\n\nIt's a **good** one.\nIt may be overkill in certain situations, but procedures descriptions can render markdown thanks to [react-markdown](https://github.com/remarkjs/react-markdown) and [tailwindcss-typography](https://github.com/tailwindlabs/tailwindcss-typography)\n1. Lists\n2. Are\n3. Supported\n but I *personally* think that [links](https://github.com/aidansunbury/trpc-ui) and images ![Image example](https://private-user-images.githubusercontent.com/64103161/384591987-7dc0e751-d493-4337-ac8d-a1f16924bf48.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzExNDM3OTMsIm5iZiI6MTczMTE0MzQ5MywicGF0aCI6Ii82NDEwMzE2MS8zODQ1OTE5ODctN2RjMGU3NTEtZDQ5My00MzM3LWFjOGQtYTFmMTY5MjRiZjQ4LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDExMDklMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMTA5VDA5MTEzM1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTE4YmM4OTlkZmYyNmJjOWI5YzgwZDUxOTVlYTBjODlkMTVkMzNlNmJjZDhkZDJiNTRhNzFmNDZhMzllNDc2ZGYmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.FsvDvXo6S7n4uOsi3LMUUOeEhjXq6LF88MlU60gzZ2k)\n are the most useful for documentation purposes",
-    })
+  mergedZodFour: zod4Middleware
     .input(
-      z.object({
-        id: z.string().describe("The id of the thing."),
-        searchTerm: z
-          .string()
-          .optional()
-          .describe(
-            "Even term descriptions *can* render basic markdown, but don't get too fancy",
-          ),
-        searchTerm2: z
-          .string()
-          .optional()
-          .describe(
-            "The name of the thing to search for. Really really long long long boi long boi long Really really long long long boi long boi long Really really long long long boi long boi long Really really long long long boi long boi long",
-          ),
+      z4.object({
+        testNum: z4.number(),
       }),
     )
-    .query(() => {
-      return "Was that described well enough?";
+    .query(({ input }) => {
+      return {
+        called: new Date().toString(),
+        ...input,
+      };
     }),
-  nonObjectInput: procedure.input(z.string()).query(({ input }) => {
-    return `Hello ${input}`;
-  }),
-  slowProcedure: procedure
-    .input(
-      z.object({
-        name: z.string(),
-      }),
-    )
-    .query(async ({ input }) => {
-      // two second delay
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      return `Hello ${input.name}`;
-    }),
-  anErrorThrowingRoute: procedure
-    .input(
-      z.object({
-        ok: z.string(),
-      }),
-    )
-    .query(() => {
-      throw new TRPCError({
-        message: "It broke.",
-        code: "FORBIDDEN",
-      });
-    }),
-  allInputs: procedure
-    .input(
-      z.object({
-        obj: z.object({
-          string: z.string().optional(),
-        }),
-        stringMin5: z.string().min(5),
-        numberMin10: z.number().min(10),
-        stringOptional: z.string().optional(),
-        enum: z.enum(["One", "Two"]),
-        optionalEnum: z.enum(["Three", "Four"]).optional(),
-        stringArray: z.string().array(),
-        boolean: z.boolean(),
-        discriminatedUnion: z.discriminatedUnion("disc", [
-          z.object({
-            disc: z.literal("one"),
-            oneProp: z.string(),
-          }),
-          z.object({
-            disc: z.literal("two"),
-            twoProp: z.enum(["one", "two"]),
-          }),
-        ]),
-        union: z.union([z.literal("one"), z.literal(2)]),
-      }),
-    )
-    .query(() => ({ goodJob: "yougotthedata" })),
+});
+
+export const appRouter = createTRPCRouter({
+  anotherRouter,
+  postsRouter,
 });
 
 // export type definition of API

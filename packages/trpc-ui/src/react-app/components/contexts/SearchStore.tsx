@@ -21,6 +21,9 @@ interface SearchStore {
 }
 
 export const useSearch = create<SearchStore>((set) => ({
+  finish: () => {
+    set({ searchOpen: false, searchText: "" });
+  },
   searchOpen: false,
   searchText: "",
   setSearchOpen: (value) => {
@@ -28,8 +31,5 @@ export const useSearch = create<SearchStore>((set) => ({
   },
   setSearchText: (value) => {
     set({ searchText: value });
-  },
-  finish: () => {
-    set({ searchOpen: false, searchText: "" });
   },
 }));

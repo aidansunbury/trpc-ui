@@ -1,85 +1,80 @@
-import type { ParsedProcedure } from "@src/parse/parseProcedure";
-import type { ParsedRouter } from "@src/parse/parseRouter";
+import type { RouterOrProcedure } from "@src/parseV2/types";
 import type { ColorSchemeType } from "@src/react-app/components/CollapsableSection";
-
 export function solidColorBg(type: ColorSchemeType) {
   switch (type) {
     case "mutation":
-      return "bg-mutationSolid";
+      return "bg-mutation-solid";
     case "query":
-      return "bg-querySolid";
+      return "bg-query-solid";
     case "router":
-      return "bg-routerSolid";
+      return "bg-router-solid";
     case "neutral":
-      return "bg-neutralSolid";
+      return "bg-neutral-solid";
     case "subscription":
-      return "bg-subscriptionSolid";
+      return "bg-subscription-solid";
   }
 }
 
 export function solidColorBorder(type: ColorSchemeType) {
   switch (type) {
     case "mutation":
-      return "border-mutationSolid";
+      return "border-mutation-solid";
     case "query":
-      return "border-querySolid";
+      return "border-query-solid";
     case "router":
-      return "border-routerSolid";
+      return "border-router-solid";
     case "neutral":
-      return "border-neutralSolid";
+      return "border-neutral-solid";
     case "subscription":
-      return "border-subscriptionSolid";
+      return "border-subscription-solid";
   }
 }
 
 export function backgroundColor(type: ColorSchemeType) {
   switch (type) {
     case "mutation":
-      return "bg-mutationBg";
+      return "bg-mutation-bg";
     case "neutral":
-      return "bg-neutralBg";
+      return "bg-neutral-bg";
     case "query":
-      return "bg-queryBg";
+      return "bg-query-bg";
     case "router":
-      return "bg-routerBg";
+      return "bg-router-bg";
     case "subscription":
-      return "bg-subscriptionBg";
+      return "bg-subscription-bg";
   }
 }
 
 export function backgroundColorDark(type: ColorSchemeType) {
   switch (type) {
     case "mutation":
-      return "bg-mutationBgDark";
+      return "bg-mutation-bg-dark";
     case "neutral":
-      return "bg-neutralBgDark";
+      return "bg-neutral-bg-dark";
     case "query":
-      return "bg-queryBgDark";
+      return "bg-query-bg-dark";
     case "router":
-      return "bg-routerBgDark";
+      return "bg-router-bg-dark";
     case "subscription":
-      return "bg-subscriptionBgDark";
+      return "bg-subscription-bg-dark";
   }
 }
 
 export function textColor(type: ColorSchemeType) {
   switch (type) {
     case "mutation":
-      return "text-mutationText";
+      return "text-mutation-text";
     case "neutral":
-      return "text-neutralText";
+      return "text-neutral-text";
     case "query":
-      return "text-queryText";
+      return "text-query-text";
     case "router":
-      return "text-routerText";
+      return "text-router-text";
     case "subscription":
-      return "text-subscriptionText";
+      return "text-subscription-text";
   }
 }
 
-export function colorSchemeForNode(
-  node: ParsedRouter | ParsedProcedure,
-): ColorSchemeType {
-  if (node.nodeType === "router") return "router";
-  return node.procedureType;
+export function colorSchemeForNode(node: RouterOrProcedure): ColorSchemeType {
+  return node.type;
 }

@@ -4,10 +4,9 @@
  *
  * We also create a few inference helpers for input and output types.
  */
-import { httpBatchLink, loggerLink } from "@trpc/client";
+import { httpLink, loggerLink } from "@trpc/client";
 import { createTRPCNext } from "@trpc/next";
 import type { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
-import superjson from "superjson";
 
 import type { AppRouter } from "~/router";
 
@@ -24,7 +23,7 @@ export const api = createTRPCNext<AppRouter>({
    *
    * @see https://trpc.io/docs/data-transformers
    */
-  transformer: superjson,
+  // transformer: superjson,
   config() {
     return {
       /**
@@ -38,15 +37,19 @@ export const api = createTRPCNext<AppRouter>({
             process.env.NODE_ENV === "development" ||
             (opts.direction === "down" && opts.result instanceof Error),
         }),
-        httpBatchLink({
+        httpLink({
           url: `${getBaseUrl()}/api/trpc`,
-          /**
-           * Transformer used for data de-serialization from the server.
-           *
-           * @see https://trpc.io/docs/data-transformers
-           */
-          transformer: superjson,
+          // transformer,
         }),
+        // httpBatchLink({
+        //   url: `${getBaseUrl()}/api/trpc`,
+        //   /**
+        //    * Transformer used for data de-serialization from the server.
+        //    *
+        //    * @see https://trpc.io/docs/data-transformers
+        //    */
+        //   // transformer: superjson,
+        // }),
       ],
     };
   },

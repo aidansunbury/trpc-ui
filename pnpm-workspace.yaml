@@ -1,2 +1,14 @@
 packages:
   - "packages/*"
+allowBuilds:
+  "@biomejs/biome": false
+  es5-ext: false
+  esbuild: false
+  fsevents: false
+  sharp: false
+minimumReleaseAgeExclude:
+  - '@hookform/resolvers@5.4.0'
+  - '@rjsf/core@6.6.0'
+  - '@rjsf/mui@6.6.0'
+  - '@rjsf/utils@6.6.0'
+  - '@rjsf/validator-ajv8@6.6.0'
