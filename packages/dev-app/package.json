@@ -1,12 +1,6 @@
 {
-  "name": "dev-app",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "build": "next build",
-    "dev": "if [ -f .env ]; then export $(grep -v '^#' .env | xargs); fi && NEXT_PUBLIC_PORT=${NEXT_PUBLIC_PORT:-3000} && echo \"Starting dev server on port $NEXT_PUBLIC_PORT\" && next dev --port=$NEXT_PUBLIC_PORT",
-    "lint": "next lint",
-    "start": "next start"
+  "ct3aMetadata": {
+    "initVersion": "7.10.2"
   },
   "dependencies": {
     "@chakra-ui/core": "1.0.0-rc.8",
@@ -48,7 +42,13 @@
     "react-scan": "^0.2.14",
     "typescript": "^6.0.3"
   },
-  "ct3aMetadata": {
-    "initVersion": "7.10.2"
-  }
+  "name": "dev-app",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "if [ -f .env ]; then export $(grep -v '^#' .env | xargs); fi && NEXT_PUBLIC_PORT=${NEXT_PUBLIC_PORT:-3000} && echo \"Starting dev server on port $NEXT_PUBLIC_PORT\" && next dev --port=$NEXT_PUBLIC_PORT",
+    "lint": "next lint",
+    "start": "next start"
+  },
+  "version": "0.1.0"
 }

@@ -1,29 +1,29 @@
+import typescript from "@rollup/plugin-typescript";
 import { defineConfig } from "vite";
 import { viteStaticCopy } from "vite-plugin-static-copy";
-import typescript from "@rollup/plugin-typescript";
 
 export default defineConfig({
   build: {
-    outDir: "lib/react-app",
-    emptyOutDir: true,
-    sourcemap: true,
     cssCodeSplit: false,
+    emptyOutDir: true,
     minify: false,
+    outDir: "lib/react-app",
     rollupOptions: {
       input: {
         main: "src/react-app/index.tsx",
       },
       output: {
-        entryFileNames: "bundle.js",
-        chunkFileNames: "[name]-[hash].js",
         assetFileNames: (assetInfo) => {
           if (assetInfo.names[0].endsWith(".css")) {
             return "index.css";
           }
           return "[name].[extname]";
         },
+        chunkFileNames: "[name]-[hash].js",
+        entryFileNames: "bundle.js",
       },
     },
+    sourcemap: true,
   },
   plugins: [
     typescript({
@@ -32,9 +32,9 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         {
-          src: "src/react-app/index.html",
           dest: ".",
           rename: { stripBase: 2 },
+          src: "src/react-app/index.html",
         },
       ],
     }),

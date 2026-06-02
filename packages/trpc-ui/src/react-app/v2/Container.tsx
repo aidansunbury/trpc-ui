@@ -1,24 +1,24 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { CollapsableSection } from "@src/react-app/components/CollapsableSection";
-import React from "react";
-
-import { Form } from "./Form";
-
 import type { Procedure, Router } from "@src/parseV2/types";
+import { CollapsableSection } from "@src/react-app/components/CollapsableSection";
+import { Form } from "./Form";
 
 export function Container({
   item,
   isRoot = false,
-}: { item: Router | Procedure; isRoot?: boolean }) {
+}: {
+  item: Router | Procedure;
+  isRoot?: boolean;
+}) {
   const renderTitle = (path: string[]) => {
     const name = path.at(-1);
     return (
       <Typography
         component="span"
         sx={{
-          fontWeight: 600,
           fontSize: "1rem",
+          fontWeight: 600,
           letterSpacing: "0.01em",
         }}
       >
@@ -41,12 +41,12 @@ export function Container({
         >
           <Box
             sx={{
+              borderLeft: "1px solid rgba(0, 0, 0, 0.1)",
               display: "flex",
               flexDirection: "column",
               gap: 0.5,
               px: 1,
               py: 0.75,
-              borderLeft: "1px solid rgba(0, 0, 0, 0.1)",
             }}
           >
             {Object.entries(item.children).map(([key, routerOrProcedure]) => (

@@ -9,8 +9,8 @@ import {
   ZodFirstPartyTypeKind,
   type ZodLiteralDef,
   type ZodNativeEnumDef,
-  type ZodNullDef,
   type ZodNullableDef,
+  type ZodNullDef,
   type ZodNumberDef,
   type ZodObjectDef,
   type ZodOptionalDef,
@@ -24,8 +24,8 @@ import { parseZodBigIntDef } from "../../input-mappers/zod/parsers/parseZodBigIn
 import { parseZodBrandedDef } from "../../input-mappers/zod/parsers/parseZodBrandedDef";
 import { parseZodDefaultDef } from "../../input-mappers/zod/parsers/parseZodDefaultDef";
 import { parseZodEffectsDef } from "../../input-mappers/zod/parsers/parseZodEffectsDef";
-import { parseZodNullDef } from "../../input-mappers/zod/parsers/parseZodNullDef";
 import { parseZodNullableDef } from "../../input-mappers/zod/parsers/parseZodNullableDef";
+import { parseZodNullDef } from "../../input-mappers/zod/parsers/parseZodNullDef";
 import { parseZodOptionalDef } from "../../input-mappers/zod/parsers/parseZodOptionalDef";
 import { parseZodPromiseDef } from "../../input-mappers/zod/parsers/parseZodPromiseDef";
 import { parseZodUndefinedDef } from "../../input-mappers/zod/parsers/parseZodUndefinedDef";
@@ -34,8 +34,8 @@ import type { ParserSelectorFunction } from "../../parseNodeTypes";
 import { parseZodArrayDef } from "./parsers/parseZodArrayDef";
 import { parseZodBooleanFieldDef } from "./parsers/parseZodBooleanFieldDef";
 import {
-  type ZodDiscriminatedUnionDefUnversioned,
   parseZodDiscriminatedUnionDef,
+  type ZodDiscriminatedUnionDefUnversioned,
 } from "./parsers/parseZodDiscriminatedUnionDef";
 import { parseZodEnumDef } from "./parsers/parseZodEnumDef";
 import { parseZodLiteralDef } from "./parsers/parseZodLiteralDef";
@@ -100,5 +100,5 @@ export const zodSelectorFunction: ParserSelectorFunction<ZodDefWithType> = (
     case ZodFirstPartyTypeKind.ZodVoid:
       return parseZodVoidDef(def as ZodVoidDef, references);
   }
-  return { type: "unsupported", path: references.path };
+  return { path: references.path, type: "unsupported" };
 };

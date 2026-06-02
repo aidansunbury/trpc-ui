@@ -37,9 +37,9 @@ function makeDefConsistent(def: ZodDiscriminatedUnionDefUnversioned): {
 } {
   const optionsMap = isZodThreePointTwenty(def) ? def.optionsMap : def.options;
   return {
-    typeName: ZodFirstPartyTypeKind.ZodDiscriminatedUnion,
     discriminator: def.discriminator,
     options: optionsMap,
+    typeName: ZodFirstPartyTypeKind.ZodDiscriminatedUnion,
   };
 }
 
@@ -57,10 +57,10 @@ export const parseZodDiscriminatedUnionDef: ParseFunction<
   const nodesMap = Object.fromEntries(nodeEntries);
   refs.addDataFunctions.addDescriptionIfExists(def, refs);
   return {
-    type: "discriminated-union",
-    discriminatedUnionValues: entries.map(([n]) => n),
     discriminatedUnionChildrenMap: nodesMap,
+    discriminatedUnionValues: entries.map(([n]) => n),
     discriminatorName: def.discriminator,
+    type: "discriminated-union",
     ...nodePropertiesFromRef(refs),
   };
 };

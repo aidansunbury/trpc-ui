@@ -1,31 +1,29 @@
 import type { ParsedTRPCRouter } from "@src/parseV2/types";
-import { HeadersPopup } from "@src/react-app/components/HeadersPopup";
-import { SearchOverlay } from "@src/react-app/components/SearchInputOverlay";
 import {
   AllPathsContextProvider,
   useAllPaths,
 } from "@src/react-app/components/contexts/AllPathsContext";
 import { HeadersContextProvider } from "@src/react-app/components/contexts/HeadersContext";
-
+import { HotKeysContextProvider } from "@src/react-app/components/contexts/HotKeysContext";
 import {
   SiteNavigationContextProvider,
   useSiteNavigationContext,
 } from "@src/react-app/components/contexts/SiteNavigationContext";
-import { HotKeysContextProvider } from "@src/react-app/components/contexts/HotKeysContext";
+import { HeadersPopup } from "@src/react-app/components/HeadersPopup";
 import { useLocalStorage } from "@src/react-app/components/hooks/useLocalStorage";
+import { SearchOverlay } from "@src/react-app/components/SearchInputOverlay";
 import type { RenderOptions } from "@src/render";
-import { useQueryState } from "nuqs";
-import { parseAsArrayOf, parseAsString } from "nuqs";
+import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
 import { NuqsAdapter } from "nuqs/adapters/react";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
-import { MetaHeader } from "./components/MetaHeader";
-import { SideNav } from "./components/SideNav";
-import { TopBar } from "./components/TopBar";
 import {
   RenderOptionsProvider,
   useRenderOptions,
 } from "./components/contexts/OptionsContext";
+import { MetaHeader } from "./components/MetaHeader";
+import { SideNav } from "./components/SideNav";
+import { TopBar } from "./components/TopBar";
 import { Container } from "./v2/Container";
 
 export function RootComponent({
@@ -75,7 +73,7 @@ function AppInnards({
 
   useEffect(() => {
     openAndNavigateTo(path ?? [], true);
-  }, []);
+  }, [path, openAndNavigateTo]);
   const allPaths = useAllPaths();
 
   return (

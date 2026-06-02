@@ -1,5 +1,5 @@
 import type { ParsedInputNode } from "@src/parse/parseNodeTypes";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { type Control, useController } from "react-hook-form";
 import { BaseTextField } from "./base/BaseTextField";
 
@@ -32,7 +32,7 @@ export function NumberField({
       return;
     }
     field.onChange(Number.parseFloat(stringValue));
-  }, [stringValue]);
+  }, [stringValue, field.onChange]);
 
   return (
     <BaseTextField

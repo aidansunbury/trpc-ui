@@ -1,6 +1,5 @@
 import type { ColorSchemeType } from "@src/react-app/components/CollapsableSection";
 import { solidColorBg } from "@src/react-app/components/style-utils";
-import React from "react";
 import type { ButtonHTMLAttributes } from "react";
 
 export function Button({

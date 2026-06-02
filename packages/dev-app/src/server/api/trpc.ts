@@ -42,16 +42,16 @@ export const createTRPCContext = (_opts: CreateNextContextOptions) => {
  * errors on the backend.
  */
 import { initTRPC } from "@trpc/server";
-import superjson from "superjson";
 import type { TRPCPanelMeta } from "trpc-ui";
 import { ZodError } from "zod";
+
 // import { env } from "~/env.mjs";
 
 const t = initTRPC
   .context<typeof createTRPCContext>()
   .meta<TRPCPanelMeta>()
   .create({
-    transformer: undefined,
+    allowOutsideOfServer: true,
     errorFormatter({ shape, error }) {
       return {
         ...shape,
@@ -62,7 +62,7 @@ const t = initTRPC
         },
       };
     },
-    allowOutsideOfServer: true,
+    transformer: undefined,
   });
 
 /**

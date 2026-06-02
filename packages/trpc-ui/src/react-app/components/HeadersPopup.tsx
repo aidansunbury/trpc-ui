@@ -3,9 +3,9 @@ import SaveIcon from "@mui/icons-material/Lock";
 import { AddItemButton } from "@src/react-app/components/AddItemButton";
 import { Button } from "@src/react-app/components/Button";
 import { useHeadersContext } from "@src/react-app/components/contexts/HeadersContext";
-import { FieldError } from "@src/react-app/components/form/fields/FieldError";
 import { BaseTextField } from "@src/react-app/components/form/fields/base/BaseTextField";
-import React, { useEffect, useState } from "react";
+import { FieldError } from "@src/react-app/components/form/fields/FieldError";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export function HeadersPopup() {
@@ -75,7 +75,7 @@ export function HeadersPopup() {
     if (headersPopupShown) {
       setHeaders(Object.entries(getHeaders()));
     }
-  }, [headersPopupShown]);
+  }, [headersPopupShown, getHeaders]);
   if (!headersPopupShown) return null;
   return (
     <div className="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center border border-panel-border bg-overlay-background bg-opacity-70 drop-shadow-lg">

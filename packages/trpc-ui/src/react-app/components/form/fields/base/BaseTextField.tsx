@@ -1,6 +1,6 @@
 import { default as MUITextField } from "@mui/material/TextField";
 import { useEnableInputGlobalHotkeys } from "@src/react-app/components/contexts/HotKeysContext";
-import React, { type InputHTMLAttributes, useRef } from "react";
+import { type InputHTMLAttributes, useRef } from "react";
 
 export function BaseTextField({
   value,

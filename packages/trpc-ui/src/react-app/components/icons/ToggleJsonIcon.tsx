@@ -1,5 +1,3 @@
-import React from "react";
-
 export function ToggleJsonIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -9,6 +7,7 @@ export function ToggleJsonIcon({ className }: { className?: string }) {
       height="24"
       viewBox="0 0 24 24"
       className={className}
+      aria-label="toggle raw JSON input"
     >
       <defs>
         <style>{".cls-1{fill:#444;fill-rule:evenodd;}"}</style>

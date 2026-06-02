@@ -12,7 +12,7 @@ const tSuperjson = initTRPC
   .context<typeof createTRPCContext>()
   .meta<TRPCPanelMeta>()
   .create({
-    transformer: superjson,
+    allowOutsideOfServer: true,
     errorFormatter({ shape, error }) {
       return {
         ...shape,
@@ -23,7 +23,7 @@ const tSuperjson = initTRPC
         },
       };
     },
-    allowOutsideOfServer: true,
+    transformer: superjson,
   });
 
 // Create middleware with logging
@@ -40,11 +40,10 @@ const loggingMiddleware = tSuperjson.middleware(
 );
 
 // Create procedure with superjson-enabled tRPC instance
-const procedureSuperjson = tSuperjson.procedure.use(loggingMiddleware);
+const _procedureSuperjson = tSuperjson.procedure.use(loggingMiddleware);
 
 // Export API handler
 export default createNextApiHandler({
-  router: appRouterSuperjson,
   createContext: createTRPCContext,
   onError:
     process.env.NODE_ENV === "development"
@@ -54,4 +53,5 @@ export default createNextApiHandler({
           );
         }
       : undefined,
+  router: appRouterSuperjson,
 });

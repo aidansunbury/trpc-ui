@@ -1,26 +1,26 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
+    "jsx": "react",
     "module": "ES2022",
     "moduleResolution": "bundler",
-    "outDir": "lib",
-    "rootDir": "./",
-    "strict": true,
     "noImplicitAny": true,
-    "strictNullChecks": true,
-    "noUncheckedIndexedAccess": true,
     "noImplicitReturns": true,
+    "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "resolveJsonModule": true,
-    "jsx": "react",
+    "outDir": "lib",
     "paths": {
-      "@src/*": ["./src/*"],
+      "@src/*": ["./src/*"]
     },
+    "resolveJsonModule": true,
+    "rootDir": "./",
     "sourceMap": true,
     "sourceRoot": "/",
-    "types": ["node"],
+    "strict": true,
+    "strictNullChecks": true,
+    "target": "ES2022",
+    "types": ["node"]
   },
-  "include": ["./src/**/*"],
   "exclude": ["node_modules/**/*", "lib/**/*"],
+  "include": ["./src/**/*"]
 }

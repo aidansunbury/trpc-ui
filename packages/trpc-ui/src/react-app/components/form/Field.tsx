@@ -1,5 +1,4 @@
 import { ROOT_VALS_PROPERTY_NAME } from "@src/react-app/components/form/ProcedureForm";
-import React from "react";
 import type { Control } from "react-hook-form";
 import type { ParsedInputNode } from "../../../parse/parseNodeTypes";
 import { ArrayField } from "./fields/ArrayField";

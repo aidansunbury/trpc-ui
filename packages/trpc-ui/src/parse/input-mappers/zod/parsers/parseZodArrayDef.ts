@@ -11,8 +11,8 @@ export const parseZodArrayDef: ParseFunction<ZodArrayDef, ArrayNode> = (
   const childType = zodSelectorFunction(type._def, { ...refs, path: [] });
   refs.addDataFunctions.addDescriptionIfExists(def, refs);
   return {
-    type: "array",
     childType,
+    type: "array",
     ...nodePropertiesFromRef(refs),
   };
 };

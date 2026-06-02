@@ -1,4 +1,3 @@
-import React from "react";
 import type { TRPCErrorType } from "../utils";
 import { ErrorRow } from "./ErrorRow";
 import { FormSection } from "./FormSection";

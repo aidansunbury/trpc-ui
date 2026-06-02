@@ -1,7 +1,7 @@
 import type { ProcedureExtraData } from "@src/parse/parseProcedure";
 import { FormLabel } from "@src/react-app/components/form/FormLabel";
 import { FormSection } from "@src/react-app/components/form/ProcedureForm/FormSection";
-import React, { type ReactNode } from "react";
+import { type ReactNode } from "react";
 import Markdown from "react-markdown";
 export function DocumentationSection({
   extraData,

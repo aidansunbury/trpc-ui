@@ -16,7 +16,7 @@ export async function loadFrontend(): Promise<{
       fs.readFile(`${dirLocation}/react-app/index.css`, "utf-8"),
     ]);
 
-    return { html, js, css };
+    return { css, html, js };
   } catch {
     return null;
   }

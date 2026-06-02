@@ -1,12 +1,12 @@
 import { useAllPaths } from "@src/react-app/components/contexts/AllPathsContext";
-import React, {
+import {
   createContext,
   type ReactNode,
   useContext,
   useMemo,
   useRef,
 } from "react";
-import { type StoreApi, type UseBoundStore, create } from "zustand";
+import { create, type StoreApi, type UseBoundStore } from "zustand";
 
 type CollapsibleState = Record<string, boolean>;
 type CollapsibleStore = UseBoundStore<StoreApi<CollapsibleState>>;
@@ -64,6 +64,15 @@ export const collapsables = (() => {
   };
   return {
     hide,
+    hideAll() {
+      if (!collapsablesStore) return;
+      const state = collapsablesStore.getState();
+      const newValue: CollapsibleState = {};
+      for (const pathKey in state) {
+        newValue[pathKey] = false;
+      }
+      collapsablesStore.setState(newValue);
+    },
     show,
     toggle(path: string[]) {
       if (!collapsablesStore) return;
@@ -73,15 +82,6 @@ export const collapsables = (() => {
       } else {
         show(path);
       }
-    },
-    hideAll() {
-      if (!collapsablesStore) return;
-      const state = collapsablesStore.getState();
-      const newValue: CollapsibleState = {};
-      for (const pathKey in state) {
-        newValue[pathKey] = false;
-      }
-      collapsablesStore.setState(newValue);
     },
   };
 })();
@@ -136,9 +136,9 @@ export function SiteNavigationContextProvider({
   return (
     <Context.Provider
       value={{
-        scrollToPathIfMatches,
         markForScrollTo,
         openAndNavigateTo,
+        scrollToPathIfMatches,
       }}
     >
       {children}

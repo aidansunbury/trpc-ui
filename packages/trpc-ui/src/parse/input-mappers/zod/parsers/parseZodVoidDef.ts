@@ -6,8 +6,8 @@ export function parseZodVoidDef(
   refs: ParseReferences,
 ): LiteralNode {
   return {
+    path: refs.path,
     type: "literal",
     value: undefined,
-    path: refs.path,
   };
 }

@@ -1,10 +1,10 @@
 import MailLockIcon from "@mui/icons-material/MailLockOutlined";
 import Search from "@mui/icons-material/Search";
 import { Chevron } from "@src/react-app/components/Chevron";
-import { LogoSvg } from "@src/react-app/components/LogoSvg";
 import { useHeadersContext } from "@src/react-app/components/contexts/HeadersContext";
 import { useSearch } from "@src/react-app/components/contexts/SearchStore";
 import { useIsMac } from "@src/react-app/components/hooks/useIsMac";
+import { LogoSvg } from "@src/react-app/components/LogoSvg";
 import React from "react";
 
 export function TopBar({
@@ -16,7 +16,7 @@ export function TopBar({
 }) {
   const { setHeadersPopupShown } = useHeadersContext();
   return (
-    <div className="position-fixed top-0 right-0 left-0 flex h-16 w-full flex-row items-center justify-between border-b border-b-panel-border  bg-gray-50 px-4 pr-8 drop-shadow-sm">
+    <div className="position-fixed top-0 right-0 left-0 flex h-16 w-full flex-row items-center justify-between border-b border-b-panel-border bg-gray-50 px-4 pr-8 drop-shadow-sm">
       <div className="flex flex-row items-center gap-4">
         <button
           type="button"

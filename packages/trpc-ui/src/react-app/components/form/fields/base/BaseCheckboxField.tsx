@@ -1,7 +1,7 @@
 import { useEnableInputGlobalHotkeys } from "@src/react-app/components/contexts/HotKeysContext";
-import { useProcedureFormContext } from "@src/react-app/components/form/ProcedureForm/ProcedureFormContext";
 import { FieldError } from "@src/react-app/components/form/fields/FieldError";
-import React, { useRef } from "react";
+import { useProcedureFormContext } from "@src/react-app/components/form/ProcedureForm/ProcedureFormContext";
+import { useRef } from "react";
 
 export function BaseCheckboxField({
   value,

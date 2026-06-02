@@ -1,10 +1,11 @@
-import React, {
+import {
   createContext,
   type ReactNode,
   useContext,
   useRef,
   useState,
 } from "react";
+
 type Headers = { [key: string]: string };
 
 type HeadersContextType = {
@@ -26,16 +27,17 @@ const storage =
     ? localStorage
     : {
         getItem: (_v: string) => null,
-        setItem: (_s: string) => {},
         removeItem: (_v: string) => {},
+        setItem: (_s: string) => {},
       };
 
 const storedHeaders = storage.getItem(headersLocalStorageKey);
 
 export function HeadersContextProvider({ children }: { children: ReactNode }) {
   const [headersPopupShown, setHeadersPopupShown] = useState(false);
-  const [saveHeadersToLocalStorage, setSaveHeadersToLocalStorage] =
-    useState(!!storedHeaders);
+  const [saveHeadersToLocalStorage, setSaveHeadersToLocalStorage] = useState(
+    !!storedHeaders,
+  );
   const globalHeadersRef = useRef<Headers>(
     storedHeaders ? JSON.parse(storedHeaders) : {},
   );
@@ -56,11 +58,11 @@ export function HeadersContextProvider({ children }: { children: ReactNode }) {
   return (
     <HeadersContext.Provider
       value={{
-        setHeaders,
         getHeaders,
         headersPopupShown,
-        setHeadersPopupShown,
         saveHeadersToLocalStorage,
+        setHeaders,
+        setHeadersPopupShown,
         setSaveHeadersToLocalStorage: (val) => {
           if (!val) storage.removeItem(headersLocalStorageKey);
           setSaveHeadersToLocalStorage(val);

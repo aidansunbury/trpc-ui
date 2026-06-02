@@ -1,5 +1,4 @@
 import type { Info } from "@src/render";
-import React from "react";
 import Markdown from "react-markdown";
 
 export function MetaHeader({ meta }: { meta?: Info }) {

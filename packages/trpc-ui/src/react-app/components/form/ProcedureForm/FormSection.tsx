@@ -1,5 +1,5 @@
 import { FormSectionHeader } from "@src/react-app/components/form/ProcedureForm/FormSectionHeader";
-import React, { type ReactNode } from "react";
+import { type ReactNode } from "react";
 
 export function FormSection({
   children,

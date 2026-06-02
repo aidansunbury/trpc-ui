@@ -1,6 +1,8 @@
-import type { Procedure } from "@src/parseV2/types";
-import React from "react";
 import Editor from "@monaco-editor/react";
+import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
+import ClearIcon from "@mui/icons-material/Clear";
+// Icons
+import SendIcon from "@mui/icons-material/Send";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
@@ -9,24 +11,18 @@ import Paper from "@mui/material/Paper";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import Typography from "@mui/material/Typography";
-import { JsonViewer } from "@textea/json-viewer";
-
-import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
-import ClearIcon from "@mui/icons-material/Clear";
-// Icons
-import SendIcon from "@mui/icons-material/Send";
-
-import { createProcedureFetcher } from "@src/parseV2/fetcher";
-import { sample } from "@stoplight/json-schema-sampler";
-import prettyBytes from "pretty-bytes";
-import prettyMs from "pretty-ms";
-import { useState } from "react";
-import { useRenderOptions } from "../components/contexts/OptionsContext";
-import { DocumentationSection } from "./DocumentationSection";
-
 import JsonForm from "@rjsf/mui";
 import validator from "@rjsf/validator-ajv8";
+import { createProcedureFetcher } from "@src/parseV2/fetcher";
+import type { Procedure } from "@src/parseV2/types";
+import { sample } from "@stoplight/json-schema-sampler";
+import { JsonViewer } from "@textea/json-viewer";
+import prettyBytes from "pretty-bytes";
+import prettyMs from "pretty-ms";
+import React, { useState } from "react";
 import SuperJSON from "superjson";
+import { useRenderOptions } from "../components/contexts/OptionsContext";
+import { DocumentationSection } from "./DocumentationSection";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -34,7 +30,7 @@ interface TabPanelProps {
   value: number;
 }
 
-const wrapSuperJson = (json: any, usingSuperJson: boolean) => {
+const wrapSuperJson = (json: object, usingSuperJson: boolean) => {
   if (!usingSuperJson) {
     return json;
   }
@@ -72,8 +68,8 @@ function CustomTabPanel(props: TabPanelProps) {
 
 function a11yProps(index: number) {
   return {
-    id: `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
+    id: `simple-tab-${index}`,
   };
 }
 
@@ -105,7 +101,7 @@ export function Form({ procedure }: { procedure: Procedure }) {
     try {
       const parsedData = JSON.parse(value ?? "{}");
       setData(parsedData);
-    } catch (e) {
+    } catch (_e) {
       // Handle parsing error silently
     }
   };
@@ -142,8 +138,8 @@ export function Form({ procedure }: { procedure: Procedure }) {
 
       setResponse({
         data: result,
-        time: responseTime,
         size: responseSize,
+        time: responseTime,
       });
     } catch (error) {
       setResponse({
@@ -200,10 +196,10 @@ export function Form({ procedure }: { procedure: Procedure }) {
             <Editor
               defaultLanguage="json"
               options={{
+                formatOnType: true,
                 minimap: {
                   enabled: false,
                 },
-                formatOnType: true,
               }}
               height={"25vh"}
               // edit raw data
@@ -214,11 +210,11 @@ export function Form({ procedure }: { procedure: Procedure }) {
 
           <Box
             sx={{
-              px: 2,
-              pb: 1.5,
-              pt: 0.5,
               display: "flex",
               justifyContent: "space-between",
+              pb: 1.5,
+              pt: 0.5,
+              px: 2,
             }}
           >
             <ButtonGroup variant="outlined" size="small">
@@ -261,20 +257,20 @@ export function Form({ procedure }: { procedure: Procedure }) {
         <Paper elevation={2}>
           <Box
             sx={{
-              px: 2,
-              py: 1,
+              alignItems: "center",
               borderBottom: 1,
               borderColor: "divider",
               display: "flex",
-              alignItems: "center",
+              px: 2,
+              py: 1,
             }}
           >
             <Typography
               variant="body2"
               component="div"
               sx={{
-                fontWeight: 500,
                 color: response.error ? "error.main" : "text.secondary",
+                fontWeight: 500,
               }}
             >
               {response.error
@@ -291,13 +287,13 @@ export function Form({ procedure }: { procedure: Procedure }) {
               {response.error.stack && (
                 <Box
                   sx={{
-                    mt: 1.5,
-                    p: 1.5,
                     bgcolor: "rgba(0, 0, 0, 0.03)",
                     borderRadius: 1,
-                    overflow: "auto",
                     fontFamily: "monospace",
                     fontSize: "0.75rem",
+                    mt: 1.5,
+                    overflow: "auto",
+                    p: 1.5,
                   }}
                 >
                   <pre>{response.error.stack}</pre>

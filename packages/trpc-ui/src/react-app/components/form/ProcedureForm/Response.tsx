@@ -1,7 +1,6 @@
 import { JsonViewer } from "@textea/json-viewer";
 import prettyBytes from "pretty-bytes";
 import prettyMs from "pretty-ms";
-import React from "react";
 import { FormSection } from "./FormSection";
 
 export function Response({

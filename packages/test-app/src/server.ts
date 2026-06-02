@@ -6,6 +6,7 @@ import express from "express";
 import morgan from "morgan";
 import { renderTrpcPanel } from "trpc-ui";
 import { testRouter } from "./router.js";
+
 dotenv.config();
 
 const serverUrl = process.env.SERVER_URL || "http://localhost";
@@ -36,7 +37,7 @@ if (liveReload) {
 
 if (simulateDelay) {
   console.log("Simulating delay...");
-  expressApp.use((req, res, next) => {
+  expressApp.use((_req, _res, next) => {
     setTimeout(() => {
       next();
       console.log("Next in timeout");
@@ -48,8 +49,8 @@ expressApp.use(morgan("short", {}));
 expressApp.use(
   "/trpc",
   trpcExpress.createExpressMiddleware({
-    router: testRouter,
     createContext,
+    router: testRouter,
   }),
 );
 
@@ -58,15 +59,15 @@ console.log(`${serverUrl}${port ? `:${port}` : ""}`);
 
 expressApp.get("/", (_req, res) => {
   renderTrpcPanel(testRouter, {
+    meta: {
+      description:
+        "A panel like this will be automatically generated when you add trpc-ui to your project. This main description, and procedure descriptions support markdown.\n\nIf you prefer to input raw JSON instead of using the auto generated forms, click the {} bracket icon to toggle json mode.\n\n[Repo](https://github.com/aidansunbury/trpc-ui) [NPM](https://www.npmjs.com/package/trpc-ui)",
+      title: "Demo tRPC Panel",
+    },
+    transformer: "superjson",
     url: `${serverUrl}${
       process.env.NODE_ENV === "production" ? "" : `:${port}`
     }/trpc`,
-    transformer: "superjson",
-    meta: {
-      title: "Demo tRPC Panel",
-      description:
-        "A panel like this will be automatically generated when you add trpc-ui to your project. This main description, and procedure descriptions support markdown.\n\nIf you prefer to input raw JSON instead of using the auto generated forms, click the {} bracket icon to toggle json mode.\n\n[Repo](https://github.com/aidansunbury/trpc-ui) [NPM](https://www.npmjs.com/package/trpc-ui)",
-    },
   }).then((data) => res.send(data));
 });
 

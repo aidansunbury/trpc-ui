@@ -2,7 +2,6 @@ import dynamic from "next/dynamic";
 // import { parseRouterWithOptions } from "trpc-ui/parse/parseRouter";
 import { parseTRPCRouter } from "trpc-ui/parseV2/parse";
 import { RootComponent } from "trpc-ui/react-app/Root";
-import { trpc } from "trpc-ui/react-app/trpc";
 // import { env } from "~/env.mjs";
 import { appRouter } from "~/router";
 
@@ -19,12 +18,12 @@ const App = dynamic(
       parsedRouter={parseV2}
       // rootRouter={parse}
       options={{
-        url: `http://localhost:${String(process.env.NEXT_PUBLIC_PORT)}/api/trpc`,
-        transformer: undefined,
         meta: {
-          title: "Dev App Title",
           description: `http://localhost:${String(process.env.NEXT_PUBLIC_PORT)}/api/trpc`,
+          title: "Dev App Title",
         },
+        transformer: undefined,
+        url: `http://localhost:${String(process.env.NEXT_PUBLIC_PORT)}/api/trpc`,
       }}
     />
   )),

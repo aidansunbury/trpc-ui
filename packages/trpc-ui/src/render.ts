@@ -19,8 +19,8 @@ export type RenderOptions = {
 //   transformer: "superjson",
 // };
 
-const javascriptReplaceSymbol = "{{js}}";
-const cssReplaceSymbol = "{{css}}";
+const javascriptReplaceSymbol = "<!--{{js}}-->";
+const cssReplaceSymbol = "<!--{{css}}-->";
 const routerReplaceSymbol = '"{{parsed_router}}"';
 const optionsReplaceSymbol = '"{{options}}"';
 
@@ -67,12 +67,12 @@ export async function renderTrpcPanel(
 
   const bundleInjectionParams: InjectionParam[] = [
     {
-      searchFor: routerReplaceSymbol,
       injectString: JSON.stringify(parseTRPCRouter(router)),
+      searchFor: routerReplaceSymbol,
     },
     {
-      searchFor: optionsReplaceSymbol,
       injectString: JSON.stringify(options),
+      searchFor: optionsReplaceSymbol,
     },
   ];
 
@@ -90,12 +90,12 @@ export async function renderTrpcPanel(
   const css = `<style>${loadedFrontend.css}</style>`;
   const htmlReplaceParams: InjectionParam[] = [
     {
-      searchFor: javascriptReplaceSymbol,
       injectString: script,
+      searchFor: javascriptReplaceSymbol,
     },
     {
-      searchFor: cssReplaceSymbol,
       injectString: css,
+      searchFor: cssReplaceSymbol,
     },
   ];
   cache.val = injectParams(loadedFrontend.html, htmlReplaceParams);

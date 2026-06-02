@@ -2,11 +2,11 @@ import XIcon from "@mui/icons-material/CloseOutlined";
 import DataArray from "@mui/icons-material/DataArray";
 import type { ParsedInputNode } from "@src/parse/parseNodeTypes";
 import { AddItemButton } from "@src/react-app/components/AddItemButton";
-import { InputGroupContainer } from "@src/react-app/components/InputGroupContainer";
-import { ROOT_VALS_PROPERTY_NAME } from "@src/react-app/components/form/ProcedureForm";
 import { FieldError } from "@src/react-app/components/form/fields/FieldError";
+import { ROOT_VALS_PROPERTY_NAME } from "@src/react-app/components/form/ProcedureForm";
 import { defaultFormValuesForNode } from "@src/react-app/components/form/utils";
-import React, { useState } from "react";
+import { InputGroupContainer } from "@src/react-app/components/InputGroupContainer";
+import { useState } from "react";
 import { type Control, useController, useWatch } from "react-hook-form";
 import { Field } from "../Field";
 
@@ -24,8 +24,8 @@ export function ArrayField({
   node: ParsedInputNode & { type: "array" };
 }) {
   const { field, fieldState } = useController({
-    name,
     control,
+    name,
   });
   // To make sure text field state dies when they're deleted
   const [textFieldKeys, setTextFieldKeys] = useState<string[]>([]);
@@ -68,7 +68,7 @@ export function ArrayField({
     >
       {field.value.map((parsedNode: ParsedInputNode, i: number) => (
         <span
-          key={`${JSON.stringify(parsedNode)} ${i}`}
+          key={`${JSON.stringify(parsedNode)}`}
           className="flex flex-row items-start"
         >
           <span className="flex flex-1 flex-col">

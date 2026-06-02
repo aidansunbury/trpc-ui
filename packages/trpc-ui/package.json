@@ -1,44 +1,24 @@
 {
-  "name": "trpc-ui",
-  "version": "1.0.15",
-  "description": "UI for testing tRPC backends",
-  "main": "lib/index.js",
-  "module": "lib/index.mjs",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/aidansunbury/trpc-ui/"
-  },
-  "typings": "lib/src/index.d.ts",
-  "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watchAll",
-    "build": "vite build -c vite.config.lib.ts && vite build -c vite.config.react.ts",
-    "preview": "vite preview"
-  },
   "author": "",
-  "license": "ISC",
-  "exports": {
-    ".": {
-      "types": "./lib/src/index.d.ts",
-      "import": "./lib/index.mjs",
-      "require": "./lib/index.js",
-      "default": "./lib/index.js"
-    }
+  "dependencies": {
+    "@jsonforms/material-renderers": "^3.7.0",
+    "@jsonforms/react": "^3.7.0",
+    "@monaco-editor/react": "^4.7.0",
+    "@rjsf/core": "^6.6.1",
+    "@rjsf/mui": "^6.6.1",
+    "@rjsf/utils": "^6.6.1",
+    "@rjsf/validator-ajv8": "^6.6.1",
+    "@stoplight/json-schema-sampler": "^0.3.0",
+    "@textea/json-viewer": "^4.0.1",
+    "clsx": "^2.1.1",
+    "fuzzysort": "^3.1.0",
+    "nuqs": "^2.8.9",
+    "pretty-bytes": "^7.1.0",
+    "pretty-ms": "^9.3.0",
+    "react-markdown": "^10.1.0",
+    "tailwind-merge": "^3.6.0"
   },
-  "files": [
-    "lib/"
-  ],
-  "directories": {
-    "lib": "lib"
-  },
-  "peerDependencies": {
-    "@trpc/server": "^11.0.0",
-    "@valibot/to-json-schema": "^1.0.0",
-    "arktype": "^2.0.0",
-    "valibot": "^1.0.0",
-    "zod": "^3.25.0",
-    "zod-to-json-schema": "^3.20.0"
-  },
+  "description": "UI for testing tRPC backends",
   "devDependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
@@ -77,22 +57,42 @@
     "vite-plugin-static-copy": "^4.1.0",
     "zustand": "^5.0.14"
   },
-  "dependencies": {
-    "@jsonforms/material-renderers": "^3.7.0",
-    "@jsonforms/react": "^3.7.0",
-    "@monaco-editor/react": "^4.7.0",
-    "@rjsf/core": "^6.6.1",
-    "@rjsf/mui": "^6.6.1",
-    "@rjsf/utils": "^6.6.1",
-    "@rjsf/validator-ajv8": "^6.6.1",
-    "@stoplight/json-schema-sampler": "^0.3.0",
-    "@textea/json-viewer": "^4.0.1",
-    "clsx": "^2.1.1",
-    "fuzzysort": "^3.1.0",
-    "nuqs": "^2.8.9",
-    "pretty-bytes": "^7.1.0",
-    "pretty-ms": "^9.3.0",
-    "react-markdown": "^10.1.0",
-    "tailwind-merge": "^3.6.0"
-  }
+  "directories": {
+    "lib": "lib"
+  },
+  "exports": {
+    ".": {
+      "default": "./lib/index.js",
+      "import": "./lib/index.mjs",
+      "require": "./lib/index.js",
+      "types": "./lib/src/index.d.ts"
+    }
+  },
+  "files": [
+    "lib/"
+  ],
+  "license": "ISC",
+  "main": "lib/index.js",
+  "module": "lib/index.mjs",
+  "name": "trpc-ui",
+  "peerDependencies": {
+    "@trpc/server": "^11.0.0",
+    "@valibot/to-json-schema": "^1.0.0",
+    "arktype": "^2.0.0",
+    "valibot": "^1.0.0",
+    "zod": "^3.25.0",
+    "zod-to-json-schema": "^3.20.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aidansunbury/trpc-ui/"
+  },
+  "scripts": {
+    "build": "vite build -c vite.config.lib.ts && vite build -c vite.config.react.ts",
+    "preview": "vite preview",
+    "test": "jest",
+    "test:watch": "jest --watchAll"
+  },
+  "typings": "lib/src/index.d.ts",
+  "version": "1.0.15"
 }

@@ -1,13 +1,13 @@
 import type { ParsedTRPCRouter, RouterOrProcedure } from "@src/parseV2/types";
 import { Chevron } from "@src/react-app/components/Chevron";
-import { ItemTypeIcon } from "@src/react-app/components/ItemTypeIcon";
 import {
   collapsables,
+  useCollapsableIsShowing,
   useSiteNavigationContext,
 } from "@src/react-app/components/contexts/SiteNavigationContext";
-import { useCollapsableIsShowing } from "@src/react-app/components/contexts/SiteNavigationContext";
+import { ItemTypeIcon } from "@src/react-app/components/ItemTypeIcon";
 import { colorSchemeForNode } from "@src/react-app/components/style-utils";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 export function SideNav({
   open,
   parsedRouter,
@@ -39,10 +39,13 @@ function SideNavItem({
   const { markForScrollTo } = useSiteNavigationContext();
   const shown = useCollapsableIsShowing(node.path) || node.path.length === 0;
 
-  const onClick = useCallback(function onClick() {
-    collapsables.toggle(node.path);
-    markForScrollTo(node.path);
-  }, []);
+  const onClick = useCallback(
+    function onClick() {
+      collapsables.toggle(node.path);
+      markForScrollTo(node.path);
+    },
+    [node.path, markForScrollTo],
+  );
 
   return (
     <>
@@ -61,7 +64,7 @@ function SideNavItem({
 
           {node.type === "router" ? (
             <Chevron
-              className={"ml-2 h-3 w-3 " + ""}
+              className={"ml-2 h-3 w-3" + ""}
               direction={shown ? "down" : "right"}
             />
           ) : (

@@ -1,26 +1,24 @@
 import { ajvResolver } from "@hookform/resolvers/ajv";
+import Editor from "@monaco-editor/react";
 import type { ParsedInputNode } from "@src/parse/parseNodeTypes";
 import type { ParsedProcedure } from "@src/parse/parseProcedure";
 import { CollapsableSection } from "@src/react-app/components/CollapsableSection";
 import { Field } from "@src/react-app/components/form/Field";
+import { ObjectField } from "@src/react-app/components/form/fields/ObjectField";
 import { DocumentationSection } from "@src/react-app/components/form/ProcedureForm/DescriptionSection";
 import { ProcedureFormContextProvider } from "@src/react-app/components/form/ProcedureForm/ProcedureFormContext";
-import { ObjectField } from "@src/react-app/components/form/fields/ObjectField";
 import { defaultFormValuesForNode } from "@src/react-app/components/form/utils";
 import { CloseIcon } from "@src/react-app/components/icons/CloseIcon";
 import { ToggleJsonIcon } from "@src/react-app/components/icons/ToggleJsonIcon";
 import { trpc } from "@src/react-app/trpc";
 import type { RenderOptions } from "@src/render";
 import { sample } from "@stoplight/json-schema-sampler";
-
 import { fullFormats } from "ajv-formats/dist/formats";
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { type Control, useForm, useFormState } from "react-hook-form";
 import SuperJson from "superjson";
 import { useAsyncDuration } from "../../hooks/useAsyncDuration";
 import { AutoFillIcon } from "../../icons/AutoFillIcon";
-
-import Editor from "@monaco-editor/react";
 import { ErrorDisplay as ErrorComponent } from "./Error";
 import { FormSection } from "./FormSection";
 import { ProcedureFormButton } from "./ProcedureFormButton";
@@ -53,7 +51,7 @@ interface JSONSchemaType {
 function getUtilsOrProcedure(base: any, procedure: ParsedProcedure) {
   let cur = base;
   for (const p of procedure.pathFromRootRouter) {
-    //@ts-ignore
+    //@ts-expect-error
     cur = cur[p];
   }
   return cur;
@@ -92,6 +90,12 @@ export function ProcedureForm({
     watch,
     setValue,
   } = useForm({
+    defaultValues: {
+      [ROOT_VALS_PROPERTY_NAME]: wrapSuperJson(
+        defaultFormValuesForNode(procedure.node),
+        usingSuperJson,
+      ),
+    },
     resolver: ajvResolver(
       shouldValidate
         ? wrapJsonSchema(procedure.inputSchema as any, {
@@ -103,12 +107,6 @@ export function ProcedureForm({
         formats: fullFormats,
       },
     ),
-    defaultValues: {
-      [ROOT_VALS_PROPERTY_NAME]: wrapSuperJson(
-        defaultFormValuesForNode(procedure.node),
-        usingSuperJson,
-      ),
-    },
   });
   async function onSubmit(data: { [ROOT_VALS_PROPERTY_NAME]: any }) {
     const newData = data[ROOT_VALS_PROPERTY_NAME];
@@ -196,10 +194,10 @@ export function ProcedureForm({
                 <Editor
                   defaultLanguage="json"
                   options={{
+                    formatOnType: true,
                     minimap: {
                       enabled: false,
                     },
-                    formatOnType: true,
                   }}
                   height={"30vh"}
                   value={JSON.stringify(
@@ -241,9 +239,7 @@ export function ProcedureForm({
         <div className="flex flex-col space-y-4">
           {response &&
             (response.isError ? (
-              <>
-                <ErrorComponent error={response.response} />
-              </>
+              <ErrorComponent error={response.response} />
             ) : (
               <Response
                 time={duration ?? undefined}
@@ -316,37 +312,37 @@ function wrapJsonSchema(
     // vals -> { json -> actual_schema, meta -> {...} }
 
     wrappedSchema = {
-      type: "object",
+      additionalProperties: true,
       properties: {
         [rootPropertyName]: {
-          type: "object",
+          additionalProperties: true,
           properties: {
             json: schemaWithoutDollarSchema,
             meta: {
-              type: "object",
               properties: {
                 values: {
                   type: "object",
                 },
               },
+              type: "object",
             },
           },
           required: ["json"],
-          additionalProperties: true,
+          type: "object",
         },
       },
       required: [rootPropertyName],
-      additionalProperties: true,
+      type: "object",
     };
   } else {
     // If not using SuperJSON, just wrap under the root property
     wrappedSchema = {
-      type: "object",
+      additionalProperties: true,
       properties: {
         [rootPropertyName]: schemaWithoutDollarSchema,
       },
       required: [rootPropertyName],
-      additionalProperties: true,
+      type: "object",
     };
   }
 

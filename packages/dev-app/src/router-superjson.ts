@@ -1,9 +1,7 @@
-import { TRPCError } from "@trpc/server";
 import { initTRPC } from "@trpc/server";
 import { type } from "arktype";
 import superjson from "superjson";
 import type { TRPCPanelMeta } from "trpc-ui";
-import * as v from "valibot";
 import { ZodError } from "zod";
 import * as z from "zod/v3";
 import * as z4 from "zod/v4";
@@ -14,7 +12,7 @@ const tSuperjson = initTRPC
   .context<typeof createTRPCContext>()
   .meta<TRPCPanelMeta>()
   .create({
-    transformer: superjson,
+    allowOutsideOfServer: true,
     errorFormatter({ shape, error }) {
       return {
         ...shape,
@@ -25,7 +23,7 @@ const tSuperjson = initTRPC
         },
       };
     },
-    allowOutsideOfServer: true,
+    transformer: superjson,
   });
 
 const loggingMiddleware = tSuperjson.middleware(
@@ -52,7 +50,7 @@ const secondValidator = procedureSuperjson
     return next({ ctx });
   });
 
-const arktypeVal = procedureSuperjson
+const _arktypeVal = procedureSuperjson
   .input(
     type({
       name: "string",
@@ -62,12 +60,12 @@ const arktypeVal = procedureSuperjson
     return next({ ctx });
   });
 
-const deepRouterSuperjson = createTRPCRouterSuperjson({
+const _deepRouterSuperjson = createTRPCRouterSuperjson({
   coolQueryWithDate: procedureSuperjson
     .input(
       z.object({
-        needString: z.string(),
         createdAt: z.date(),
+        needString: z.string(),
       }),
     )
     .query(({ input }) => ({
@@ -81,7 +79,7 @@ const deepRouterSuperjson = createTRPCRouterSuperjson({
 // valid query
 // http://localhost:3000/trpc/transaction.budgetOptions?batch=1&input=%7B%220%22%3A%7B%22json%22%3A%7B%22transactionId%22%3A%22txn_01K23XPNG0J376K8N7FYE0PNHT%22%7D%7D%7D
 
-const validResult = {
+const _validResult = {
   result: {
     data: {
       json: {
@@ -102,10 +100,82 @@ const validResult = {
 };
 
 const postsRouterSuperjson = createTRPCRouterSuperjson({
+  complexSuperJson: procedureSuperjson
+    .input(
+      z.object({
+        createdAt: z.date(),
+        id: z.bigint(),
+        metadata: z.map(z.string(), z.string()),
+        name: z.string(),
+        tags: z.set(z.string()),
+      }),
+    )
+    .query(({ input }) => {
+      return {
+        input: input,
+        message: "You used superjson!",
+        processedAt: new Date(),
+      };
+    }),
+
+  createPostZodFourSuperjson: procedureSuperjson
+    .input(
+      z4.object({
+        categories: z4.set(z4.string()).describe("Post categories"),
+        content: z4.string().describe("Post content"),
+        publishedAt: z4.coerce.date().describe("Publication date"),
+        title: z4.string().min(1).describe("Post title"),
+      }),
+    )
+    .mutation(({ input }) => {
+      return {
+        id: "generated-id",
+        ...input,
+        createdAt: new Date(),
+      };
+    }),
+
+  createPostZodThreeSuperjson: secondValidator
+    .meta({
+      description:
+        "Zod v3 procedure with superjson types and merged validators",
+    })
+    .input(
+      z.object({
+        createdAt: z.date().describe("Creation date"),
+        metadata: z.map(z.string(), z.string()).describe("Additional metadata"),
+        tags: z.set(z.string()).describe("Post tags"),
+        text: z.string().min(1).describe("hi there").optional(),
+      }),
+    )
+    .mutation(({ input }) => {
+      return {
+        ...input,
+        processedAt: new Date(),
+      };
+    }),
+
+  dateTest: procedureSuperjson
+    .input(
+      z.object({
+        date: z.date(),
+        nested: z.object({
+          text: z.string(),
+        }),
+      }),
+    )
+    .mutation(({ input }) => {
+      console.log(input);
+      return {
+        id: "aoisdjfoasidjfasodf",
+        originalDate: input.date,
+        time: input.date.getTime(),
+      };
+    }),
   nothing: procedureSuperjson.input(z.any()).query(({ input }) => {
     return {
-      testSet: new Set(["asd"]),
       test: Math.random(),
+      testSet: new Set(["asd"]),
     };
   }),
   superMutation: procedureSuperjson
@@ -131,78 +201,6 @@ const postsRouterSuperjson = createTRPCRouterSuperjson({
       return {
         theTest: input.test,
         theValue: input.value,
-      };
-    }),
-  complexSuperJson: procedureSuperjson
-    .input(
-      z.object({
-        id: z.bigint(),
-        name: z.string(),
-        createdAt: z.date(),
-        tags: z.set(z.string()),
-        metadata: z.map(z.string(), z.string()),
-      }),
-    )
-    .query(({ input }) => {
-      return {
-        message: "You used superjson!",
-        input: input,
-        processedAt: new Date(),
-      };
-    }),
-
-  dateTest: procedureSuperjson
-    .input(
-      z.object({
-        date: z.date(),
-        nested: z.object({
-          text: z.string(),
-        }),
-      }),
-    )
-    .mutation(({ input }) => {
-      console.log(input);
-      return {
-        id: "aoisdjfoasidjfasodf",
-        time: input.date.getTime(),
-        originalDate: input.date,
-      };
-    }),
-
-  createPostZodThreeSuperjson: secondValidator
-    .meta({
-      description:
-        "Zod v3 procedure with superjson types and merged validators",
-    })
-    .input(
-      z.object({
-        text: z.string().min(1).describe("hi there").optional(),
-        createdAt: z.date().describe("Creation date"),
-        tags: z.set(z.string()).describe("Post tags"),
-        metadata: z.map(z.string(), z.string()).describe("Additional metadata"),
-      }),
-    )
-    .mutation(({ input }) => {
-      return {
-        ...input,
-        processedAt: new Date(),
-      };
-    }),
-
-  createPostZodFourSuperjson: procedureSuperjson
-    .input(
-      z4.object({
-        title: z4.string().min(1).describe("Post title"),
-        content: z4.string().describe("Post content"),
-        publishedAt: z4.coerce.date().describe("Publication date"),
-        categories: z4.set(z4.string()).describe("Post categories"),
-      }),
-    )
-    .mutation(({ input }) => {
-      return {
-        id: "generated-id",
-        ...input,
-        createdAt: new Date(),
       };
     }),
 

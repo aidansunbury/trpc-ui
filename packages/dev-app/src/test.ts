@@ -6,15 +6,15 @@ import { z } from "zod";
 import { zodToJsonSchema } from "zod-to-json-schema";
 import { appRouter } from "./router";
 
-const index = 0;
+const _index = 0;
 
 appRouter.postsRouter.createPost;
 
-function parseNode(node: unknown) {
+function _parseNode(node: unknown) {
   return node._def;
 }
 
-const base = type({});
+const _base = type({});
 
 const array = [
   type({
@@ -29,7 +29,7 @@ array.reduce((acc, curr) => {
   return acc.and(curr);
 });
 
-const ark = type({
+const _ark = type({
   text: "string >=1",
 }).and(
   type({
@@ -37,11 +37,11 @@ const ark = type({
   }),
 );
 
-const vali = v.object({
-  text: v.pipe(v.string(), v.minLength(1)),
+const _vali = v.object({
   nested: v.object({
     nestedText: v.string(),
   }),
+  text: v.pipe(v.string(), v.minLength(1)),
 });
 
 const schemaOne = z.object({
@@ -54,13 +54,13 @@ const schemaTwo = z.object({
 
 const combined = schemaOne.merge(schemaTwo);
 
-const res = zodToJsonSchema(combined);
+const _res = zodToJsonSchema(combined);
 
 const expected = z.object({
-  text: z.string().min(1),
   nested: z.object({
     nestedText: z.string(),
   }),
+  text: z.string().min(1),
 });
 
 expected["~standard"].vendor;
@@ -113,7 +113,7 @@ function detectValidatorType(
       if (vendor.includes("valibot")) return "valibot";
       if (vendor.includes("arktype")) return "arktype";
     }
-  } catch (e) {
+  } catch (_e) {
     // Ignore errors when accessing properties
   }
   console.log("unable to determine based on standard schema");
@@ -243,7 +243,7 @@ function parseTRPCRouter(
       // Determine validator type
       let validatorType: "zod" | "valibot" | "arktype" | "unknown" | "mixed" =
         "unknown";
-      let jsonSchema: any = undefined;
+      let jsonSchema: any;
 
       // Check if inputs array exists and has elements
       if (
@@ -289,7 +289,7 @@ function parseTRPCRouter(
           }
         } else if (validatorType === "arktype") {
           const merged = item._def.inputs.reduce((merge, curr) => {
-            merge.and(curr);
+            return merge.and(curr);
           });
           jsonSchema = merged.toJsonSchema();
         }
@@ -297,19 +297,19 @@ function parseTRPCRouter(
 
       if (item._def.type === "query") {
         result[key] = {
-          type: "query",
-          path: nodePath,
           meta,
-          validator: validatorType,
+          path: nodePath,
           schema: jsonSchema,
+          type: "query",
+          validator: validatorType,
         };
       } else if (item._def.type === "mutation") {
         result[key] = {
-          type: "mutation",
-          path: nodePath,
           meta,
-          validator: validatorType,
+          path: nodePath,
           schema: jsonSchema,
+          type: "mutation",
+          validator: validatorType,
         };
       }
     }
@@ -321,9 +321,9 @@ function parseTRPCRouter(
       // Only add it as a router if it has children
       if (Object.keys(children).length > 0) {
         result[key] = {
-          type: "router",
-          path: nodePath,
           children,
+          path: nodePath,
+          type: "router",
         };
       }
     }

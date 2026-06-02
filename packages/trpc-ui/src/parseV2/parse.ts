@@ -2,8 +2,8 @@ import { toJsonSchema } from "@valibot/to-json-schema";
 import type { Type as ArkTypeValidator } from "arktype";
 import type { JSONSchema7Object } from "json-schema";
 import * as v from "valibot";
-import { zodToJsonSchema } from "zod-to-json-schema";
 import * as z4 from "zod/v4";
+import { zodToJsonSchema } from "zod-to-json-schema";
 import { detectValidatorType } from "./detectValidator";
 import type { ParsedTRPCRouter, Router } from "./types";
 
@@ -46,7 +46,7 @@ export function parseTRPCRouter(
       // Determine validator type
       let validatorType: "zod" | "valibot" | "arktype" | "unknown" | "mixed" =
         "unknown";
-      let jsonSchema: any = undefined;
+      let jsonSchema: any;
 
       // Check if inputs array exists and has elements
       if (
@@ -108,19 +108,19 @@ export function parseTRPCRouter(
 
       if (item._def.type === "query") {
         result[key] = {
-          type: "query",
-          path: nodePath,
           meta,
-          validator: validatorType,
+          path: nodePath,
           schema: jsonSchema,
+          type: "query",
+          validator: validatorType,
         };
       } else if (item._def.type === "mutation") {
         result[key] = {
-          type: "mutation",
-          path: nodePath,
           meta,
-          validator: validatorType,
+          path: nodePath,
           schema: jsonSchema,
+          type: "mutation",
+          validator: validatorType,
         };
       }
     }
@@ -132,9 +132,9 @@ export function parseTRPCRouter(
       // Only add it as a router if it has children
       if (Object.keys(children).length > 0) {
         result[key] = {
-          type: "router",
-          path: nodePath,
           children,
+          path: nodePath,
+          type: "router",
         };
       }
     }

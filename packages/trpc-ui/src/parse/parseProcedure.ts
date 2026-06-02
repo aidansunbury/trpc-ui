@@ -1,6 +1,5 @@
-import type { JSON7SchemaType, ProcedureType } from "./parseRouter";
-
 import type { ParsedInputNode } from "./parseNodeTypes";
+import type { JSON7SchemaType, ProcedureType } from "./parseRouter";
 
 export type ProcedureExtraData = {
   parameterDescriptions: { [path: string]: string };

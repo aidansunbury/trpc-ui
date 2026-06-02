@@ -1,9 +1,4 @@
 {
-  "name": "test-app",
-  "version": "1.0.0",
-  "type": "module",
-  "main": "src/server.ts",
-  "license": "MIT",
   "dependencies": {
     "@trpc/client": "11.17.0",
     "@trpc/server": "11.17.0",
@@ -30,15 +25,20 @@
     "zod": "^3.25.76",
     "zod-to-json-schema": "^3.25.2"
   },
-  "scripts": {
-    "dev": "tsx watch src/server.ts",
-    "build": "npx tsc --project tsconfig.json",
-    "start": "node ./lib/server"
-  },
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/ws": "^8.18.1",
     "superjson": "^1.13.3",
     "typescript": "^6.0.3"
-  }
+  },
+  "license": "MIT",
+  "main": "src/server.ts",
+  "name": "test-app",
+  "scripts": {
+    "build": "npx tsc --project tsconfig.json",
+    "dev": "tsx watch src/server.ts",
+    "start": "node ./lib/server"
+  },
+  "type": "module",
+  "version": "1.0.0"
 }

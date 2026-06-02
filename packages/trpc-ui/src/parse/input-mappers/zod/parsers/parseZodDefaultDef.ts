@@ -1,6 +1,6 @@
 import type { ZodDefaultDef } from "zod";
 import { zodSelectorFunction } from "../../../input-mappers/zod/selector";
-import type { ParseReferences, ParsedInputNode } from "../../../parseNodeTypes";
+import type { ParsedInputNode, ParseReferences } from "../../../parseNodeTypes";
 
 export function parseZodDefaultDef(
   def: ZodDefaultDef,

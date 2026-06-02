@@ -1,4 +1,4 @@
-import React, { type ReactNode } from "react";
+import { type ReactNode } from "react";
 
 export function InputGroupContainer({
   title,
@@ -19,7 +19,7 @@ export function InputGroupContainer({
         {iconElement} {title}
       </span>
 
-      <div className={"flex flex-col space-y-2 p-1 "}>{children}</div>
+      <div className={"flex flex-col space-y-2 p-1"}>{children}</div>
     </div>
   );
 }

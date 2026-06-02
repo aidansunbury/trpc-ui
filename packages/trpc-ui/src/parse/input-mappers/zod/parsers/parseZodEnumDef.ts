@@ -8,5 +8,5 @@ export const parseZodEnumDef: ParseFunction<ZodEnumDef, EnumNode> = (
 ) => {
   const values = def.values as unknown as string[];
   refs.addDataFunctions.addDescriptionIfExists(def, refs);
-  return { type: "enum", enumValues: values, ...nodePropertiesFromRef(refs) };
+  return { enumValues: values, type: "enum", ...nodePropertiesFromRef(refs) };
 };

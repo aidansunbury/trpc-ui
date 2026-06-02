@@ -1,4 +1,3 @@
-import { TRPCError } from "@trpc/server";
 import { type } from "arktype";
 import * as v from "valibot";
 import * as z3 from "zod/v3";
@@ -66,6 +65,75 @@ const anotherRouter = createTRPCRouter({
 });
 
 const postsRouter = createTRPCRouter({
+  basicArktype: procedure
+    .input(
+      type({
+        test: "string",
+      }),
+    )
+    .query(({ input }) => {
+      return input;
+    }),
+  createPostArkType: arktypeVal
+    .input(
+      type({
+        test: "string",
+        test3: "number > 5",
+      }),
+    )
+    .query(({ input }) => {
+      return {
+        data: input,
+        message: "ArkType validation successful",
+      };
+    }),
+  createPostValibot: procedure
+    .input(v.object({ name: v.string() }))
+    .mutation(({ input }) => {
+      return {
+        success: true,
+        user: input,
+      };
+    }),
+  createPostZodFour: procedure
+    .input(
+      z4.object({
+        content: z4.string().describe("Post content"),
+        title: z4.string().min(1).describe("Post title"),
+      }),
+    )
+    .mutation(({ input }) => {
+      return {
+        id: "generated-id",
+        ...input,
+        createdAt: new Date().toISOString(),
+      };
+    }),
+  createPostZodThree: zod3Middleware
+    .meta({
+      description: "Zod v3 procedure with merged input validators",
+    })
+    .input(
+      z3.object({
+        nested: z3
+          .object({
+            nestedAgain: z3.object({
+              nest: z3.boolean().describe("cool bool"),
+            }),
+            nestedText: z3.string().describe("what's happening").optional(),
+          })
+          .describe("object descriptions"),
+        optionalProp: z3.string().optional(),
+        text: z3.string().min(1).describe("hi there").optional(),
+      }),
+    )
+    .mutation(({ input }) => {
+      return {
+        ...input,
+      };
+    }),
+
+  deep: deepRouter,
   getAllPosts: procedure
     .meta({
       description: "Simple procedure that returns a list of posts",
@@ -85,99 +153,6 @@ const postsRouter = createTRPCRouter({
           text: "Post Id 3",
         },
       ];
-    }),
-  createPostZodThree: zod3Middleware
-    .meta({
-      description: "Zod v3 procedure with merged input validators",
-    })
-    .input(
-      z3.object({
-        text: z3.string().min(1).describe("hi there").optional(),
-        nested: z3
-          .object({
-            nestedText: z3.string().describe("what's happening").optional(),
-            nestedAgain: z3.object({
-              nest: z3.boolean().describe("cool bool"),
-            }),
-          })
-          .describe("object descriptions"),
-        optionalProp: z3.string().optional(),
-      }),
-    )
-    .mutation(({ input }) => {
-      return {
-        ...input,
-      };
-    }),
-  createPostZodFour: procedure
-    .input(
-      z4.object({
-        title: z4.string().min(1).describe("Post title"),
-        content: z4.string().describe("Post content"),
-      }),
-    )
-    .mutation(({ input }) => {
-      return {
-        id: "generated-id",
-        ...input,
-        createdAt: new Date().toISOString(),
-      };
-    }),
-  mergedZodFour: zod4Middleware
-    .input(
-      z4.object({
-        testNum: z4.number(),
-      }),
-    )
-    .query(({ input }) => {
-      return {
-        called: new Date().toString(),
-        ...input,
-      };
-    }),
-  basicArktype: procedure
-    .input(
-      type({
-        test: "string",
-      }),
-    )
-    .query(({ input }) => {
-      return input;
-    }),
-  createPostArkType: arktypeVal
-    .input(
-      type({
-        test: "string",
-        test3: "number > 5",
-      }),
-    )
-    .query(({ input }) => {
-      return {
-        message: "ArkType validation successful",
-        data: input,
-      };
-    }),
-  createPostValibot: procedure
-    .input(v.object({ name: v.string() }))
-    .mutation(({ input }) => {
-      return {
-        success: true,
-        user: input,
-      };
-    }),
-  mergedZod3Procedure: zod3Middleware
-    .input(
-      z3.object({
-        additionalField: z3
-          .string()
-          .describe("Additional field for merged validation"),
-      }),
-    )
-    .query(({ input }) => {
-      return {
-        message: "Merged Zod v3 validation",
-        data: input,
-      };
     }),
 
   //! This breaks, but I think it is an issue with json schema features maybe not being supported?
@@ -202,13 +177,37 @@ const postsRouter = createTRPCRouter({
         user: input,
       };
     }),
-
-  deep: deepRouter,
+  mergedZod3Procedure: zod3Middleware
+    .input(
+      z3.object({
+        additionalField: z3
+          .string()
+          .describe("Additional field for merged validation"),
+      }),
+    )
+    .query(({ input }) => {
+      return {
+        data: input,
+        message: "Merged Zod v3 validation",
+      };
+    }),
+  mergedZodFour: zod4Middleware
+    .input(
+      z4.object({
+        testNum: z4.number(),
+      }),
+    )
+    .query(({ input }) => {
+      return {
+        called: new Date().toString(),
+        ...input,
+      };
+    }),
 });
 
 export const appRouter = createTRPCRouter({
-  postsRouter,
   anotherRouter,
+  postsRouter,
 });
 
 // export type definition of API

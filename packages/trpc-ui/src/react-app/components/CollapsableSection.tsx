@@ -2,15 +2,15 @@ import { Chevron } from "@src/react-app/components/Chevron";
 import {
   collapsables,
   useCollapsableIsShowing,
+  useSiteNavigationContext,
 } from "@src/react-app/components/contexts/SiteNavigationContext";
-import { useSiteNavigationContext } from "@src/react-app/components/contexts/SiteNavigationContext";
 import {
   backgroundColor,
   solidColorBg,
   solidColorBorder,
 } from "@src/react-app/components/style-utils";
 import { useQueryState } from "nuqs";
-import React, {
+import {
   type MutableRefObject,
   type ReactNode,
   useEffect,
@@ -57,7 +57,7 @@ export function CollapsableSection({
         }
       }
     }
-  }, [shown]);
+  }, [shown, scrollToPathIfMatches, fullPath, focusOnScrollRef?.current]);
 
   // deals with root router. If it's not collapsable we **simply** render the title element and children
   const collapsable = fullPath.length > 0;
@@ -68,7 +68,7 @@ export function CollapsableSection({
         collapsable
           ? `${solidColorBorder(sectionType)} ${backgroundColor(sectionType)}`
           : ""
-      }${!isRoot ? " rounded-sm border" : ""}`}
+      }${!isRoot ? "rounded-sm border" : ""}`}
     >
       {collapsable ? (
         <button
@@ -81,7 +81,7 @@ export function CollapsableSection({
               setPath(fullPath.join("."));
             }
           }}
-          className="flex flex-row items-center justify-between p-1 "
+          className="flex flex-row items-center justify-between p-1"
         >
           <span className="flex flex-row">
             <SectionTypeLabel className="mr-2" sectionType={sectionType} />
@@ -98,7 +98,7 @@ export function CollapsableSection({
       )}
 
       <div
-        className={`flex-col justify-between ${collapsable ? ` border-t ${solidColorBorder(sectionType)}` : ""}${shown || !collapsable ? " flex" : " hidden"}`}
+        className={`flex-col justify-between ${collapsable ? `border-t ${solidColorBorder(sectionType)}` : ""}${shown || !collapsable ? "flex" : "hidden"}`}
       >
         {children}
       </div>

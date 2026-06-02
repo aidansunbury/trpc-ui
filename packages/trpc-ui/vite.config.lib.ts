@@ -1,19 +1,18 @@
+import typescript from "@rollup/plugin-typescript";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
-import typescript from "@rollup/plugin-typescript";
 
 export default defineConfig({
   build: {
-    outDir: "lib",
     emptyOutDir: true,
-    sourcemap: true,
-    minify: false,
     lib: {
       entry: "src/index.ts",
-      name: "trpc-ui",
-      formats: ["es", "cjs"],
       fileName: (format) => `index.${format === "es" ? "mjs" : "js"}`,
+      formats: ["es", "cjs"],
+      name: "trpc-ui",
     },
+    minify: false,
+    outDir: "lib",
     rollupOptions: {
       external: [
         "@trpc/server",
@@ -28,16 +27,17 @@ export default defineConfig({
         "node:path",
       ],
     },
+    sourcemap: true,
   },
   plugins: [
     typescript({
       tsconfig: "./tsconfig.buildPanel.json",
     }),
     dts({
-      tsconfigPath: "./tsconfig.json",
-      include: ["src/**/*.ts"],
       exclude: ["node_modules", "test", "src/react-app"],
+      include: ["src/**/*.ts"],
       outDirs: "lib",
+      tsconfigPath: "./tsconfig.json",
     }),
   ],
   resolve: {

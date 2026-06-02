@@ -20,7 +20,7 @@ export function defaultFormValuesForNode(node: ParsedInputNode): any {
     // return node.enumValues[0];
     case "object": {
       const obj: any = {};
-      // biome-ignore lint/style/noVar: <This errors when not using var, leave it unless you are going to properly fix it>
+
       for (var [name, nodeChild] of Object.entries(node.children)) {
         obj[name] = defaultFormValuesForNode(nodeChild);
       }
@@ -61,7 +61,7 @@ const TRPCErrorSchema = z.object({
 export function parseError(errorResponse: any, superJson: boolean) {
   if (!superJson) {
     const { success, data } = TRPCErrorSchema.safeParse(errorResponse);
-    return { isError: success, data };
+    return { data, isError: success };
   }
   const errors = [];
   for (const error of errorResponse.meta.responseJSON) {
@@ -80,5 +80,5 @@ export function parseError(errorResponse: any, superJson: boolean) {
     },
   };
   const { success, data } = TRPCErrorSchema.safeParse(parsed);
-  return { isError: success, data };
+  return { data, isError: success };
 }

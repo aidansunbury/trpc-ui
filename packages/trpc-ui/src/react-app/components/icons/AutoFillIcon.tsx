@@ -1,5 +1,3 @@
-import React from "react";
-
 // From: https://lucide.dev/icons/zap
 export function AutoFillIcon({ className }: { className?: string }) {
   return (

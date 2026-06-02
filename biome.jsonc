@@ -1,49 +1,54 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.0.0/schema.json",
-  "vcs": {
-    "enabled": true,
-    "clientKind": "git",
-    "useIgnoreFile": true,
-    "defaultBranch": "main",
-  },
   "assist": {
-    "enabled": true,
-    "includes": ["**/*.{js,jsx,ts,tsx,json,css,scss,md,mdx}"],
     "actions": {
       "source": {
         "organizeImports": "on",
-        "useSortedKeys": "on",
-      },
+        "useSortedKeys": "on"
+      }
     },
+    "enabled": true,
+    "includes": ["**/*.{js,jsx,ts,tsx,json,css,scss,md,mdx}"]
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2
   },
   "linter": {
     "enabled": true,
     "rules": {
+      "correctness": {
+        "useExhaustiveDependencies": "warn"
+      },
       "nursery": {
         "useSortedClasses": {
           "level": "error",
           "options": {
-            "functions": ["clsx", "cva", "cn"],
-          },
-        },
-      },
-      "correctness": {
-        "useExhaustiveDependencies": "warn",
-      },
-      "suspicious": {
-        "noExplicitAny": "warn",
-        "noDuplicateFontNames": "off",
-      },
-      "style": {
-        "noNonNullAssertion": "warn",
-        "useImportType": "off",
+            "functions": ["clsx", "cva", "cn"]
+          }
+        }
       },
       "recommended": true,
-    },
+      "style": {
+        "noNonNullAssertion": "warn",
+        "useImportType": "off"
+      },
+      "suspicious": {
+        "noDuplicateFontNames": "off",
+        "noExplicitAny": "warn"
+      }
+    }
   },
-  "formatter": {
+  "vcs": {
+    "clientKind": "git",
+    "defaultBranch": "main",
     "enabled": true,
-    "indentWidth": 2,
-    "indentStyle": "space",
-  },
+    "useIgnoreFile": true
+  }
 }

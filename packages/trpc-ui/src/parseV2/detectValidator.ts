@@ -14,7 +14,7 @@ export function detectValidatorType(validator: any): ValidatorType {
       if (vendor.includes("valibot")) return "valibot";
       if (vendor.includes("arktype")) return "arktype";
     }
-  } catch (e) {
+  } catch (_e) {
     // Ignore errors when accessing properties
   }
 

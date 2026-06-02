@@ -1,4 +1,3 @@
-import React from "react";
 import { type Control, useController } from "react-hook-form";
 import { BaseSelectField } from "./base/BaseSelectField";
 
@@ -14,8 +13,8 @@ export function EnumField({
   options: string[];
 }) {
   const { field, fieldState } = useController({
-    name,
     control,
+    name,
   });
   return (
     <BaseSelectField

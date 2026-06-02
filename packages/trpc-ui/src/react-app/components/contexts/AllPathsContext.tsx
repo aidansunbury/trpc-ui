@@ -1,8 +1,7 @@
 import type { ParsedTRPCRouter, Procedure, Router } from "@src/parseV2/types";
 import type { ColorSchemeType } from "@src/react-app/components/CollapsableSection";
 import { colorSchemeForNode } from "@src/react-app/components/style-utils";
-import React, { useContext } from "react";
-import { type ReactNode, createContext, useMemo } from "react";
+import { createContext, type ReactNode, useContext, useMemo } from "react";
 
 const Context = createContext<{
   pathsArray: string[];
@@ -36,16 +35,19 @@ export function AllPathsContextProvider({
       results.push(...flatten(node));
     }
     return results;
-  }, []);
+  }, [parsedRouter]);
   const pathsArray = useMemo(() => {
     return flattened.map((e) => e[0]);
-  }, []);
-  const colorSchemeForNode = useMemo(() => Object.fromEntries(flattened), []);
+  }, [flattened.map]);
+  const colorSchemeForNode = useMemo(
+    () => Object.fromEntries(flattened),
+    [flattened],
+  );
   return (
     <Context.Provider
       value={{
-        pathsArray,
         colorSchemeForNode,
+        pathsArray,
       }}
     >
       {children}

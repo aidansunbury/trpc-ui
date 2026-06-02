@@ -40,11 +40,11 @@ export function createProcedureFetcher(options: FetchWrapperOptions) {
 
     // Prepare request options
     const requestOptions: RequestInit = {
-      method,
       headers: {
         "Content-Type": "application/json",
         ...headers,
       },
+      method,
       signal,
     };
 

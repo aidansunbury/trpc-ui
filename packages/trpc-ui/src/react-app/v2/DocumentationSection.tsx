@@ -5,7 +5,6 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import type { ProcedureMeta } from "@src/parseV2/types";
 import type { JSONSchema7Object } from "json-schema";
-import React from "react";
 import Markdown from "react-markdown";
 
 interface DocumentationSectionProps {
@@ -46,11 +45,11 @@ export function DocumentationSection({
                   variant="h6"
                   component="h3"
                   sx={{
-                    mb: 1,
-                    fontWeight: 600,
                     color: "text.primary",
                     fontSize: "1.125rem",
+                    fontWeight: 600,
                     letterSpacing: "0.01em",
+                    mb: 1,
                   }}
                 >
                   {key}
@@ -58,15 +57,15 @@ export function DocumentationSection({
                 <Box
                   sx={{
                     "& .markdown": {
-                      lineHeight: 1.5,
-                      fontSize: "0.875rem",
                       "& a": { color: "primary.main" },
                       "& code": {
                         bgcolor: "rgba(0, 0, 0, 0.04)",
-                        p: 0.25,
                         borderRadius: 0.5,
                         fontFamily: "monospace",
+                        p: 0.25,
                       },
+                      fontSize: "0.875rem",
+                      lineHeight: 1.5,
                     },
                   }}
                 >
@@ -87,11 +86,11 @@ export function DocumentationSection({
               variant="h6"
               component="h3"
               sx={{
-                mb: 1.5,
-                fontWeight: 600,
                 color: "text.primary",
                 fontSize: "1.125rem",
+                fontWeight: 600,
                 letterSpacing: "0.01em",
+                mb: 1.5,
               }}
             >
               Params
@@ -101,33 +100,33 @@ export function DocumentationSection({
               <Box
                 key={prop.path}
                 sx={{
-                  mb: 1.25,
                   "&:last-child": { mb: 0 },
-                  display: "flex",
                   alignItems: "flex-start",
+                  display: "flex",
+                  mb: 1.25,
                 }}
               >
                 <Box
                   sx={{
-                    display: "flex",
                     alignItems: "center",
-                    width: "30%",
+                    display: "flex",
+                    flexShrink: 0,
                     maxWidth: "250px",
                     minWidth: "120px",
-                    flexShrink: 0,
                     mr: 1,
                     overflow: "hidden",
                     textOverflow: "ellipsis",
                     whiteSpace: "nowrap",
+                    width: "30%",
                   }}
                 >
                   <Typography
                     variant="subtitle2"
                     sx={{
-                      fontWeight: 600,
-                      fontFamily: "monospace",
                       color: "text.primary",
+                      fontFamily: "monospace",
                       fontSize: "0.8rem",
+                      fontWeight: 600,
                       overflow: "hidden",
                       textOverflow: "ellipsis",
                     }}
@@ -137,7 +136,7 @@ export function DocumentationSection({
                       <Typography
                         component="span"
                         color="error.main"
-                        sx={{ ml: 0.5, fontWeight: 700 }}
+                        sx={{ fontWeight: 700, ml: 0.5 }}
                       >
                         *
                       </Typography>
@@ -147,8 +146,8 @@ export function DocumentationSection({
 
                 <Box
                   sx={{
-                    display: "flex",
                     alignItems: "flex-start",
+                    display: "flex",
                     flexGrow: 1,
                   }}
                 >
@@ -157,16 +156,16 @@ export function DocumentationSection({
                       variant="body2"
                       color="text.secondary"
                       sx={{
-                        mr: 1,
                         "& code": {
                           bgcolor: "rgba(0, 0, 0, 0.04)",
-                          px: 0.5,
                           borderRadius: 0.5,
                           fontFamily: "monospace",
+                          px: 0.5,
                         },
                         "& p": {
                           my: 0,
                         },
+                        mr: 1,
                       }}
                     >
                       <Markdown>{prop.description}</Markdown>
@@ -178,9 +177,9 @@ export function DocumentationSection({
                       variant="caption"
                       color="text.secondary"
                       sx={{
+                        flexShrink: 0,
                         fontStyle: "italic",
                         mt: 0.25,
-                        flexShrink: 0,
                       }}
                     >
                       {String(prop.type)}
@@ -220,11 +219,11 @@ function extractPropertyDescriptions(
     // Add this property if it has a description
     if (propDetails.description) {
       properties.push({
+        description: propDetails.description,
         path,
         required: propIsRequired,
         // biome-ignore lint/suspicious/noExplicitAny: JSONSchema type field is complex
         type: (propDetails as any).type ?? "unknown",
-        description: propDetails.description,
       } as PropertyInfo);
     }
 
