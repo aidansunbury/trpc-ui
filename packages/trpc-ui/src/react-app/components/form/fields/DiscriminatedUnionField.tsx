@@ -28,7 +28,8 @@ export function DiscriminatedUnionField({
     name,
     control,
   });
-  function onDiscriminatorChange(value: string) {
+  function onDiscriminatorChange(value: string | undefined) {
+    if (!value) return;
     const newObj = nodeTypecast.discriminatedUnionChildrenMap[value];
     if (!newObj) return;
     const newDefaultValues = {
