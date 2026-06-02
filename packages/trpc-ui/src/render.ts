@@ -14,10 +14,10 @@ export type RenderOptions = {
   meta?: Info;
 } & TrpcPanelExtraOptions;
 
-const defaultParseRouterOptions: Partial<TrpcPanelExtraOptions> = {
-  logFailedProcedureParse: true,
-  transformer: "superjson",
-};
+// const defaultParseRouterOptions: Partial<TrpcPanelExtraOptions> = {
+//   logFailedProcedureParse: true,
+//   transformer: "superjson",
+// };
 
 const javascriptReplaceSymbol = "{{js}}";
 const cssReplaceSymbol = "{{css}}";

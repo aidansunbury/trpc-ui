@@ -145,7 +145,8 @@ export function parseTRPCRouter(
 
 function arkToJson(inputs: ArkTypeValidator[]): JSONSchema7Object {
   if (inputs.length === 1) {
-    return inputs[0]?.toJsonSchema();
+    const schema = inputs[0]?.toJsonSchema() as JSONSchema7Object;
+    return schema ?? {};
   }
   if (inputs.length > 1) {
     const [first, ...rest] = inputs;
@@ -156,13 +157,17 @@ function arkToJson(inputs: ArkTypeValidator[]): JSONSchema7Object {
   }
   return {};
 }
-function arkRecursive(base: ArkTypeValidator, rest: ArkTypeValidator[]): any {
+
+function arkRecursive(
+  base: ArkTypeValidator,
+  rest: ArkTypeValidator[],
+): JSONSchema7Object {
   if (rest.length === 0) {
-    return base.toJsonSchema();
+    return (base.toJsonSchema() as JSONSchema7Object) ?? {};
   }
   const [first, ...left] = rest;
   if (first === undefined) {
-    return base.toJsonSchema();
+    return (base.toJsonSchema() as JSONSchema7Object) ?? {};
   }
   return arkRecursive(base.and(first), left);
 }

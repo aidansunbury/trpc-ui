@@ -2,10 +2,10 @@ import type { ParsedTRPCRouter } from "@src/parseV2/types";
 import type { RenderOptions } from "@src/render";
 import React, { createContext, useContext, ReactNode } from "react";
 
-// @ts-expect-error
 const RenderOptionsContext = createContext<{
   options: RenderOptions;
   router: ParsedTRPCRouter;
+  // @ts-expect-error
 }>(null);
 
 interface RenderOptionsProviderProps {

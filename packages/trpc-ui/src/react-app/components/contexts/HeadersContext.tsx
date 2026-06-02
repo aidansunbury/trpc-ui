@@ -25,18 +25,17 @@ const storage =
   typeof window !== "undefined"
     ? localStorage
     : {
-        getItem: (v: string) => null,
-        setItem: (s: string) => {},
-        removeItem: (v: string) => {},
+        getItem: (_v: string) => null,
+        setItem: (_s: string) => {},
+        removeItem: (_v: string) => {},
       };
 
 const storedHeaders = storage.getItem(headersLocalStorageKey);
 
 export function HeadersContextProvider({ children }: { children: ReactNode }) {
   const [headersPopupShown, setHeadersPopupShown] = useState(false);
-  const [saveHeadersToLocalStorage, setSaveHeadersToLocalStorage] = useState(
-    !!storedHeaders,
-  );
+  const [saveHeadersToLocalStorage, setSaveHeadersToLocalStorage] =
+    useState(!!storedHeaders);
   const globalHeadersRef = useRef<Headers>(
     storedHeaders ? JSON.parse(storedHeaders) : {},
   );

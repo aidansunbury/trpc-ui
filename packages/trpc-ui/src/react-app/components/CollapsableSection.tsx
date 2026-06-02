@@ -40,7 +40,7 @@ export function CollapsableSection({
 }) {
   const { scrollToPathIfMatches } = useSiteNavigationContext();
   const shown = useCollapsableIsShowing(fullPath);
-  const [path, setPath] = useQueryState("path");
+  const [, setPath] = useQueryState("path");
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {

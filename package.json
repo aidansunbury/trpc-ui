@@ -2,7 +2,7 @@
   "name": "trpc-ui-monorepo",
   "version": "0.0.0",
   "license": "MIT",
-  "packageManager": "pnpm@11.4.0",
+  "packageManager": "pnpm@11.5.0",
   "scripts": {
     "build:ui": "pnpm -F trpc-ui build",
     "build:dev-app": "pnpm -F dev-app build",
@@ -20,6 +20,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@tsconfig/docusaurus": "^1.0.7",
+    "pkg-pr-new": "^0.0.75",
     "typescript": "^6.0.3"
   }
 }
