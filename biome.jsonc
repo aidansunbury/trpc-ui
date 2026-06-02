@@ -1,13 +1,20 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.0.0/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
     "useIgnoreFile": true,
-    "defaultBranch": "main"
+    "defaultBranch": "main",
   },
-  "organizeImports": {
-    "enabled": true
+  "assist": {
+    "enabled": true,
+    "includes": ["**/*.{js,jsx,ts,tsx,json,css,scss,md,mdx}"],
+    "actions": {
+      "source": {
+        "organizeImports": "on",
+        "useSortedKeys": "on",
+      },
+    },
   },
   "linter": {
     "enabled": true,
@@ -16,30 +23,27 @@
         "useSortedClasses": {
           "level": "error",
           "options": {
-            "functions": ["clsx", "cva", "cn"]
-          }
-        }
+            "functions": ["clsx", "cva", "cn"],
+          },
+        },
       },
       "correctness": {
-        "useExhaustiveDependencies": "warn"
+        "useExhaustiveDependencies": "warn",
       },
       "suspicious": {
         "noExplicitAny": "warn",
-        "noDuplicateFontNames": "off"
+        "noDuplicateFontNames": "off",
       },
       "style": {
         "noNonNullAssertion": "warn",
-        "useImportType": "off"
+        "useImportType": "off",
       },
-      "recommended": true
-    }
+      "recommended": true,
+    },
   },
   "formatter": {
     "enabled": true,
     "indentWidth": 2,
-    "indentStyle": "space"
+    "indentStyle": "space",
   },
-  "files": {
-    "ignore": ["package.json", ".next/", "tsconfig.buildPanel.json"]
-  }
 }
