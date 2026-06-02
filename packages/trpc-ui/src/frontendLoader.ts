@@ -8,8 +8,7 @@ export async function loadFrontend(): Promise<{
     const { dirname } = await import("node:path");
     const { fileURLToPath } = await import("node:url");
 
-    const dirLocation = dirname(fileURLToPath(import.meta.url));
-    console.log(dirLocation);
+    const dirLocation = __dirname ?? dirname(fileURLToPath(import.meta.url));
     const [html, js, css] = await Promise.all([
       fs.readFile(`${dirLocation}/react-app/index.html`, "utf-8"),
       fs.readFile(`${dirLocation}/react-app/bundle.js`, "utf-8"),
