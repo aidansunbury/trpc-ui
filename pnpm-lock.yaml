@@ -14,9 +14,6 @@ importers:
       '@tsconfig/docusaurus':
         specifier: ^1.0.7
         version: 1.0.7
-      pkg-pr-new:
-        specifier: ^0.0.75
-        version: 0.0.75
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
@@ -353,6 +350,9 @@ importers:
       json-bigint:
         specifier: ^1.0.0
         version: 1.0.0
+      pkg-pr-new:
+        specifier: ^0.0.75
+        version: 0.0.75
       postcss:
         specifier: ^8.5.15
         version: 8.5.15

@@ -32,4 +32,4 @@ jobs:
         run: |
           cd packages/trpc-ui
           pnpm install
-          pnpm pkg-pr-new publish './packages/trpc-ui' --pnpm --packageManager=pnpm
+          pnpm pkg-pr-new publish --pnpm --packageManager=pnpm
